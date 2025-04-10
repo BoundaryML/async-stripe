@@ -65,8 +65,8 @@ pub mod core {
     pub mod payment_intent_next_action_cashapp_handle_redirect_or_display_qr_code;
     pub mod payment_method_config_biz_payment_method_configuration_details;
     pub mod payment_method_details_card_installments_plan;
-    pub mod payment_method_details_card_present_offline;
     pub mod payment_method_details_card_present;
+    pub mod payment_method_details_card_present_offline;
     pub mod payment_method_details_card_wallet_apple_pay;
     pub mod payment_method_details_card_wallet_google_pay;
     pub mod payment_method_details_passthrough_card;
@@ -110,8 +110,8 @@ pub mod payment {
     pub mod payment_method_billie;
     pub mod payment_method_blik;
     pub mod payment_method_boleto;
-    pub mod payment_method_card_present;
     pub mod payment_method_card;
+    pub mod payment_method_card_present;
     pub mod payment_method_cashapp;
     pub mod payment_method_customer_balance;
     pub mod payment_method_detached;
@@ -183,11 +183,11 @@ pub mod billing {
     pub mod billing_bill_resource_invoicing_lines_common_proration_details;
     pub mod billing_bill_resource_invoicing_pricing_pricing;
     pub mod billing_credit_balance_summary;
-    pub mod billing_credit_balance_transaction_created;
     pub mod billing_credit_balance_transaction;
+    pub mod billing_credit_balance_transaction_created;
+    pub mod billing_credit_grant;
     pub mod billing_credit_grant_created;
     pub mod billing_credit_grant_updated;
-    pub mod billing_credit_grant;
     pub mod billing_credit_grants_resource_amount;
     pub mod billing_portal_configuration;
     pub mod billing_portal_configuration_created;
@@ -212,6 +212,7 @@ pub mod billing {
     pub mod invoice_finalized;
     pub mod invoice_marked_uncollectible;
     pub mod invoice_paid;
+    pub mod invoice_payment;
     pub mod invoice_payment_action_required;
     pub mod invoice_payment_failed;
     pub mod invoice_payment_method_options_acss_debit;
@@ -221,15 +222,14 @@ pub mod billing {
     pub mod invoice_payment_method_options_sepa_debit;
     pub mod invoice_payment_method_options_us_bank_account;
     pub mod invoice_payment_succeeded;
-    pub mod invoice_payment;
     pub mod invoice_sent;
     pub mod invoice_setting_checkout_rendering_options;
     pub mod invoice_upcoming;
     pub mod invoice_updated;
     pub mod invoice_voided;
+    pub mod invoiceitem;
     pub mod invoiceitem_created;
     pub mod invoiceitem_deleted;
-    pub mod invoiceitem;
     pub mod invoices_resource_shipping_cost;
     pub mod line_item;
     pub mod plan;
@@ -246,10 +246,10 @@ pub mod billing {
     pub mod tax_id;
     pub mod tax_product_resource_customer_details;
     pub mod tax_product_resource_ship_from_details;
+    pub mod tax_rate;
     pub mod tax_rate_created;
     pub mod tax_rate_flat_amount;
     pub mod tax_rate_updated;
-    pub mod tax_rate;
 }
 
 #[path = "generated"]
@@ -281,11 +281,11 @@ pub mod issuing {
     pub mod issuing_card;
     pub mod issuing_cardholder;
     pub mod issuing_dispute;
+    pub mod issuing_personalization_design;
     pub mod issuing_personalization_design_activated;
     pub mod issuing_personalization_design_deactivated;
     pub mod issuing_personalization_design_rejected;
     pub mod issuing_personalization_design_updated;
-    pub mod issuing_personalization_design;
     pub mod issuing_physical_bundle;
     pub mod issuing_token;
     pub mod issuing_transaction;

@@ -605,6 +605,10 @@ def_id!(UsageRecordId, "mbur_");
 def_id!(UsageRecordSummaryId, "urs_" | "sis_");
 def_id!(WebhookEndpointId, "we_");
 
+// aliases because i can't figure out how to work the rename system
+pub type BillingCreditBalanceTransactionId = CreditBalanceTransactionId;
+pub type BillingCreditGrantId = CreditGrantId;
+
 impl InvoiceId {
     pub(crate) fn none() -> Self {
         Self("".into())

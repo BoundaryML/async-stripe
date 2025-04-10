@@ -3,7 +3,7 @@
 // ======================================
 
 use crate::resources::{
-    PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet, Networks as PaymentMethodCardPresentNetworks,
+    PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet, PaymentMethodCardPresentNetworks,
     PaymentMethodDetailsCardPresentOffline,
 };
 use serde::{Deserialize, Serialize};

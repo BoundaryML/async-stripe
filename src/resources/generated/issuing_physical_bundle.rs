@@ -2,8 +2,8 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{IssuingPhysicalBundleId};
-use crate::params::{Object};
+use crate::ids::IssuingPhysicalBundleId;
+use crate::params::Object;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "IssuingPhysicalBundle".
@@ -42,7 +42,6 @@ impl Object for IssuingPhysicalBundle {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingPhysicalBundleFeatures {
-
     /// The policy for how to use card logo images in a card design with this physical bundle.
     pub card_logo: IssuingPhysicalBundleFeaturesCardLogo,
 

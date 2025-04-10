@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_options_card_present_routing".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodOptionsCardPresentRouting {
-
     /// Requested routing priority.
     pub requested_priority: Option<PaymentMethodOptionsCardPresentRoutingRequestedPriority>,
 }
@@ -24,7 +23,9 @@ impl PaymentMethodOptionsCardPresentRoutingRequestedPriority {
     pub fn as_str(self) -> &'static str {
         match self {
             PaymentMethodOptionsCardPresentRoutingRequestedPriority::Domestic => "domestic",
-            PaymentMethodOptionsCardPresentRoutingRequestedPriority::International => "international",
+            PaymentMethodOptionsCardPresentRoutingRequestedPriority::International => {
+                "international"
+            }
         }
     }
 }

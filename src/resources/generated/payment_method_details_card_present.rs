@@ -2,14 +2,16 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::params::{Timestamp};
-use crate::resources::{PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet, PaymentMethodDetailsCardPresentOffline};
+use crate::params::Timestamp;
+use crate::resources::{
+    PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet,
+    PaymentMethodDetailsCardPresentOffline,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "payment_method_details_card_present".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodDetailsCardPresent {
-
     /// The authorized amount.
     pub amount_authorized: Option<i64>,
 
@@ -124,7 +126,6 @@ pub struct PaymentMethodDetailsCardPresent {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodDetailsCardPresentReceipt {
-
     /// The type of account being debited or credited.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub account_type: Option<PaymentMethodDetailsCardPresentReceiptAccountType>,
@@ -176,9 +177,15 @@ impl PaymentMethodDetailsCardPresentReadMethod {
         match self {
             PaymentMethodDetailsCardPresentReadMethod::ContactEmv => "contact_emv",
             PaymentMethodDetailsCardPresentReadMethod::ContactlessEmv => "contactless_emv",
-            PaymentMethodDetailsCardPresentReadMethod::ContactlessMagstripeMode => "contactless_magstripe_mode",
-            PaymentMethodDetailsCardPresentReadMethod::MagneticStripeFallback => "magnetic_stripe_fallback",
-            PaymentMethodDetailsCardPresentReadMethod::MagneticStripeTrack2 => "magnetic_stripe_track2",
+            PaymentMethodDetailsCardPresentReadMethod::ContactlessMagstripeMode => {
+                "contactless_magstripe_mode"
+            }
+            PaymentMethodDetailsCardPresentReadMethod::MagneticStripeFallback => {
+                "magnetic_stripe_fallback"
+            }
+            PaymentMethodDetailsCardPresentReadMethod::MagneticStripeTrack2 => {
+                "magnetic_stripe_track2"
+            }
         }
     }
 }

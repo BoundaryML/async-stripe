@@ -11,7 +11,6 @@ use serde::{Deserialize, Serialize};
 /// For more details see <https://stripe.com/docs/api/billing/credit-balance-summary/object>
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditBalanceSummary {
-
     /// The billing credit balances.
     ///
     /// One entry per credit grant currency.
@@ -35,7 +34,6 @@ impl Object for BillingCreditBalanceSummary {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreditBalance {
-
     pub available_balance: BillingCreditGrantsResourceAmount,
 
     pub ledger_balance: BillingCreditGrantsResourceAmount,

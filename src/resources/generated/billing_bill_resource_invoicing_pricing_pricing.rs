@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "BillingBillResourceInvoicingPricingPricing".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingPricingPricing {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub price_details: Option<BillingBillResourceInvoicingPricingPricingPriceDetails>,
 
@@ -21,7 +20,6 @@ pub struct BillingBillResourceInvoicingPricingPricing {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingPricingPricingPriceDetails {
-
     /// The ID of the price this item is associated with.
     pub price: String,
 

@@ -2,14 +2,14 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::resources::{Address as TaxProductResourcePostalAddress};
+use crate::resources::Address;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "TaxProductResourceCustomerDetails".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TaxProductResourceCustomerDetails {
     /// The customer's postal address (for example, home or business location).
-    pub address: Option<TaxProductResourcePostalAddress>,
+    pub address: Option<Address>,
 
     /// The type of customer address provided.
     pub address_source: Option<TaxProductResourceCustomerDetailsAddressSource>,

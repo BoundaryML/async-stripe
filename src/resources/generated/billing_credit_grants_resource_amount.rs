@@ -2,13 +2,12 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::resources::{Currency};
+use crate::resources::Currency;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "BillingCreditGrantsResourceAmount".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceAmount {
-
     /// The monetary amount.
     pub monetary: Option<BillingCreditGrantsResourceMonetaryAmount>,
 
@@ -21,7 +20,6 @@ pub struct BillingCreditGrantsResourceAmount {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceMonetaryAmount {
-
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     ///
     /// Must be a [supported currency](https://stripe.com/docs/currencies).

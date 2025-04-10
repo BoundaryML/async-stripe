@@ -2,14 +2,13 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::params::{Expandable};
+use crate::params::Expandable;
 use crate::resources::{Address, PaymentMethodDetailsCardPresent, SetupAttempt};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "payment_method_card".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CardDetails {
-
     /// Card brand.
     ///
     /// Can be `amex`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa`, or `unknown`.
@@ -85,7 +84,6 @@ pub struct CardDetails {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct Networks {
-
     /// All networks available for selection via [payment_method_options.card.network](/api/payment_intents/confirm#confirm_payment_intent-payment_method_options-card-network).
     pub available: Vec<String>,
 
@@ -97,7 +95,6 @@ pub struct Networks {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodCardChecks {
-
     /// If a address line1 was provided, results of the check, one of `pass`, `fail`, `unavailable`, or `unchecked`.
     pub address_line1_check: Option<String>,
 
@@ -110,7 +107,6 @@ pub struct PaymentMethodCardChecks {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodCardGeneratedCard {
-
     /// The charge that created this object.
     pub charge: Option<String>,
 
@@ -123,7 +119,6 @@ pub struct PaymentMethodCardGeneratedCard {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CardGeneratedFromPaymentMethodDetails {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub card_present: Option<PaymentMethodDetailsCardPresent>,
 
@@ -136,7 +131,6 @@ pub struct CardGeneratedFromPaymentMethodDetails {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct WalletDetails {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub amex_express_checkout: Option<WalletAmexExpressCheckout>,
 
@@ -170,24 +164,19 @@ pub struct WalletDetails {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct WalletAmexExpressCheckout {
-}
+pub struct WalletAmexExpressCheckout {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct WalletApplePay {
-}
+pub struct WalletApplePay {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct WalletGooglePay {
-}
+pub struct WalletGooglePay {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct PaymentMethodCardWalletLink {
-}
+pub struct PaymentMethodCardWalletLink {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct WalletMasterpass {
-
     /// Owner's verified billing address.
     ///
     /// Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement.
@@ -214,12 +203,10 @@ pub struct WalletMasterpass {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct WalletSamsungPay {
-}
+pub struct WalletSamsungPay {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct WalletVisaCheckout {
-
     /// Owner's verified billing address.
     ///
     /// Values are verified or provided by the wallet directly (if supported) at the time of authorization or settlement.
@@ -247,7 +234,6 @@ pub struct WalletVisaCheckout {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ThreeDSecureUsage {
-
     /// Whether 3D Secure is supported on this card.
     pub supported: bool,
 }

@@ -4,8 +4,8 @@ use crate::ids::BalanceTransactionSourceId;
 use crate::params::Object;
 use crate::resources::{
     ApplicationFee, ApplicationFeeRefund, Charge, ConnectCollectionTransfer, Dispute,
-    IssuingAuthorization, IssuingDispute, IssuingTransaction, Payout, Refund,
-    ReserveTransaction, TaxDeductedAtSource, Topup, Transfer, TransferReversal,
+    IssuingAuthorization, IssuingDispute, IssuingTransaction, Payout, Refund, ReserveTransaction,
+    TaxDeductedAtSource, Topup, Transfer, TransferReversal,
 };
 
 #[derive(Clone, Debug, Deserialize, Serialize)]

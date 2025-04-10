@@ -2,12 +2,11 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::resources::{Address as TaxProductResourcePostalAddress};
+use crate::resources::Address;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "TaxProductResourceShipFromDetails".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TaxProductResourceShipFromDetails {
-
-    pub address: TaxProductResourcePostalAddress,
+    pub address: Address,
 }

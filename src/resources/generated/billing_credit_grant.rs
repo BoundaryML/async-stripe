@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::CreditGrantId as BillingCreditGrantId;
+use crate::ids::BillingCreditGrantId;
 use crate::params::{Expandable, Metadata, Object, Timestamp};
 use crate::resources::{BillingCreditGrantsResourceAmount, Customer, TestHelpersTestClock};
 use serde::{Deserialize, Serialize};
@@ -83,13 +83,11 @@ impl Object for BillingCreditGrant {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceApplicabilityConfig {
-
     pub scope: BillingCreditGrantsResourceScope,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceScope {
-
     /// The price type that credit grants can apply to.
     ///
     /// We currently only support the `metered` price type.
@@ -109,7 +107,6 @@ pub struct BillingCreditGrantsResourceScope {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceApplicablePrice {
-
     /// Unique identifier for the object.
     pub id: Option<String>,
 }
