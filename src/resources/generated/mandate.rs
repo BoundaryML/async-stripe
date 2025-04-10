@@ -86,6 +86,9 @@ pub struct MandatePaymentMethodDetails {
     pub acss_debit: Option<MandateAcssDebit>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub amazon_pay: Option<MandateAmazonPay>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub au_becs_debit: Option<MandateAuBecsDebit>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -98,10 +101,25 @@ pub struct MandatePaymentMethodDetails {
     pub cashapp: Option<MandateCashapp>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub kakao_pay: Option<MandateKakaoPay>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub kr_card: Option<MandateKrCard>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub link: Option<MandateLink>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub naver_pay: Option<MandateNaverPay>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub nz_bank_account: Option<MandateNzBankAccount>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub paypal: Option<MandatePaypal>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub revolut_pay: Option<MandateRevolutPay>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
     pub sepa_debit: Option<MandateSepaDebit>,
@@ -138,6 +156,9 @@ pub struct MandateAcssDebit {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct MandateAmazonPay {}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct MandateAuBecsDebit {
     /// The URL of the mandate.
     ///
@@ -166,7 +187,19 @@ pub struct MandateBacsDebit {
 pub struct MandateCashapp {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct MandateKakaoPay {}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct MandateKrCard {}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct MandateLink {}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct MandateNaverPay {}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct MandateNzBankAccount {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct MandatePaypal {
@@ -180,6 +213,9 @@ pub struct MandatePaypal {
     /// This identifier uniquely identifies the PayPal customer.
     pub payer_id: Option<String>,
 }
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct MandateRevolutPay {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct MandateSepaDebit {

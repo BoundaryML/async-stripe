@@ -6,5 +6,4 @@ use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "plan.deleted".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct PlanDeleted {
-}
+pub struct PlanDeleted {}

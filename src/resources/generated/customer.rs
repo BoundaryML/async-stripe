@@ -3,13 +3,13 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::{CouponId, CustomerId, PaymentMethodId, PaymentSourceId, PromotionCodeId};
+use crate::ids::{CustomerId, PaymentMethodId, PaymentSourceId};
 use crate::params::{
     Deleted, Expand, Expandable, List, Metadata, Object, Paginable, RangeQuery, Timestamp,
 };
 use crate::resources::{
-    Address, CashBalance, Currency, Discount, InvoiceSettingRenderingOptions, PaymentMethod,
-    PaymentSource, PaymentSourceParams, Shipping, Subscription, TaxId, TestHelpersTestClock,
+    Address, CashBalance, Currency, Discount, PaymentMethod, PaymentSource, PaymentSourceParams,
+    Shipping, Subscription, TaxId, TestHelpersTestClock,
 };
 use serde::{Deserialize, Serialize};
 
@@ -116,6 +116,8 @@ pub struct Customer {
     pub name: Option<String>,
 
     /// The suffix of the customer's next invoice number (for example, 0001).
+    ///
+    /// When the account uses account level sequencing, this parameter is ignored in API requests and the field omitted in API responses.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub next_invoice_sequence: Option<i64>,
 
@@ -221,19 +223,19 @@ pub struct CustomerTax {
     /// A recent IP address of the customer used for tax reporting and tax location inference.
     pub ip_address: Option<String>,
 
-    /// The customer's location as identified by Stripe Tax.
+    /// The identified tax location of the customer.
     pub location: Option<CustomerTaxLocation>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerTaxLocation {
-    /// The customer's country as identified by Stripe Tax.
+    /// The identified tax country of the customer.
     pub country: String,
 
     /// The data source used to infer the customer's location.
     pub source: CustomerTaxLocationSource,
 
-    /// The customer's state, county, province, or region as identified by Stripe Tax.
+    /// The identified tax state, county, province, or region of the customer.
     pub state: Option<String>,
 }
 
@@ -249,7 +251,7 @@ pub struct InvoiceSettingCustomerSetting {
     pub footer: Option<String>,
 
     /// Default options for invoice PDF rendering for this customer.
-    pub rendering_options: Option<InvoiceSettingRenderingOptions>,
+    pub rendering_options: Option<InvoiceSettingCustomerRenderingOptions>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -259,6 +261,17 @@ pub struct InvoiceSettingCustomField {
 
     /// The value of the custom field.
     pub value: String,
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct InvoiceSettingCustomerRenderingOptions {
+    /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+    pub amount_tax_display: Option<String>,
+
+    /// ID of the invoice rendering template to be used for this customer's invoices.
+    ///
+    /// If set, the template will be used on all invoices for this customer unless a template is set directly on the invoice.
+    pub template: Option<String>,
 }
 
 /// The parameters for `Customer::create`.
@@ -277,9 +290,6 @@ pub struct CreateCustomer<'a> {
     /// Balance information and default balance settings for this customer.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cash_balance: Option<CreateCustomerCashBalance>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub coupon: Option<CouponId>,
 
     /// An arbitrary string that you can attach to a customer object.
     ///
@@ -337,13 +347,6 @@ pub struct CreateCustomer<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub preferred_locales: Option<Vec<String>>,
 
-    /// The API ID of a promotion code to apply to the customer.
-    ///
-    /// The customer will have a discount applied on all recurring payments.
-    /// Charges you create through the API will not have the discount.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub promotion_code: Option<PromotionCodeId>,
-
     /// The customer's shipping information.
     ///
     /// Appears on invoices emailed to this customer.
@@ -381,7 +384,6 @@ impl<'a> CreateCustomer<'a> {
             address: Default::default(),
             balance: Default::default(),
             cash_balance: Default::default(),
-            coupon: Default::default(),
             description: Default::default(),
             email: Default::default(),
             expand: Default::default(),
@@ -393,7 +395,6 @@ impl<'a> CreateCustomer<'a> {
             payment_method: Default::default(),
             phone: Default::default(),
             preferred_locales: Default::default(),
-            promotion_code: Default::default(),
             shipping: Default::default(),
             source: Default::default(),
             tax: Default::default(),
@@ -408,6 +409,7 @@ impl<'a> CreateCustomer<'a> {
 /// The parameters for `Customer::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListCustomers<'a> {
+    /// Only return customers that were created during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created: Option<RangeQuery<Timestamp>>,
 
@@ -484,9 +486,6 @@ pub struct UpdateCustomer<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub cash_balance: Option<UpdateCustomerCashBalance>,
 
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub coupon: Option<CouponId>,
-
     /// If you are using payment methods created via the PaymentMethods API, see the [invoice_settings.default_payment_method](https://stripe.com/docs/api/customers/update#update_customer-invoice_settings-default_payment_method) parameter.
     ///
     /// Provide the ID of a payment source already attached to this customer to make it this customer's default payment source.
@@ -548,13 +547,6 @@ pub struct UpdateCustomer<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub preferred_locales: Option<Vec<String>>,
 
-    /// The API ID of a promotion code to apply to the customer.
-    ///
-    /// The customer will have a discount applied on all recurring payments.
-    /// Charges you create through the API will not have the discount.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub promotion_code: Option<PromotionCodeId>,
-
     /// The customer's shipping information.
     ///
     /// Appears on invoices emailed to this customer.
@@ -584,7 +576,6 @@ impl<'a> UpdateCustomer<'a> {
             address: Default::default(),
             balance: Default::default(),
             cash_balance: Default::default(),
-            coupon: Default::default(),
             default_source: Default::default(),
             description: Default::default(),
             email: Default::default(),
@@ -596,7 +587,6 @@ impl<'a> UpdateCustomer<'a> {
             next_invoice_sequence: Default::default(),
             phone: Default::default(),
             preferred_locales: Default::default(),
-            promotion_code: Default::default(),
             shipping: Default::default(),
             source: Default::default(),
             tax: Default::default(),
@@ -666,7 +656,7 @@ pub struct CustomerInvoiceSettings {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TaxIdData {
-    /// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`.
+    /// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `al_tin`, `am_tin`, `ao_tin`, `ar_cuit`, `au_abn`, `au_arn`, `ba_tin`, `bb_tin`, `bg_uic`, `bh_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `bs_tin`, `by_tin`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `cd_nif`, `ch_uid`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `de_stn`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `gn_nif`, `hk_br`, `hr_oib`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kh_tin`, `kr_brn`, `kz_bin`, `li_uid`, `li_vat`, `ma_vat`, `md_vat`, `me_pib`, `mk_vat`, `mr_nif`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `ng_tin`, `no_vat`, `no_voec`, `np_pan`, `nz_gst`, `om_vat`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sn_ninea`, `sr_fin`, `sv_nit`, `th_vat`, `tj_tin`, `tr_tin`, `tw_vat`, `tz_vat`, `ua_vat`, `ug_tin`, `us_ein`, `uy_ruc`, `uz_tin`, `uz_vat`, `ve_rif`, `vn_tin`, `za_vat`, `zm_tin`, or `zw_tin`.
     #[serde(rename = "type")]
     pub type_: TaxIdType,
 
@@ -706,7 +696,7 @@ pub struct UpdateCustomerTax {
 
     /// A flag that indicates when Stripe should validate the customer tax location.
     ///
-    /// Defaults to `deferred`.
+    /// Defaults to `auto`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub validate_location: Option<UpdateCustomerTaxValidateLocation>,
 }
@@ -727,7 +717,9 @@ pub struct CreateCustomerShippingAddress {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub city: Option<String>,
 
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+    /// A freeform text field for the country.
+    ///
+    /// However, in order to activate some tax features, the format should be a two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub country: Option<String>,
 
@@ -752,12 +744,12 @@ pub struct CreateCustomerShippingAddress {
 pub struct CustomerInvoiceSettingsCustomFields {
     /// The name of the custom field.
     ///
-    /// This may be up to 30 characters.
+    /// This may be up to 40 characters.
     pub name: String,
 
     /// The value of the custom field.
     ///
-    /// This may be up to 30 characters.
+    /// This may be up to 140 characters.
     pub value: String,
 }
 
@@ -770,6 +762,10 @@ pub struct CustomerInvoiceSettingsRenderingOptions {
     /// `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub amount_tax_display: Option<CustomerInvoiceSettingsRenderingOptionsAmountTaxDisplay>,
+
+    /// ID of the invoice rendering template to use for future invoices.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub template: Option<String>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -788,7 +784,9 @@ pub struct UpdateCustomerShippingAddress {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub city: Option<String>,
 
-    /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+    /// A freeform text field for the country.
+    ///
+    /// However, in order to activate some tax features, the format should be a two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub country: Option<String>,
 
@@ -1071,24 +1069,35 @@ impl std::default::Default for CustomerTaxLocationSource {
 pub enum TaxIdType {
     AdNrt,
     AeTrn,
+    AlTin,
+    AmTin,
+    AoTin,
     ArCuit,
     AuAbn,
     AuArn,
+    BaTin,
+    BbTin,
     BgUic,
+    BhVat,
     BoTin,
     BrCnpj,
     BrCpf,
+    BsTin,
+    ByTin,
     CaBn,
     CaGstHst,
     CaPstBc,
     CaPstMb,
     CaPstSk,
     CaQst,
+    CdNif,
+    ChUid,
     ChVat,
     ClTin,
     CnTin,
     CoNit,
     CrTin,
+    DeStn,
     DoRcn,
     EcRuc,
     EgTin,
@@ -1097,7 +1106,9 @@ pub enum TaxIdType {
     EuVat,
     GbVat,
     GeVat,
+    GnNif,
     HkBr,
+    HrOib,
     HuTin,
     IdNpwp,
     IlVat,
@@ -1107,14 +1118,26 @@ pub enum TaxIdType {
     JpRn,
     JpTrn,
     KePin,
+    KhTin,
     KrBrn,
+    KzBin,
     LiUid,
+    LiVat,
+    MaVat,
+    MdVat,
+    MePib,
+    MkVat,
+    MrNif,
     MxRfc,
     MyFrp,
     MyItn,
     MySst,
+    NgTin,
     NoVat,
+    NoVoec,
+    NpPan,
     NzGst,
+    OmVat,
     PeRuc,
     PhTin,
     RoTin,
@@ -1125,16 +1148,25 @@ pub enum TaxIdType {
     SgGst,
     SgUen,
     SiTin,
+    SnNinea,
+    SrFin,
     SvNit,
     ThVat,
+    TjTin,
     TrTin,
     TwVat,
+    TzVat,
     UaVat,
+    UgTin,
     UsEin,
     UyRuc,
+    UzTin,
+    UzVat,
     VeRif,
     VnTin,
     ZaVat,
+    ZmTin,
+    ZwTin,
 }
 
 impl TaxIdType {
@@ -1142,24 +1174,35 @@ impl TaxIdType {
         match self {
             TaxIdType::AdNrt => "ad_nrt",
             TaxIdType::AeTrn => "ae_trn",
+            TaxIdType::AlTin => "al_tin",
+            TaxIdType::AmTin => "am_tin",
+            TaxIdType::AoTin => "ao_tin",
             TaxIdType::ArCuit => "ar_cuit",
             TaxIdType::AuAbn => "au_abn",
             TaxIdType::AuArn => "au_arn",
+            TaxIdType::BaTin => "ba_tin",
+            TaxIdType::BbTin => "bb_tin",
             TaxIdType::BgUic => "bg_uic",
+            TaxIdType::BhVat => "bh_vat",
             TaxIdType::BoTin => "bo_tin",
             TaxIdType::BrCnpj => "br_cnpj",
             TaxIdType::BrCpf => "br_cpf",
+            TaxIdType::BsTin => "bs_tin",
+            TaxIdType::ByTin => "by_tin",
             TaxIdType::CaBn => "ca_bn",
             TaxIdType::CaGstHst => "ca_gst_hst",
             TaxIdType::CaPstBc => "ca_pst_bc",
             TaxIdType::CaPstMb => "ca_pst_mb",
             TaxIdType::CaPstSk => "ca_pst_sk",
             TaxIdType::CaQst => "ca_qst",
+            TaxIdType::CdNif => "cd_nif",
+            TaxIdType::ChUid => "ch_uid",
             TaxIdType::ChVat => "ch_vat",
             TaxIdType::ClTin => "cl_tin",
             TaxIdType::CnTin => "cn_tin",
             TaxIdType::CoNit => "co_nit",
             TaxIdType::CrTin => "cr_tin",
+            TaxIdType::DeStn => "de_stn",
             TaxIdType::DoRcn => "do_rcn",
             TaxIdType::EcRuc => "ec_ruc",
             TaxIdType::EgTin => "eg_tin",
@@ -1168,7 +1211,9 @@ impl TaxIdType {
             TaxIdType::EuVat => "eu_vat",
             TaxIdType::GbVat => "gb_vat",
             TaxIdType::GeVat => "ge_vat",
+            TaxIdType::GnNif => "gn_nif",
             TaxIdType::HkBr => "hk_br",
+            TaxIdType::HrOib => "hr_oib",
             TaxIdType::HuTin => "hu_tin",
             TaxIdType::IdNpwp => "id_npwp",
             TaxIdType::IlVat => "il_vat",
@@ -1178,14 +1223,26 @@ impl TaxIdType {
             TaxIdType::JpRn => "jp_rn",
             TaxIdType::JpTrn => "jp_trn",
             TaxIdType::KePin => "ke_pin",
+            TaxIdType::KhTin => "kh_tin",
             TaxIdType::KrBrn => "kr_brn",
+            TaxIdType::KzBin => "kz_bin",
             TaxIdType::LiUid => "li_uid",
+            TaxIdType::LiVat => "li_vat",
+            TaxIdType::MaVat => "ma_vat",
+            TaxIdType::MdVat => "md_vat",
+            TaxIdType::MePib => "me_pib",
+            TaxIdType::MkVat => "mk_vat",
+            TaxIdType::MrNif => "mr_nif",
             TaxIdType::MxRfc => "mx_rfc",
             TaxIdType::MyFrp => "my_frp",
             TaxIdType::MyItn => "my_itn",
             TaxIdType::MySst => "my_sst",
+            TaxIdType::NgTin => "ng_tin",
             TaxIdType::NoVat => "no_vat",
+            TaxIdType::NoVoec => "no_voec",
+            TaxIdType::NpPan => "np_pan",
             TaxIdType::NzGst => "nz_gst",
+            TaxIdType::OmVat => "om_vat",
             TaxIdType::PeRuc => "pe_ruc",
             TaxIdType::PhTin => "ph_tin",
             TaxIdType::RoTin => "ro_tin",
@@ -1196,16 +1253,25 @@ impl TaxIdType {
             TaxIdType::SgGst => "sg_gst",
             TaxIdType::SgUen => "sg_uen",
             TaxIdType::SiTin => "si_tin",
+            TaxIdType::SnNinea => "sn_ninea",
+            TaxIdType::SrFin => "sr_fin",
             TaxIdType::SvNit => "sv_nit",
             TaxIdType::ThVat => "th_vat",
+            TaxIdType::TjTin => "tj_tin",
             TaxIdType::TrTin => "tr_tin",
             TaxIdType::TwVat => "tw_vat",
+            TaxIdType::TzVat => "tz_vat",
             TaxIdType::UaVat => "ua_vat",
+            TaxIdType::UgTin => "ug_tin",
             TaxIdType::UsEin => "us_ein",
             TaxIdType::UyRuc => "uy_ruc",
+            TaxIdType::UzTin => "uz_tin",
+            TaxIdType::UzVat => "uz_vat",
             TaxIdType::VeRif => "ve_rif",
             TaxIdType::VnTin => "vn_tin",
             TaxIdType::ZaVat => "za_vat",
+            TaxIdType::ZmTin => "zm_tin",
+            TaxIdType::ZwTin => "zw_tin",
         }
     }
 }
@@ -1269,6 +1335,7 @@ impl std::default::Default for UpdateCustomerCashBalanceSettingsReconciliationMo
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
 pub enum UpdateCustomerTaxValidateLocation {
+    Auto,
     Deferred,
     Immediately,
 }
@@ -1276,6 +1343,7 @@ pub enum UpdateCustomerTaxValidateLocation {
 impl UpdateCustomerTaxValidateLocation {
     pub fn as_str(self) -> &'static str {
         match self {
+            UpdateCustomerTaxValidateLocation::Auto => "auto",
             UpdateCustomerTaxValidateLocation::Deferred => "deferred",
             UpdateCustomerTaxValidateLocation::Immediately => "immediately",
         }
@@ -1295,6 +1363,6 @@ impl std::fmt::Display for UpdateCustomerTaxValidateLocation {
 }
 impl std::default::Default for UpdateCustomerTaxValidateLocation {
     fn default() -> Self {
-        Self::Deferred
+        Self::Auto
     }
 }

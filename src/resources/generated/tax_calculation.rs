@@ -4,7 +4,10 @@
 
 use crate::ids::TaxCalculationId;
 use crate::params::{List, Object, Timestamp};
-use crate::resources::{Currency, TaxCalculationLineItem, TaxProductResourceCustomerDetails};
+use crate::resources::{
+    Currency, TaxCalculationLineItem, TaxProductResourceCustomerDetails,
+    TaxProductResourceShipFromDetails, TaxRateFlatAmount,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "TaxProductResourceTaxCalculation".
@@ -15,7 +18,7 @@ pub struct TaxCalculation {
     /// Unique identifier for the calculation.
     pub id: TaxCalculationId,
 
-    /// Total after taxes.
+    /// Total amount after taxes in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
     pub amount_total: i64,
 
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
@@ -32,10 +35,14 @@ pub struct TaxCalculation {
     pub expires_at: Option<Timestamp>,
 
     /// The list of items the customer is purchasing.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub line_items: Option<List<TaxCalculationLineItem>>,
 
     /// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
     pub livemode: bool,
+
+    /// The details of the ship from location, such as the address.
+    pub ship_from_details: Option<TaxProductResourceShipFromDetails>,
 
     /// The shipping cost details for the calculation.
     pub shipping_cost: Option<TaxProductResourceTaxCalculationShippingCost>,
@@ -145,7 +152,7 @@ pub struct TaxProductResourceJurisdiction {
     /// Indicates the level of the jurisdiction imposing the tax.
     pub level: TaxProductResourceJurisdictionLevel,
 
-    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix.
+    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2), without country prefix.
     ///
     /// For example, "NY" for New York, United States.
     pub state: Option<String>,
@@ -172,10 +179,22 @@ pub struct TaxProductResourceTaxRateDetails {
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     pub country: Option<String>,
 
+    /// The amount of the tax rate when the `rate_type` is `flat_amount`.
+    ///
+    /// Tax rates with `rate_type` `percentage` can vary based on the transaction, resulting in this field being `null`.
+    /// This field exposes the amount and currency of the flat tax rate.
+    pub flat_amount: Option<TaxRateFlatAmount>,
+
     /// The tax rate percentage as a string.
     ///
     /// For example, 8.5% is represented as `"8.5"`.
     pub percentage_decimal: String,
+
+    /// Indicates the type of tax rate applied to the taxable amount.
+    ///
+    /// This value can be `null` when no tax applies to the location.
+    /// This field is only present for TaxRates created by Stripe Tax.
+    pub rate_type: Option<TaxProductResourceTaxRateDetailsRateType>,
 
     /// State, county, province, or region.
     pub state: Option<String>,
@@ -355,8 +374,10 @@ pub enum TaxProductResourceLineItemTaxRateDetailsTaxType {
     LeaseTax,
     Pst,
     Qst,
+    RetailDeliveryFee,
     Rst,
     SalesTax,
+    ServiceTax,
     Vat,
 }
 
@@ -374,8 +395,12 @@ impl TaxProductResourceLineItemTaxRateDetailsTaxType {
             TaxProductResourceLineItemTaxRateDetailsTaxType::LeaseTax => "lease_tax",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Pst => "pst",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Qst => "qst",
+            TaxProductResourceLineItemTaxRateDetailsTaxType::RetailDeliveryFee => {
+                "retail_delivery_fee"
+            }
             TaxProductResourceLineItemTaxRateDetailsTaxType::Rst => "rst",
             TaxProductResourceLineItemTaxRateDetailsTaxType::SalesTax => "sales_tax",
+            TaxProductResourceLineItemTaxRateDetailsTaxType::ServiceTax => "service_tax",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Vat => "vat",
         }
     }
@@ -504,6 +529,40 @@ impl std::default::Default for TaxProductResourceTaxCalculationShippingCostTaxBe
     }
 }
 
+/// An enum representing the possible values of an `TaxProductResourceTaxRateDetails`'s `rate_type` field.
+#[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[serde(rename_all = "snake_case")]
+pub enum TaxProductResourceTaxRateDetailsRateType {
+    FlatAmount,
+    Percentage,
+}
+
+impl TaxProductResourceTaxRateDetailsRateType {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            TaxProductResourceTaxRateDetailsRateType::FlatAmount => "flat_amount",
+            TaxProductResourceTaxRateDetailsRateType::Percentage => "percentage",
+        }
+    }
+}
+
+impl AsRef<str> for TaxProductResourceTaxRateDetailsRateType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+
+impl std::fmt::Display for TaxProductResourceTaxRateDetailsRateType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        self.as_str().fmt(f)
+    }
+}
+impl std::default::Default for TaxProductResourceTaxRateDetailsRateType {
+    fn default() -> Self {
+        Self::FlatAmount
+    }
+}
+
 /// An enum representing the possible values of an `TaxProductResourceTaxRateDetails`'s `tax_type` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
@@ -517,8 +576,10 @@ pub enum TaxProductResourceTaxRateDetailsTaxType {
     LeaseTax,
     Pst,
     Qst,
+    RetailDeliveryFee,
     Rst,
     SalesTax,
+    ServiceTax,
     Vat,
 }
 
@@ -534,8 +595,10 @@ impl TaxProductResourceTaxRateDetailsTaxType {
             TaxProductResourceTaxRateDetailsTaxType::LeaseTax => "lease_tax",
             TaxProductResourceTaxRateDetailsTaxType::Pst => "pst",
             TaxProductResourceTaxRateDetailsTaxType::Qst => "qst",
+            TaxProductResourceTaxRateDetailsTaxType::RetailDeliveryFee => "retail_delivery_fee",
             TaxProductResourceTaxRateDetailsTaxType::Rst => "rst",
             TaxProductResourceTaxRateDetailsTaxType::SalesTax => "sales_tax",
+            TaxProductResourceTaxRateDetailsTaxType::ServiceTax => "service_tax",
             TaxProductResourceTaxRateDetailsTaxType::Vat => "vat",
         }
     }

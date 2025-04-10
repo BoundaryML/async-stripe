@@ -41,6 +41,7 @@ pub struct TaxCalculationLineItem {
     pub tax_behavior: TaxCalculationLineItemTaxBehavior,
 
     /// Detailed account of taxes relevant to this line item.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub tax_breakdown: Option<Vec<TaxProductResourceLineItemTaxBreakdown>>,
 
     /// The [tax code](https://stripe.com/docs/tax/tax-categories) ID used for this resource.
@@ -92,7 +93,7 @@ pub struct TaxProductResourceJurisdiction {
     /// Indicates the level of the jurisdiction imposing the tax.
     pub level: TaxProductResourceJurisdictionLevel,
 
-    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix.
+    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2), without country prefix.
     ///
     /// For example, "NY" for New York, United States.
     pub state: Option<String>,
@@ -319,8 +320,10 @@ pub enum TaxProductResourceLineItemTaxRateDetailsTaxType {
     LeaseTax,
     Pst,
     Qst,
+    RetailDeliveryFee,
     Rst,
     SalesTax,
+    ServiceTax,
     Vat,
 }
 
@@ -338,8 +341,12 @@ impl TaxProductResourceLineItemTaxRateDetailsTaxType {
             TaxProductResourceLineItemTaxRateDetailsTaxType::LeaseTax => "lease_tax",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Pst => "pst",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Qst => "qst",
+            TaxProductResourceLineItemTaxRateDetailsTaxType::RetailDeliveryFee => {
+                "retail_delivery_fee"
+            }
             TaxProductResourceLineItemTaxRateDetailsTaxType::Rst => "rst",
             TaxProductResourceLineItemTaxRateDetailsTaxType::SalesTax => "sales_tax",
+            TaxProductResourceLineItemTaxRateDetailsTaxType::ServiceTax => "service_tax",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Vat => "vat",
         }
     }

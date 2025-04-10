@@ -86,8 +86,6 @@ pub struct PortalFeatures {
 
     pub subscription_cancel: PortalSubscriptionCancel,
 
-    pub subscription_pause: PortalSubscriptionPause,
-
     pub subscription_update: PortalSubscriptionUpdate,
 }
 
@@ -153,12 +151,6 @@ pub struct PortalSubscriptionCancellationReason {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct PortalSubscriptionPause {
-    /// Whether the feature is enabled.
-    pub enabled: bool,
-}
-
-#[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalSubscriptionUpdate {
     /// The types of subscription updates that are supported for items listed in the `products` attribute.
     ///
@@ -169,12 +161,31 @@ pub struct PortalSubscriptionUpdate {
     pub enabled: bool,
 
     /// The list of up to 10 products that support subscription updates.
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub products: Option<Vec<PortalSubscriptionUpdateProduct>>,
 
     /// Determines how to handle prorations resulting from subscription updates.
     ///
     /// Valid values are `none`, `create_prorations`, and `always_invoice`.
+    /// Defaults to a value of `none` if you don't set it during creation.
     pub proration_behavior: PortalSubscriptionUpdateProrationBehavior,
+
+    pub schedule_at_period_end: PortalResourceScheduleUpdateAtPeriodEnd,
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct PortalResourceScheduleUpdateAtPeriodEnd {
+    /// List of conditions.
+    ///
+    /// When any condition is true, an update will be scheduled at the end of the current period.
+    pub conditions: Vec<PortalResourceScheduleUpdateAtPeriodEndCondition>,
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct PortalResourceScheduleUpdateAtPeriodEndCondition {
+    /// The type of condition.
+    #[serde(rename = "type")]
+    pub type_: PortalResourceScheduleUpdateAtPeriodEndConditionType,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -225,6 +236,44 @@ impl std::fmt::Display for PortalCustomerUpdateAllowedUpdates {
 impl std::default::Default for PortalCustomerUpdateAllowedUpdates {
     fn default() -> Self {
         Self::Address
+    }
+}
+
+/// An enum representing the possible values of an `PortalResourceScheduleUpdateAtPeriodEndCondition`'s `type` field.
+#[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[serde(rename_all = "snake_case")]
+pub enum PortalResourceScheduleUpdateAtPeriodEndConditionType {
+    DecreasingItemAmount,
+    ShorteningInterval,
+}
+
+impl PortalResourceScheduleUpdateAtPeriodEndConditionType {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            PortalResourceScheduleUpdateAtPeriodEndConditionType::DecreasingItemAmount => {
+                "decreasing_item_amount"
+            }
+            PortalResourceScheduleUpdateAtPeriodEndConditionType::ShorteningInterval => {
+                "shortening_interval"
+            }
+        }
+    }
+}
+
+impl AsRef<str> for PortalResourceScheduleUpdateAtPeriodEndConditionType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+
+impl std::fmt::Display for PortalResourceScheduleUpdateAtPeriodEndConditionType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        self.as_str().fmt(f)
+    }
+}
+impl std::default::Default for PortalResourceScheduleUpdateAtPeriodEndConditionType {
+    fn default() -> Self {
+        Self::DecreasingItemAmount
     }
 }
 

@@ -8,6 +8,10 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "APIErrors".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ApiErrors {
+    /// For card errors resulting from a card issuer decline, a short string indicating [how to proceed with an error](https://stripe.com/docs/declines#retrying-issuer-declines) if they provide one.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub advice_code: Option<String>,
+
     /// For card errors, the ID of the failed charge.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub charge: Option<String>,
@@ -29,6 +33,14 @@ pub struct ApiErrors {
     /// For card errors, these messages can be shown to your users.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub message: Option<String>,
+
+    /// For card errors resulting from a card issuer decline, a 2 digit code which indicates the advice given to merchant by the card network on how to proceed with an error.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub network_advice_code: Option<String>,
+
+    /// For card errors resulting from a card issuer decline, a brand specific 2, 3, or 4 digit code which indicates the reason the authorization failed.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub network_decline_code: Option<String>,
 
     /// If the error is parameter-specific, the parameter related to the error.
     ///
@@ -102,6 +114,7 @@ pub enum ApiErrorsCode {
     ChargeAlreadyRefunded,
     ChargeDisputed,
     ChargeExceedsSourceLimit,
+    ChargeExceedsTransactionLimit,
     ChargeExpiredForCapture,
     ChargeInvalidParameter,
     ChargeNotRefundable,
@@ -117,6 +130,11 @@ pub enum ApiErrorsCode {
     ExpiredCard,
     FinancialConnectionsAccountInactive,
     FinancialConnectionsNoSuccessfulTransactionRefresh,
+    ForwardingApiInactive,
+    ForwardingApiInvalidParameter,
+    ForwardingApiRetryableUpstreamError,
+    ForwardingApiUpstreamConnectionError,
+    ForwardingApiUpstreamConnectionTimeout,
     IdempotencyKeyInUse,
     IncorrectAddress,
     IncorrectCvc,
@@ -135,6 +153,7 @@ pub enum ApiErrorsCode {
     InvalidCvc,
     InvalidExpiryMonth,
     InvalidExpiryYear,
+    InvalidMandateReferencePrefixFormat,
     InvalidNumber,
     InvalidSourceUsage,
     InvalidTaxLocation,
@@ -210,8 +229,10 @@ pub enum ApiErrorsCode {
     SetupIntentAuthenticationFailure,
     SetupIntentInvalidParameter,
     SetupIntentMandateInvalid,
+    SetupIntentMobileWalletUnsupported,
     SetupIntentSetupAttemptExpired,
     SetupIntentUnexpectedState,
+    ShippingAddressInvalid,
     ShippingCalculationFailed,
     SkuInactive,
     StateUnsupported,
@@ -222,6 +243,8 @@ pub enum ApiErrorsCode {
     TerminalLocationCountryUnsupported,
     TerminalReaderBusy,
     TerminalReaderHardwareFault,
+    TerminalReaderInvalidLocationForActivation,
+    TerminalReaderInvalidLocationForPayment,
     TerminalReaderOffline,
     TerminalReaderTimeout,
     TestmodeChargesOnly,
@@ -274,6 +297,7 @@ impl ApiErrorsCode {
             ApiErrorsCode::ChargeAlreadyRefunded => "charge_already_refunded",
             ApiErrorsCode::ChargeDisputed => "charge_disputed",
             ApiErrorsCode::ChargeExceedsSourceLimit => "charge_exceeds_source_limit",
+            ApiErrorsCode::ChargeExceedsTransactionLimit => "charge_exceeds_transaction_limit",
             ApiErrorsCode::ChargeExpiredForCapture => "charge_expired_for_capture",
             ApiErrorsCode::ChargeInvalidParameter => "charge_invalid_parameter",
             ApiErrorsCode::ChargeNotRefundable => "charge_not_refundable",
@@ -293,6 +317,17 @@ impl ApiErrorsCode {
             ApiErrorsCode::FinancialConnectionsNoSuccessfulTransactionRefresh => {
                 "financial_connections_no_successful_transaction_refresh"
             }
+            ApiErrorsCode::ForwardingApiInactive => "forwarding_api_inactive",
+            ApiErrorsCode::ForwardingApiInvalidParameter => "forwarding_api_invalid_parameter",
+            ApiErrorsCode::ForwardingApiRetryableUpstreamError => {
+                "forwarding_api_retryable_upstream_error"
+            }
+            ApiErrorsCode::ForwardingApiUpstreamConnectionError => {
+                "forwarding_api_upstream_connection_error"
+            }
+            ApiErrorsCode::ForwardingApiUpstreamConnectionTimeout => {
+                "forwarding_api_upstream_connection_timeout"
+            }
             ApiErrorsCode::IdempotencyKeyInUse => "idempotency_key_in_use",
             ApiErrorsCode::IncorrectAddress => "incorrect_address",
             ApiErrorsCode::IncorrectCvc => "incorrect_cvc",
@@ -311,6 +346,9 @@ impl ApiErrorsCode {
             ApiErrorsCode::InvalidCvc => "invalid_cvc",
             ApiErrorsCode::InvalidExpiryMonth => "invalid_expiry_month",
             ApiErrorsCode::InvalidExpiryYear => "invalid_expiry_year",
+            ApiErrorsCode::InvalidMandateReferencePrefixFormat => {
+                "invalid_mandate_reference_prefix_format"
+            }
             ApiErrorsCode::InvalidNumber => "invalid_number",
             ApiErrorsCode::InvalidSourceUsage => "invalid_source_usage",
             ApiErrorsCode::InvalidTaxLocation => "invalid_tax_location",
@@ -420,8 +458,12 @@ impl ApiErrorsCode {
             }
             ApiErrorsCode::SetupIntentInvalidParameter => "setup_intent_invalid_parameter",
             ApiErrorsCode::SetupIntentMandateInvalid => "setup_intent_mandate_invalid",
+            ApiErrorsCode::SetupIntentMobileWalletUnsupported => {
+                "setup_intent_mobile_wallet_unsupported"
+            }
             ApiErrorsCode::SetupIntentSetupAttemptExpired => "setup_intent_setup_attempt_expired",
             ApiErrorsCode::SetupIntentUnexpectedState => "setup_intent_unexpected_state",
+            ApiErrorsCode::ShippingAddressInvalid => "shipping_address_invalid",
             ApiErrorsCode::ShippingCalculationFailed => "shipping_calculation_failed",
             ApiErrorsCode::SkuInactive => "sku_inactive",
             ApiErrorsCode::StateUnsupported => "state_unsupported",
@@ -434,6 +476,12 @@ impl ApiErrorsCode {
             }
             ApiErrorsCode::TerminalReaderBusy => "terminal_reader_busy",
             ApiErrorsCode::TerminalReaderHardwareFault => "terminal_reader_hardware_fault",
+            ApiErrorsCode::TerminalReaderInvalidLocationForActivation => {
+                "terminal_reader_invalid_location_for_activation"
+            }
+            ApiErrorsCode::TerminalReaderInvalidLocationForPayment => {
+                "terminal_reader_invalid_location_for_payment"
+            }
             ApiErrorsCode::TerminalReaderOffline => "terminal_reader_offline",
             ApiErrorsCode::TerminalReaderTimeout => "terminal_reader_timeout",
             ApiErrorsCode::TestmodeChargesOnly => "testmode_charges_only",

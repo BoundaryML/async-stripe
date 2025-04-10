@@ -5,6 +5,7 @@
 use crate::client::{Client, Response};
 use crate::ids::TaxRateId;
 use crate::params::{Expand, List, Metadata, Object, Paginable, RangeQuery, Timestamp};
+use crate::resources::TaxRateFlatAmount;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "TaxRate".
@@ -41,6 +42,12 @@ pub struct TaxRate {
     /// For tax calculations with automatic_tax[enabled]=true, this percentage reflects the rate actually used to calculate tax based on the product's taxability and whether the user is registered to collect taxes in the corresponding jurisdiction.
     pub effective_percentage: Option<f64>,
 
+    /// The amount of the tax rate when the `rate_type` is `flat_amount`.
+    ///
+    /// Tax rates with `rate_type` `percentage` can vary based on the transaction, resulting in this field being `null`.
+    /// This field exposes the amount and currency of the flat tax rate.
+    pub flat_amount: Option<TaxRateFlatAmount>,
+
     /// This specifies if the tax rate is inclusive or exclusive.
     pub inclusive: bool,
 
@@ -68,7 +75,13 @@ pub struct TaxRate {
     /// For tax calculations with automatic_tax[enabled]=true, this percentage includes the statutory tax rate of non-taxable jurisdictions.
     pub percentage: f64,
 
-    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix.
+    /// Indicates the type of tax rate applied to the taxable amount.
+    ///
+    /// This value can be `null` when no tax applies to the location.
+    /// This field is only present for TaxRates created by Stripe Tax.
+    pub rate_type: Option<TaxRateRateType>,
+
+    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2), without country prefix.
     ///
     /// For example, "NY" for New York, United States.
     pub state: Option<String>,
@@ -160,7 +173,7 @@ pub struct CreateTaxRate<'a> {
     /// This represents the tax rate percent out of 100.
     pub percentage: f64,
 
-    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix.
+    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2), without country prefix.
     ///
     /// For example, "NY" for New York, United States.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -290,7 +303,7 @@ pub struct UpdateTaxRate<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<Metadata>,
 
-    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix.
+    /// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2), without country prefix.
     ///
     /// For example, "NY" for New York, United States.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -359,6 +372,40 @@ impl std::default::Default for TaxRateJurisdictionLevel {
     }
 }
 
+/// An enum representing the possible values of an `TaxRate`'s `rate_type` field.
+#[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
+#[serde(rename_all = "snake_case")]
+pub enum TaxRateRateType {
+    FlatAmount,
+    Percentage,
+}
+
+impl TaxRateRateType {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            TaxRateRateType::FlatAmount => "flat_amount",
+            TaxRateRateType::Percentage => "percentage",
+        }
+    }
+}
+
+impl AsRef<str> for TaxRateRateType {
+    fn as_ref(&self) -> &str {
+        self.as_str()
+    }
+}
+
+impl std::fmt::Display for TaxRateRateType {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        self.as_str().fmt(f)
+    }
+}
+impl std::default::Default for TaxRateRateType {
+    fn default() -> Self {
+        Self::FlatAmount
+    }
+}
+
 /// An enum representing the possible values of an `TaxRate`'s `tax_type` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
@@ -372,6 +419,7 @@ pub enum TaxRateTaxType {
     LeaseTax,
     Pst,
     Qst,
+    RetailDeliveryFee,
     Rst,
     SalesTax,
     ServiceTax,
@@ -390,6 +438,7 @@ impl TaxRateTaxType {
             TaxRateTaxType::LeaseTax => "lease_tax",
             TaxRateTaxType::Pst => "pst",
             TaxRateTaxType::Qst => "qst",
+            TaxRateTaxType::RetailDeliveryFee => "retail_delivery_fee",
             TaxRateTaxType::Rst => "rst",
             TaxRateTaxType::SalesTax => "sales_tax",
             TaxRateTaxType::ServiceTax => "service_tax",

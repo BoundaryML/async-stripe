@@ -139,9 +139,9 @@ impl Price {
         client.get_query("/prices", params)
     }
 
-    /// Creates a new price for an existing product.
+    /// Creates a new [Price](https://docs.stripe.com/api/prices) for an existing [Product](https://docs.stripe.com/api/products).
     ///
-    /// The price can be recurring or one-time.
+    /// The Price can be recurring or one-time.
     pub fn create(client: &Client, params: CreatePrice<'_>) -> Response<Price> {
         #[allow(clippy::needless_borrows_for_generic_args)]
         client.post_form("/prices", &params)
@@ -221,11 +221,6 @@ pub struct PriceTier {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct Recurring {
-    /// Specifies a usage aggregation strategy for prices of `usage_type=metered`.
-    ///
-    /// Defaults to `sum`.
-    pub aggregate_usage: Option<RecurringAggregateUsage>,
-
     /// The frequency at which a subscription is billed.
     ///
     /// One of `day`, `week`, `month` or `year`.
@@ -235,6 +230,9 @@ pub struct Recurring {
     ///
     /// For example, `interval=month` and `interval_count=3` bills every 3 months.
     pub interval_count: u64,
+
+    /// The meter tracking the usage of a metered price.
+    pub meter: Option<String>,
 
     /// Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
     pub trial_period_days: Option<u32>,
@@ -311,7 +309,7 @@ pub struct CreatePrice<'a> {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nickname: Option<&'a str>,
 
-    /// The ID of the product that this price will belong to.
+    /// The ID of the [Product](https://docs.stripe.com/api/products) that this [Price](https://docs.stripe.com/api/prices) will belong to.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub product: Option<IdOrCreate<'a, CreateProduct<'a>>>,
 
@@ -356,7 +354,7 @@ pub struct CreatePrice<'a> {
 
     /// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
     ///
-    /// One of `unit_amount` or `custom_unit_amount` is required, unless `billing_scheme=tiered`.
+    /// One of `unit_amount`, `unit_amount_decimal`, or `custom_unit_amount` is required, unless `billing_scheme=tiered`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub unit_amount: Option<i64>,
 
@@ -428,6 +426,8 @@ pub struct ListPrices<'a> {
     pub limit: Option<u64>,
 
     /// Only return the price with these lookup_keys, if any exist.
+    ///
+    /// You can specify up to 10 lookup_keys.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub lookup_keys: Option<Vec<String>>,
 
@@ -639,12 +639,6 @@ pub struct CreatePriceProductData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreatePriceRecurring {
-    /// Specifies a usage aggregation strategy for prices of `usage_type=metered`.
-    ///
-    /// Defaults to `sum`.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub aggregate_usage: Option<CreatePriceRecurringAggregateUsage>,
-
     /// Specifies billing frequency.
     ///
     /// Either `day`, `week`, `month` or `year`.
@@ -656,6 +650,10 @@ pub struct CreatePriceRecurring {
     /// Maximum of three years interval allowed (3 years, 36 months, or 156 weeks).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub interval_count: Option<u64>,
+
+    /// The meter tracking the usage of a metered price.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub meter: Option<String>,
 
     /// Default number of trial days when subscribing a customer to this price using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -716,6 +714,10 @@ pub struct ListPricesRecurring {
     /// Either `day`, `week`, `month` or `year`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub interval: Option<ListPricesRecurringInterval>,
+
+    /// Filter by the price's meter.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub meter: Option<String>,
 
     /// Filter by the usage type for this price.
     ///
@@ -887,44 +889,6 @@ impl std::fmt::Display for CreatePriceCurrencyOptionsTaxBehavior {
 impl std::default::Default for CreatePriceCurrencyOptionsTaxBehavior {
     fn default() -> Self {
         Self::Exclusive
-    }
-}
-
-/// An enum representing the possible values of an `CreatePriceRecurring`'s `aggregate_usage` field.
-#[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub enum CreatePriceRecurringAggregateUsage {
-    LastDuringPeriod,
-    LastEver,
-    Max,
-    Sum,
-}
-
-impl CreatePriceRecurringAggregateUsage {
-    pub fn as_str(self) -> &'static str {
-        match self {
-            CreatePriceRecurringAggregateUsage::LastDuringPeriod => "last_during_period",
-            CreatePriceRecurringAggregateUsage::LastEver => "last_ever",
-            CreatePriceRecurringAggregateUsage::Max => "max",
-            CreatePriceRecurringAggregateUsage::Sum => "sum",
-        }
-    }
-}
-
-impl AsRef<str> for CreatePriceRecurringAggregateUsage {
-    fn as_ref(&self) -> &str {
-        self.as_str()
-    }
-}
-
-impl std::fmt::Display for CreatePriceRecurringAggregateUsage {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        self.as_str().fmt(f)
-    }
-}
-impl std::default::Default for CreatePriceRecurringAggregateUsage {
-    fn default() -> Self {
-        Self::LastDuringPeriod
     }
 }
 
@@ -1277,44 +1241,6 @@ impl std::fmt::Display for PriceType {
 impl std::default::Default for PriceType {
     fn default() -> Self {
         Self::OneTime
-    }
-}
-
-/// An enum representing the possible values of an `Recurring`'s `aggregate_usage` field.
-#[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
-#[serde(rename_all = "snake_case")]
-pub enum RecurringAggregateUsage {
-    LastDuringPeriod,
-    LastEver,
-    Max,
-    Sum,
-}
-
-impl RecurringAggregateUsage {
-    pub fn as_str(self) -> &'static str {
-        match self {
-            RecurringAggregateUsage::LastDuringPeriod => "last_during_period",
-            RecurringAggregateUsage::LastEver => "last_ever",
-            RecurringAggregateUsage::Max => "max",
-            RecurringAggregateUsage::Sum => "sum",
-        }
-    }
-}
-
-impl AsRef<str> for RecurringAggregateUsage {
-    fn as_ref(&self) -> &str {
-        self.as_str()
-    }
-}
-
-impl std::fmt::Display for RecurringAggregateUsage {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        self.as_str().fmt(f)
-    }
-}
-impl std::default::Default for RecurringAggregateUsage {
-    fn default() -> Self {
-        Self::LastDuringPeriod
     }
 }
 

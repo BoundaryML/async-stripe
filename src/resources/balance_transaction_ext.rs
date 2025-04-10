@@ -4,7 +4,7 @@ use crate::ids::BalanceTransactionSourceId;
 use crate::params::Object;
 use crate::resources::{
     ApplicationFee, ApplicationFeeRefund, Charge, ConnectCollectionTransfer, Dispute,
-    IssuingAuthorization, IssuingDispute, IssuingTransaction, Payout, PlatformTaxFee, Refund,
+    IssuingAuthorization, IssuingDispute, IssuingTransaction, Payout, Refund,
     ReserveTransaction, TaxDeductedAtSource, Topup, Transfer, TransferReversal,
 };
 
@@ -24,7 +24,6 @@ pub enum BalanceTransactionSourceUnion {
     #[serde(rename = "issuing.transaction")]
     IssuingTransaction(IssuingTransaction),
     Payout(Payout),
-    PlatformTaxFee(PlatformTaxFee),
     Refund(Refund),
     ReserveTransaction(ReserveTransaction),
     TaxDeductedAtSource(TaxDeductedAtSource),
@@ -52,7 +51,6 @@ impl Object for BalanceTransactionSourceUnion {
             Source::IssuingAuthorization(x) => Id::IssuingAuthorization(x.id()),
             Source::IssuingDispute(x) => Id::IssuingDispute(x.id()),
             Source::IssuingTransaction(x) => Id::IssuingTransaction(x.id()),
-            Source::PlatformTaxFee(_) => Id::None,
             Source::Payout(x) => Id::Payout(x.id()),
             Source::Refund(x) => Id::Refund(x.id()),
             Source::ReserveTransaction(_) => Id::None,
@@ -74,7 +72,6 @@ impl Object for BalanceTransactionSourceUnion {
             Source::IssuingAuthorization(x) => x.object(),
             Source::IssuingDispute(x) => x.object(),
             Source::IssuingTransaction(x) => x.object(),
-            Source::PlatformTaxFee(x) => x.object(),
             Source::Payout(x) => x.object(),
             Source::Refund(x) => x.object(),
             Source::ReserveTransaction(x) => x.object(),

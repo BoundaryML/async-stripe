@@ -24,7 +24,7 @@ pub struct Review {
 
     /// The reason the review was closed, or null if it has not yet been closed.
     ///
-    /// One of `approved`, `refunded`, `refunded_as_fraud`, `disputed`, or `redacted`.
+    /// One of `approved`, `refunded`, `refunded_as_fraud`, `disputed`, `redacted`, or `canceled`.
     pub closed_reason: Option<ReviewClosedReason>,
 
     /// Time at which the object was created.
@@ -57,7 +57,7 @@ pub struct Review {
 
     /// The reason the review is currently open or closed.
     ///
-    /// One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, `disputed`, or `redacted`.
+    /// One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, `disputed`, `redacted`, or `canceled`.
     pub reason: ReviewReason,
 
     /// Information related to the browsing session of the user who initiated the payment.
@@ -124,6 +124,7 @@ pub struct RadarReviewResourceSession {
 /// The parameters for `Review::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListReviews<'a> {
+    /// Only return reviews that were created during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created: Option<RangeQuery<Timestamp>>,
 
@@ -174,6 +175,7 @@ impl Paginable for ListReviews<'_> {
 #[serde(rename_all = "snake_case")]
 pub enum ReviewClosedReason {
     Approved,
+    Canceled,
     Disputed,
     Redacted,
     Refunded,
@@ -184,6 +186,7 @@ impl ReviewClosedReason {
     pub fn as_str(self) -> &'static str {
         match self {
             ReviewClosedReason::Approved => "approved",
+            ReviewClosedReason::Canceled => "canceled",
             ReviewClosedReason::Disputed => "disputed",
             ReviewClosedReason::Redacted => "redacted",
             ReviewClosedReason::Refunded => "refunded",

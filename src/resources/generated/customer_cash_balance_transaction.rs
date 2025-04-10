@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{CustomerCashBalanceTransactionId};
+use crate::ids::CustomerCashBalanceTransactionId;
 use crate::params::{Expandable, Object, Timestamp};
 use crate::resources::{BalanceTransaction, Currency, Customer, PaymentIntent, Refund};
 use serde::{Deserialize, Serialize};
@@ -16,10 +16,12 @@ pub struct CustomerCashBalanceTransaction {
     pub id: CustomerCashBalanceTransactionId,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub adjusted_for_overdraft: Option<CustomerBalanceResourceCashBalanceTransactionResourceAdjustedForOverdraft>,
+    pub adjusted_for_overdraft:
+        Option<CustomerBalanceResourceCashBalanceTransactionResourceAdjustedForOverdraft>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub applied_to_payment: Option<CustomerBalanceResourceCashBalanceTransactionResourceAppliedToPaymentTransaction>,
+    pub applied_to_payment:
+        Option<CustomerBalanceResourceCashBalanceTransactionResourceAppliedToPaymentTransaction>,
 
     /// Time at which the object was created.
     ///
@@ -51,10 +53,12 @@ pub struct CustomerCashBalanceTransaction {
     pub net_amount: i64,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub refunded_from_payment: Option<CustomerBalanceResourceCashBalanceTransactionResourceRefundedFromPaymentTransaction>,
+    pub refunded_from_payment:
+        Option<CustomerBalanceResourceCashBalanceTransactionResourceRefundedFromPaymentTransaction>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub transferred_to_balance: Option<CustomerBalanceResourceCashBalanceTransactionResourceTransferredToBalance>,
+    pub transferred_to_balance:
+        Option<CustomerBalanceResourceCashBalanceTransactionResourceTransferredToBalance>,
 
     /// The type of the cash balance transaction.
     ///
@@ -64,7 +68,9 @@ pub struct CustomerCashBalanceTransaction {
     pub type_: CustomerCashBalanceTransactionType,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub unapplied_from_payment: Option<CustomerBalanceResourceCashBalanceTransactionResourceUnappliedFromPaymentTransaction>,
+    pub unapplied_from_payment: Option<
+        CustomerBalanceResourceCashBalanceTransactionResourceUnappliedFromPaymentTransaction,
+    >,
 }
 
 impl Object for CustomerCashBalanceTransaction {
@@ -79,7 +85,6 @@ impl Object for CustomerCashBalanceTransaction {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerBalanceResourceCashBalanceTransactionResourceAdjustedForOverdraft {
-
     /// The [Balance Transaction](https://stripe.com/docs/api/balance_transactions/object) that corresponds to funds taken out of your Stripe balance.
     pub balance_transaction: Expandable<BalanceTransaction>,
 
@@ -89,15 +94,14 @@ pub struct CustomerBalanceResourceCashBalanceTransactionResourceAdjustedForOverd
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerBalanceResourceCashBalanceTransactionResourceAppliedToPaymentTransaction {
-
     /// The [Payment Intent](https://stripe.com/docs/api/payment_intents/object) that funds were applied to.
     pub payment_intent: Expandable<PaymentIntent>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransaction {
-
-    pub bank_transfer: CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransfer,
+    pub bank_transfer:
+        CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransfer,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
@@ -126,8 +130,8 @@ pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactio
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceEuBankTransfer {
-
+pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceEuBankTransfer
+{
     /// The BIC of the bank of the sender of the funding.
     pub bic: Option<String>,
 
@@ -139,8 +143,8 @@ pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactio
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceGbBankTransfer {
-
+pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceGbBankTransfer
+{
     /// The last 4 digits of the account number of the sender of the funding.
     pub account_number_last4: Option<String>,
 
@@ -152,8 +156,8 @@ pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactio
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceJpBankTransfer {
-
+pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceJpBankTransfer
+{
     /// The name of the bank of the sender of the funding.
     pub sender_bank: Option<String>,
 
@@ -177,21 +181,18 @@ pub struct CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactio
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerBalanceResourceCashBalanceTransactionResourceRefundedFromPaymentTransaction {
-
     /// The [Refund](https://stripe.com/docs/api/refunds/object) that moved these funds into the customer's cash balance.
     pub refund: Expandable<Refund>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerBalanceResourceCashBalanceTransactionResourceTransferredToBalance {
-
     /// The [Balance Transaction](https://stripe.com/docs/api/balance_transactions/object) that corresponds to funds transferred to your Stripe balance.
     pub balance_transaction: Expandable<BalanceTransaction>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerBalanceResourceCashBalanceTransactionResourceUnappliedFromPaymentTransaction {
-
     /// The [Payment Intent](https://stripe.com/docs/api/payment_intents/object) that funds were unapplied from.
     pub payment_intent: Expandable<PaymentIntent>,
 }
@@ -199,7 +200,8 @@ pub struct CustomerBalanceResourceCashBalanceTransactionResourceUnappliedFromPay
 /// An enum representing the possible values of an `CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransfer`'s `network` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransferNetwork {
+pub enum CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferResourceUsBankTransferNetwork
+{
     Ach,
     DomesticWireUs,
     Swift,
@@ -235,7 +237,8 @@ impl std::default::Default for CustomerBalanceResourceCashBalanceTransactionReso
 /// An enum representing the possible values of an `CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransfer`'s `type` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferType {
+pub enum CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferType
+{
     EuBankTransfer,
     GbBankTransfer,
     JpBankTransfer,
@@ -243,7 +246,9 @@ pub enum CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionR
     UsBankTransfer,
 }
 
-impl CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferType {
+impl
+    CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferType
+{
     pub fn as_str(self) -> &'static str {
         match self {
             CustomerBalanceResourceCashBalanceTransactionResourceFundedTransactionResourceBankTransferType::EuBankTransfer => "eu_bank_transfer",

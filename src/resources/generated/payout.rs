@@ -5,7 +5,7 @@
 use crate::client::{Client, Response};
 use crate::ids::PayoutId;
 use crate::params::{Expand, Expandable, List, Metadata, Object, Paginable, RangeQuery, Timestamp};
-use crate::resources::{BalanceTransaction, Currency, PayoutDestinationUnion};
+use crate::resources::{ApplicationFee, BalanceTransaction, Currency, PayoutDestinationUnion};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "Payout".
@@ -18,6 +18,16 @@ pub struct Payout {
 
     /// The amount (in cents (or local equivalent)) that transfers to your bank account or debit card.
     pub amount: i64,
+
+    /// The application fee (if any) for the payout.
+    ///
+    /// [See the Connect documentation](https://stripe.com/docs/connect/instant-payouts#monetization-and-fees) for details.
+    pub application_fee: Option<Expandable<ApplicationFee>>,
+
+    /// The amount of the application fee (if any) requested for the payout.
+    ///
+    /// [See the Connect documentation](https://stripe.com/docs/connect/instant-payouts#monetization-and-fees) for details.
+    pub application_fee_amount: Option<i64>,
 
     /// Date that you can expect the payout to arrive in the bank.
     ///
@@ -95,6 +105,11 @@ pub struct Payout {
     /// Some payouts that fail might initially show as `paid`, then change to `failed`.
     pub status: String,
 
+    /// A value that generates from the beneficiary's bank that allows users to track payouts with their bank.
+    ///
+    /// Banks might call this a "reference number" or something similar.
+    pub trace_id: Option<PayoutsTraceId>,
+
     /// Can be `bank_account` or `card`.
     #[serde(rename = "type")]
     pub type_: PayoutType,
@@ -144,6 +159,19 @@ impl Object for Payout {
     fn object(&self) -> &'static str {
         "payout"
     }
+}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct PayoutsTraceId {
+    /// Possible values are `pending`, `supported`, and `unsupported`.
+    ///
+    /// When `payout.status` is `pending` or `in_transit`, this will be `pending`.
+    /// When the payout transitions to `paid`, `failed`, or `canceled`, this status will become `supported` or `unsupported` shortly after in most cases.
+    /// In some cases, this may appear as `pending` for up to 10 days after `arrival_date` until transitioning to `supported` or `unsupported`.
+    pub status: String,
+
+    /// The trace ID value if `trace_id.status` is `supported`, otherwise `nil`.
+    pub value: Option<String>,
 }
 
 /// The parameters for `Payout::create`.
@@ -224,9 +252,11 @@ impl<'a> CreatePayout<'a> {
 /// The parameters for `Payout::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListPayouts<'a> {
+    /// Only return payouts that are expected to arrive during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub arrival_date: Option<RangeQuery<Timestamp>>,
 
+    /// Only return payouts that were created during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created: Option<RangeQuery<Timestamp>>,
 
