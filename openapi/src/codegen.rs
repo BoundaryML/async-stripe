@@ -600,11 +600,7 @@ pub fn gen_inferred_structs(
             if emitted_structs.contains(&struct_name) {
                 continue;
             } else {
-                if struct_name == "Networks" {
-                    emitted_structs.insert(format!("BadgerBadger{}", struct_name));
-                } else {
-                    emitted_structs.insert(struct_name.clone());
-                }
+                emitted_structs.insert(struct_name.clone());
             }
 
             let obj = match struct_.schema.schema_kind {

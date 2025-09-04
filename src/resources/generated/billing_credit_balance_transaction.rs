@@ -2,11 +2,11 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::BillingCreditBalanceTransactionId;
 use crate::params::{Expandable, Object, Timestamp};
 use crate::resources::{
     BillingCreditGrant, BillingCreditGrantsResourceAmount, Invoice, TestHelpersTestClock,
 };
+use crate::CreditBalanceTransactionId;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "CreditBalanceTransaction".
@@ -15,7 +15,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditBalanceTransaction {
     /// Unique identifier for the object.
-    pub id: BillingCreditBalanceTransactionId,
+    pub id: CreditBalanceTransactionId,
 
     /// Time at which the object was created.
     ///
@@ -50,7 +50,7 @@ pub struct BillingCreditBalanceTransaction {
 }
 
 impl Object for BillingCreditBalanceTransaction {
-    type Id = BillingCreditBalanceTransactionId;
+    type Id = CreditBalanceTransactionId;
     fn id(&self) -> Self::Id {
         self.id.clone()
     }

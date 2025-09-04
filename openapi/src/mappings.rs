@@ -128,11 +128,6 @@ pub fn object_mappings() -> ObjectMap {
         ("create_source_receiver_refund_attributes_method", "source_refund_notification_method"),
 
         // Config for `subscription_schedule` params
-        // TODO: Maybe allow "union" if structs have optional params
-        /*
-        ("create_subscription_schedule_phases", "subscription_schedule_phases_params"),
-        ("update_subscription_schedule_phases", "subscription_schedule_phases_params"),
-        */
         ("subscription_pending_invoice_item_interval_interval", "plan_interval"),
         ("create_subscription_pending_invoice_item_interval_interval", "plan_interval"),
         ("update_subscription_pending_invoice_item_interval_interval", "plan_interval"),
@@ -176,11 +171,6 @@ pub fn object_mappings() -> ObjectMap {
         ("webhook_endpoint_api_version", "api_version"),
         ("create_webhook_endpoint_enabled_events", "event_filter"),
         ("update_webhook_endpoint_enabled_events", "event_filter"),
-
-        // sam added
-        ("tax_product_resource_postal_address", "address"),
-        // ("billing_credit_balance_transaction_id", "credit_balance_transaction_id"),
-        // ("billing_credit_grant_id", "credit_grant_id"),
     ])
 }
 
