@@ -8,12 +8,15 @@ use crate::params::Timestamp;
 pub enum ApiVersion {
     #[serde(rename = "2025-05-28.basil")]
     V2025_05_28Basil,
+    #[serde(rename = "2025-08-27.basil")]
+    V2025_08_27Basil,
 }
 
 impl ApiVersion {
     pub fn as_str(self) -> &'static str {
         match self {
             ApiVersion::V2025_05_28Basil => "2025-05-28.basil",
+            ApiVersion::V2025_08_27Basil => "2025-08-27.basil",
         }
     }
 }

@@ -55,7 +55,6 @@ pub mod core {
     pub mod file;
     pub mod file_created;
     pub mod file_link;
-    pub mod linked_account_options_us_bank_account;
     pub mod mandate;
     pub mod mandate_updated;
     pub mod payment_flows_amount_details_client_resource_tip;
