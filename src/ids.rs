@@ -499,9 +499,13 @@ def_id!(CheckoutSessionItemId, "li_");
 def_id!(ConnectCollectionTransferId, "connct_");
 def_id!(ConnectTokenId, "ct_");
 def_id!(CouponId: String); // N.B. A coupon id can be user-provided so can be any arbitrary string
+def_id!(ConfirmationTokenId, "ctoken_");
+def_id!(CreditBalanceTransactionId, "cbtxn_");
+def_id!(CreditGrantId, "credgr_");
 def_id!(CreditNoteId, "cn_");
 def_id!(CreditNoteLineItemId, "cnli_");
 def_id!(CustomerBalanceTransactionId, "cbtxn_");
+def_id!(CustomerCashBalanceTransactionId, "ccbtxn_");
 def_id!(CustomerId, "cus_");
 def_id!(DiscountId, "di_");
 def_id!(DisputeId, "dp_" | "du_" | "pdp_");
@@ -521,10 +525,13 @@ def_id!(
         InvoiceLineItemIdWebhook(InvoiceLineItemIdWebhook),
     }
 );
+def_id!(InvoicePaymentId, "inpay_");
 def_id!(IssuingAuthorizationId, "iauth_");
 def_id!(IssuingCardId, "ic_");
 def_id!(IssuingCardholderId, "ich_");
 def_id!(IssuingDisputeId, "idp_");
+def_id!(IssuingPersonalizationDesignId, "ipcd_");
+def_id!(IssuingPhysicalBundleId, "ics_");
 def_id!(IssuingTransactionId, "ipi_");
 def_id!(IssuingTokenId: String);
 def_id!(OrderId, "or_");

@@ -128,11 +128,6 @@ pub fn object_mappings() -> ObjectMap {
         ("create_source_receiver_refund_attributes_method", "source_refund_notification_method"),
 
         // Config for `subscription_schedule` params
-        // TODO: Maybe allow "union" if structs have optional params
-        /*
-        ("create_subscription_schedule_phases", "subscription_schedule_phases_params"),
-        ("update_subscription_schedule_phases", "subscription_schedule_phases_params"),
-        */
         ("subscription_pending_invoice_item_interval_interval", "plan_interval"),
         ("create_subscription_pending_invoice_item_interval_interval", "plan_interval"),
         ("update_subscription_pending_invoice_item_interval_interval", "plan_interval"),

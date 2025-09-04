@@ -3,7 +3,7 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::AccountId;
+use crate::ids::{AccountId};
 use crate::params::{Expand, Object, Timestamp};
 use serde::{Deserialize, Serialize};
 
@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
 /// For more details see <https://stripe.com/docs/api/account_links/object>
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct AccountLink {
+
     /// Time at which the object was created.
     ///
     /// Measured in seconds since the Unix epoch.
@@ -25,6 +26,7 @@ pub struct AccountLink {
 }
 
 impl AccountLink {
+
     /// Creates an AccountLink object that includes a single-use Stripe URL that the platform can redirect their user to in order to take them through the Connect Onboarding flow.
     pub fn create(client: &Client, params: CreateAccountLink<'_>) -> Response<AccountLink> {
         #[allow(clippy::needless_borrows_for_generic_args)]
@@ -43,6 +45,7 @@ impl Object for AccountLink {
 /// The parameters for `AccountLink::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreateAccountLink<'a> {
+
     /// The identifier of the account to create an account link for.
     pub account: AccountId,
 
@@ -73,7 +76,11 @@ pub struct CreateAccountLink<'a> {
 
     /// The type of account link the user is requesting.
     ///
-    /// Possible values are `account_onboarding` or `account_update`.
+    /// You can create Account Links of type `account_update` only for connected accounts where your platform is responsible for collecting requirements, including Custom accounts.
+    ///
+    /// You can't create them for accounts that have access to a Stripe-hosted Dashboard.
+    /// If you use [Connect embedded components](/connect/get-started-connect-embedded-components), you can include components that allow your connected accounts to update their own information.
+    /// For an account without Stripe-hosted Dashboard access where Stripe is liable for negative balances, you must use embedded components.
     #[serde(rename = "type")]
     pub type_: AccountLinkType,
 }
@@ -94,10 +101,12 @@ impl<'a> CreateAccountLink<'a> {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountLinkCollectionOptions {
+
     /// Specifies whether the platform collects only currently_due requirements (`currently_due`) or both currently_due and eventually_due requirements (`eventually_due`).
     ///
     /// If you don't specify `collection_options`, the default value is `currently_due`.
-    pub fields: CreateAccountLinkCollectionOptionsFields,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub fields: Option<CreateAccountLinkCollectionOptionsFields>,
 
     /// Specifies whether the platform collects future_requirements in addition to requirements in Connect Onboarding.
     ///

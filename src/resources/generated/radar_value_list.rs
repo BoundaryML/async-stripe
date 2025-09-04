@@ -35,7 +35,7 @@ pub struct RadarValueList {
 
     /// The type of items in the value list.
     ///
-    /// One of `card_fingerprint`, `us_bank_account_fingerprint`, `sepa_debit_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, or `customer_id`.
+    /// One of `card_fingerprint`, `card_bin`, `email`, `ip_address`, `country`, `string`, `case_sensitive_string`, `customer_id`, `sepa_debit_fingerprint`, or `us_bank_account_fingerprint`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub item_type: Option<RadarValueListItemType>,
 

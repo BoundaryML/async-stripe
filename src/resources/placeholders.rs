@@ -16,13 +16,19 @@ pub struct IssuingAuthorizationAmountDetails {}
 pub struct NotificationEventData {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct PaymentMethodDetailsCardInstallmentsPlan {}
+pub struct PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet {}
 
-#[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct PaymentMethodDetailsCardPresent {}
+// #[derive(Clone, Debug, Default, Deserialize, Serialize)]
+// pub struct PaymentMethodDetailsCardInstallmentsPlan {}
+
+// #[derive(Clone, Debug, Default, Deserialize, Serialize)]
+// pub struct PaymentMethodDetailsCardPresent {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodDetailsCardWallet {}
+
+#[derive(Clone, Debug, Default, Deserialize, Serialize)]
+pub struct Period {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RadarValueListItem {}

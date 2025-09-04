@@ -6,7 +6,7 @@ use heck::{CamelCase, SnakeCase};
 use indoc::writedoc;
 use openapiv3::{
     AdditionalProperties, Parameter, ParameterSchemaOrContent, PathStyle, ReferenceOr, Schema,
-    SchemaKind, Type,
+    SchemaKind, Type, VariantOrUnknownOrEmpty,
 };
 use tracing::trace;
 
@@ -1190,6 +1190,33 @@ fn gen_field_type(
                 state.use_params.insert("RangeQuery");
                 state.use_params.insert("Timestamp");
                 "RangeQuery<Timestamp>".into()
+            } else if (any_of.len() == 2 || any_of.len() == 3)
+                && any_of.iter().any(|item| {
+                    if let ReferenceOr::Item(schema) = item {
+                        if let SchemaKind::Type(Type::Integer(int_type)) = &schema.schema_kind {
+                            matches!(&int_type.format, VariantOrUnknownOrEmpty::Unknown(val) if val == "unix-time")
+                        } else {
+                            false
+                        }
+                    } else {
+                        false
+                    }
+                })
+                && any_of.iter().all(|item| {
+                    if let ReferenceOr::Item(schema) = item {
+                        matches!(
+                            &schema.schema_kind,
+                            SchemaKind::Type(Type::Integer(int_type))
+                            if matches!(&int_type.format, VariantOrUnknownOrEmpty::Unknown(val) if val == "unix-time")
+                        ) || matches!(&schema.schema_kind, SchemaKind::Type(Type::String(_)))
+                    } else {
+                        false
+                    }
+                })
+            {
+                // Handle union of unix-time integer and string enum (e.g., cancel_at field)
+                state.use_params.insert("Timestamp");
+                "Scheduled".into()
             } else {
                 trace!("object: {}, field_name: {}", object, field_name);
                 let union_addition = format!("{field_name}_union");
