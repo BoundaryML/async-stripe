@@ -55,17 +55,22 @@ pub struct InvoicePayment {
 }
 
 impl InvoicePayment {
-
     /// When retrieving an invoice, there is an includable payments property containing the first handful of those items.
     ///
     /// There is also a URL where you can retrieve the full (paginated) list of payments.
-pub fn list(client: &Client, params: &ListInvoicePayments<'_>) -> Response<List<InvoicePayment>> {
-   client.get_query("/invoice_payments", params)
-}
-
+    pub fn list(
+        client: &Client,
+        params: &ListInvoicePayments<'_>,
+    ) -> Response<List<InvoicePayment>> {
+        client.get_query("/invoice_payments", params)
+    }
 
     /// Retrieves the invoice payment with the given ID.
-    pub fn retrieve(client: &Client, id: &InvoicePaymentId, expand: &[&str]) -> Response<InvoicePayment> {
+    pub fn retrieve(
+        client: &Client,
+        id: &InvoicePaymentId,
+        expand: &[&str],
+    ) -> Response<InvoicePayment> {
         client.get_query(&format!("/invoice_payments/{}", id), Expand { expand })
     }
 }
@@ -82,7 +87,6 @@ impl Object for InvoicePayment {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesPaymentsInvoicePaymentAssociatedPayment {
-
     /// ID of the successful charge for this payment when `type` is `charge`.Note: charge is only surfaced if the charge object is not associated with a payment intent.
     ///
     /// If the charge object does have a payment intent, the Invoice Payment surfaces the payment intent instead.
@@ -102,7 +106,6 @@ pub struct InvoicesPaymentsInvoicePaymentAssociatedPayment {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesPaymentsInvoicePaymentStatusTransitions {
-
     /// The time that the payment was canceled.
     pub canceled_at: Option<Timestamp>,
 
@@ -113,7 +116,6 @@ pub struct InvoicesPaymentsInvoicePaymentStatusTransitions {
 /// The parameters for `InvoicePayment::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListInvoicePayments<'a> {
-
     /// A cursor for use in pagination.
     ///
     /// `ending_before` is an object ID that defines your place in the list.
@@ -167,11 +169,11 @@ impl<'a> ListInvoicePayments<'a> {
 impl Paginable for ListInvoicePayments<'_> {
     type O = InvoicePayment;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ListInvoicePaymentsPayment {
-
     /// Only return invoice payments associated by this payment intent ID.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub payment_intent: Option<String>,

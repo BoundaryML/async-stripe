@@ -3,9 +3,9 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::{TaxRateId};
+use crate::ids::TaxRateId;
 use crate::params::{Expand, List, Metadata, Object, Paginable, RangeQuery, Timestamp};
-use crate::resources::{TaxRateFlatAmount};
+use crate::resources::TaxRateFlatAmount;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "TaxRate".
@@ -91,14 +91,12 @@ pub struct TaxRate {
 }
 
 impl TaxRate {
-
     /// Returns a list of your tax rates.
     ///
     /// Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
-pub fn list(client: &Client, params: &ListTaxRates<'_>) -> Response<List<TaxRate>> {
-   client.get_query("/tax_rates", params)
-}
-
+    pub fn list(client: &Client, params: &ListTaxRates<'_>) -> Response<List<TaxRate>> {
+        client.get_query("/tax_rates", params)
+    }
 
     /// Creates a new tax rate.
     pub fn create(client: &Client, params: CreateTaxRate<'_>) -> Response<TaxRate> {
@@ -131,7 +129,6 @@ impl Object for TaxRate {
 /// The parameters for `TaxRate::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreateTaxRate<'a> {
-
     /// Flag determining whether the tax rate is active or inactive (archived).
     ///
     /// Inactive tax rates cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
@@ -208,7 +205,6 @@ impl<'a> CreateTaxRate<'a> {
 /// The parameters for `TaxRate::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListTaxRates<'a> {
-
     /// Optional flag to filter by tax rates that are either active or inactive (archived).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub active: Option<bool>,
@@ -262,12 +258,12 @@ impl<'a> ListTaxRates<'a> {
 impl Paginable for ListTaxRates<'_> {
     type O = TaxRate;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 /// The parameters for `TaxRate::update`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct UpdateTaxRate<'a> {
-
     /// Flag determining whether the tax rate is active or inactive (archived).
     ///
     /// Inactive tax rates cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.

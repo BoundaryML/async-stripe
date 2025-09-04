@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{TestHelpersTestClockId};
+use crate::ids::TestHelpersTestClockId;
 use crate::params::{Object, Timestamp};
 use serde::{Deserialize, Serialize};
 
@@ -58,14 +58,12 @@ impl Object for TestHelpersTestClock {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingClocksResourceStatusDetailsStatusDetails {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub advancing: Option<BillingClocksResourceStatusDetailsAdvancingStatusDetails>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingClocksResourceStatusDetailsAdvancingStatusDetails {
-
     /// The `frozen_time` that the Test Clock is advancing towards.
     pub target_frozen_time: Timestamp,
 }

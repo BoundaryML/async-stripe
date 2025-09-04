@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{PersonId};
+use crate::ids::PersonId;
 use crate::params::{Expandable, Metadata, Object, Timestamp};
 use crate::resources::{Address, File};
 use serde::{Deserialize, Serialize};
@@ -171,7 +171,6 @@ impl Object for Person {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct LegalEntityDob {
-
     /// The day of birth, between 1 and 31.
     pub day: Option<i64>,
 
@@ -184,7 +183,6 @@ pub struct LegalEntityDob {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonVerification {
-
     /// A document showing address, either a passport, local ID card, or utility bill from a well-known utility company.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub additional_document: Option<PersonVerificationDocument>,
@@ -213,7 +211,6 @@ pub struct PersonVerification {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonVerificationDocument {
-
     /// The back of an ID returned by a [file upload](https://stripe.com/docs/api#create_file) with a `purpose` value of `identity_document`.
     pub back: Option<Expandable<File>>,
 
@@ -233,14 +230,12 @@ pub struct PersonVerificationDocument {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonAdditionalTosAcceptances {
-
     /// Details on the legal guardian's acceptance of the main Stripe service agreement.
     pub account: Option<PersonAdditionalTosAcceptance>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonAdditionalTosAcceptance {
-
     /// The Unix timestamp marking when the legal guardian accepted the service agreement.
     pub date: Option<Timestamp>,
 
@@ -253,7 +248,6 @@ pub struct PersonAdditionalTosAcceptance {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonFutureRequirements {
-
     /// Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
     pub alternatives: Option<Vec<AccountRequirementsAlternative>>,
 
@@ -286,7 +280,6 @@ pub struct PersonFutureRequirements {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct AccountRequirementsAlternative {
-
     /// Fields that can be provided to satisfy all fields in `original_fields_due`.
     pub alternative_fields_due: Vec<String>,
 
@@ -296,7 +289,6 @@ pub struct AccountRequirementsAlternative {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct AccountRequirementsError {
-
     /// The code for the type of error.
     pub code: AccountRequirementsErrorCode,
 
@@ -309,7 +301,6 @@ pub struct AccountRequirementsError {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonRelationship {
-
     /// Whether the person is the authorizer of the account's representative.
     pub authorizer: Option<bool>,
 
@@ -343,7 +334,6 @@ pub struct PersonRelationship {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonRequirements {
-
     /// Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
     pub alternatives: Option<Vec<AccountRequirementsAlternative>>,
 
@@ -375,7 +365,6 @@ pub struct PersonRequirements {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonUsCfpbData {
-
     /// The persons ethnicity details.
     pub ethnicity_details: Option<PersonEthnicityDetails>,
 
@@ -388,7 +377,6 @@ pub struct PersonUsCfpbData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonEthnicityDetails {
-
     /// The persons ethnicity.
     pub ethnicity: Option<Vec<PersonEthnicityDetailsEthnicity>>,
 
@@ -398,7 +386,6 @@ pub struct PersonEthnicityDetails {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PersonRaceDetails {
-
     /// The persons race.
     pub race: Option<Vec<PersonRaceDetailsRace>>,
 
@@ -739,7 +726,9 @@ impl PersonRaceDetailsRace {
     pub fn as_str(self) -> &'static str {
         match self {
             PersonRaceDetailsRace::AfricanAmerican => "african_american",
-            PersonRaceDetailsRace::AmericanIndianOrAlaskaNative => "american_indian_or_alaska_native",
+            PersonRaceDetailsRace::AmericanIndianOrAlaskaNative => {
+                "american_indian_or_alaska_native"
+            }
             PersonRaceDetailsRace::Asian => "asian",
             PersonRaceDetailsRace::AsianIndian => "asian_indian",
             PersonRaceDetailsRace::BlackOrAfricanAmerican => "black_or_african_american",
@@ -752,7 +741,9 @@ impl PersonRaceDetailsRace {
             PersonRaceDetailsRace::Japanese => "japanese",
             PersonRaceDetailsRace::Korean => "korean",
             PersonRaceDetailsRace::NativeHawaiian => "native_hawaiian",
-            PersonRaceDetailsRace::NativeHawaiianOrOtherPacificIslander => "native_hawaiian_or_other_pacific_islander",
+            PersonRaceDetailsRace::NativeHawaiianOrOtherPacificIslander => {
+                "native_hawaiian_or_other_pacific_islander"
+            }
             PersonRaceDetailsRace::Nigerian => "nigerian",
             PersonRaceDetailsRace::OtherAsian => "other_asian",
             PersonRaceDetailsRace::OtherBlackOrAfricanAmerican => "other_black_or_african_american",

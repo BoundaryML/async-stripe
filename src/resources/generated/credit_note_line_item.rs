@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{CreditNoteLineItemId};
+use crate::ids::CreditNoteLineItemId;
 use crate::params::{Expandable, Object};
 use crate::resources::{BillingCreditBalanceTransaction, Discount, TaxRate};
 use serde::{Deserialize, Serialize};
@@ -71,7 +71,6 @@ impl Object for CreditNoteLineItem {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingTaxesTax {
-
     /// The amount of the tax, in cents (or local equivalent).
     pub amount: i64,
 
@@ -98,13 +97,11 @@ pub struct BillingBillResourceInvoicingTaxesTax {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingTaxesTaxRateDetails {
-
     pub tax_rate: String,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreditNotesPretaxCreditAmount {
-
     /// The amount, in cents (or local equivalent), of the pretax credit amount.
     pub amount: i64,
 
@@ -123,7 +120,6 @@ pub struct CreditNotesPretaxCreditAmount {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct DiscountsResourceDiscountAmount {
-
     /// The amount, in cents (or local equivalent), of the discount.
     pub amount: i64,
 
@@ -190,21 +186,37 @@ pub enum BillingBillResourceInvoicingTaxesTaxTaxabilityReason {
 impl BillingBillResourceInvoicingTaxesTaxTaxabilityReason {
     pub fn as_str(self) -> &'static str {
         match self {
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::CustomerExempt => "customer_exempt",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::CustomerExempt => {
+                "customer_exempt"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotAvailable => "not_available",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotCollecting => "not_collecting",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSubjectToTax => "not_subject_to_tax",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSubjectToTax => {
+                "not_subject_to_tax"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSupported => "not_supported",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionProductExempt => "portion_product_exempt",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionReducedRated => "portion_reduced_rated",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionStandardRated => "portion_standard_rated",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionProductExempt => {
+                "portion_product_exempt"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionReducedRated => {
+                "portion_reduced_rated"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionStandardRated => {
+                "portion_standard_rated"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExempt => "product_exempt",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExemptHoliday => "product_exempt_holiday",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProportionallyRated => "proportionally_rated",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExemptHoliday => {
+                "product_exempt_holiday"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProportionallyRated => {
+                "proportionally_rated"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ReducedRated => "reduced_rated",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ReverseCharge => "reverse_charge",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::StandardRated => "standard_rated",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::TaxableBasisReduced => "taxable_basis_reduced",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::TaxableBasisReduced => {
+                "taxable_basis_reduced"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ZeroRated => "zero_rated",
         }
     }
@@ -304,7 +316,9 @@ pub enum CreditNotesPretaxCreditAmountType {
 impl CreditNotesPretaxCreditAmountType {
     pub fn as_str(self) -> &'static str {
         match self {
-            CreditNotesPretaxCreditAmountType::CreditBalanceTransaction => "credit_balance_transaction",
+            CreditNotesPretaxCreditAmountType::CreditBalanceTransaction => {
+                "credit_balance_transaction"
+            }
             CreditNotesPretaxCreditAmountType::Discount => "discount",
         }
     }

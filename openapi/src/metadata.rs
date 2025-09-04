@@ -148,7 +148,7 @@ impl<'a> Metadata<'a> {
         out.push_str("use crate::ApiVersion;\n\n");
         out.push_str(&format!(
             "pub const VERSION: ApiVersion = ApiVersion::V{};",
-            self.spec.version().replace('-', "_")
+            self.spec.version().replace('-', "_").replace(".", "_")
         ));
 
         write(out_path.as_ref().join("version.rs"), out.as_bytes()).unwrap();

@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_nz_bank_account".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodNzBankAccount {
-
     /// The name on the bank account.
     ///
     /// Only present if the account holder name is different from the name of the authorized signatory collected in the PaymentMethod’s billing details.

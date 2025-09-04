@@ -4,8 +4,19 @@
 
 use crate::client::{Client, Response};
 use crate::ids::{CustomerId, InvoiceId, SubscriptionId};
-use crate::params::{CurrencyMap, Deleted, Expand, Expandable, List, Metadata, Object, Paginable, RangeQuery, Timestamp};
-use crate::resources::{Account, Address, ApiErrors, Application, BillingCreditBalanceTransaction, ConnectAccountReference, Currency, Customer, Discount, InvoiceLineItem, InvoicePayment, InvoicePaymentMethodOptionsAcssDebit, InvoicePaymentMethodOptionsBancontact, InvoicePaymentMethodOptionsCustomerBalance, InvoicePaymentMethodOptionsKonbini, InvoicePaymentMethodOptionsSepaDebit, InvoicePaymentMethodOptionsUsBankAccount, InvoicesResourceShippingCost, PaymentMethod, PaymentSource, Shipping, Subscription, TaxId, TaxRate, TestHelpersTestClock};
+use crate::params::{
+    CurrencyMap, Deleted, Expand, Expandable, List, Metadata, Object, Paginable, RangeQuery,
+    Timestamp,
+};
+use crate::resources::{
+    Account, Address, ApiErrors, Application, BillingCreditBalanceTransaction,
+    ConnectAccountReference, Currency, Customer, Discount, InvoiceLineItem, InvoicePayment,
+    InvoicePaymentMethodOptionsAcssDebit, InvoicePaymentMethodOptionsBancontact,
+    InvoicePaymentMethodOptionsCustomerBalance, InvoicePaymentMethodOptionsKonbini,
+    InvoicePaymentMethodOptionsSepaDebit, InvoicePaymentMethodOptionsUsBankAccount,
+    InvoicesResourceShippingCost, PaymentMethod, PaymentSource, Shipping, Subscription, TaxId,
+    TaxRate, TestHelpersTestClock,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "Invoice".
@@ -16,7 +27,8 @@ pub struct Invoice {
     /// Unique identifier for the object.
     ///
     /// For preview invoices created using the [create preview](https://stripe.com/docs/api/invoices/create_preview) endpoint, this id will be prefixed with `upcoming_in`.
-    #[serde(default = "InvoiceId::none")]    pub id: InvoiceId,
+    #[serde(default = "InvoiceId::none")]
+    pub id: InvoiceId,
 
     /// The country of the business associated with this invoice, most often the business creating the invoice.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -434,14 +446,12 @@ pub struct Invoice {
 }
 
 impl Invoice {
-
     /// You can list all invoices, or list the invoices for a specific customer.
     ///
     /// The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
-pub fn list(client: &Client, params: &ListInvoices<'_>) -> Response<List<Invoice>> {
-   client.get_query("/invoices", params)
-}
-
+    pub fn list(client: &Client, params: &ListInvoices<'_>) -> Response<List<Invoice>> {
+        client.get_query("/invoices", params)
+    }
 
     /// This endpoint creates a draft invoice for a given customer.
     ///
@@ -485,7 +495,6 @@ impl Object for Invoice {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct AutomaticTax {
-
     /// If Stripe disabled automatic tax, this enum describes why.
     pub disabled_reason: Option<AutomaticTaxDisabledReason>,
 
@@ -509,7 +518,6 @@ pub struct AutomaticTax {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingParentsInvoiceParent {
-
     /// Details about the quote that generated this invoice.
     pub quote_details: Option<BillingBillResourceInvoicingParentsInvoiceQuoteParent>,
 
@@ -523,14 +531,12 @@ pub struct BillingBillResourceInvoicingParentsInvoiceParent {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingParentsInvoiceQuoteParent {
-
     /// The quote that generated this invoice.
     pub quote: String,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingParentsInvoiceSubscriptionParent {
-
     /// Set of [key-value pairs](https://stripe.com/docs/api/metadata) defined as subscription metadata when an invoice is created.
     ///
     /// Becomes an immutable snapshot of the subscription metadata at the time of invoice finalization.  *Note: This attribute is populated only for invoices created on or after June 29, 2023.*.
@@ -548,7 +554,6 @@ pub struct BillingBillResourceInvoicingParentsInvoiceSubscriptionParent {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingTaxesTax {
-
     /// The amount of the tax, in cents (or local equivalent).
     pub amount: i64,
 
@@ -575,13 +580,11 @@ pub struct BillingBillResourceInvoicingTaxesTax {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingTaxesTaxRateDetails {
-
     pub tax_rate: String,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct DiscountsResourceDiscountAmount {
-
     /// The amount, in cents (or local equivalent), of the discount.
     pub amount: i64,
 
@@ -591,7 +594,6 @@ pub struct DiscountsResourceDiscountAmount {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoiceSettingCustomField {
-
     /// The name of the custom field.
     pub name: String,
 
@@ -601,7 +603,6 @@ pub struct InvoiceSettingCustomField {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoiceThresholdReason {
-
     /// The total invoice amount threshold boundary if it triggered the threshold invoice.
     pub amount_gte: Option<i64>,
 
@@ -611,7 +612,6 @@ pub struct InvoiceThresholdReason {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoiceItemThresholdReason {
-
     /// The IDs of the line items that triggered the threshold invoice.
     pub line_item_ids: Vec<String>,
 
@@ -621,7 +621,6 @@ pub struct InvoiceItemThresholdReason {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesPaymentSettings {
-
     /// ID of the mandate to be used for this invoice.
     ///
     /// It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
@@ -639,7 +638,6 @@ pub struct InvoicesPaymentSettings {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesPaymentMethodOptions {
-
     /// If paying by `acss_debit`, this sub-hash contains details about the Canadian pre-authorized debit payment method options to pass to the invoice’s PaymentIntent.
     pub acss_debit: Option<InvoicePaymentMethodOptionsAcssDebit>,
 
@@ -664,7 +662,6 @@ pub struct InvoicesPaymentMethodOptions {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicePaymentMethodOptionsCard {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub installments: Option<InvoiceInstallmentsCard>,
 
@@ -677,14 +674,12 @@ pub struct InvoicePaymentMethodOptionsCard {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoiceInstallmentsCard {
-
     /// Whether Installments are enabled for this Invoice.
     pub enabled: Option<bool>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesResourceConfirmationSecret {
-
     /// The client_secret of the payment that Stripe creates for the invoice after finalization.
     pub client_secret: String,
 
@@ -697,7 +692,6 @@ pub struct InvoicesResourceConfirmationSecret {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesResourceFromInvoice {
-
     /// The relation between this invoice and the cloned invoice.
     pub action: String,
 
@@ -707,7 +701,6 @@ pub struct InvoicesResourceFromInvoice {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesResourceInvoiceRendering {
-
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
     pub amount_tax_display: Option<String>,
 
@@ -723,7 +716,6 @@ pub struct InvoicesResourceInvoiceRendering {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoiceRenderingPdf {
-
     /// Page size of invoice pdf.
     ///
     /// Options include a4, letter, and auto.
@@ -733,7 +725,6 @@ pub struct InvoiceRenderingPdf {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesResourceInvoiceTaxId {
-
     /// The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `hr_oib`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `no_voec`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `li_vat`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, `al_tin`, `bh_vat`, `kz_bin`, `ng_tin`, `om_vat`, `de_stn`, `ch_uid`, `tz_vat`, `uz_vat`, `uz_tin`, `md_vat`, `ma_vat`, `by_tin`, `ao_tin`, `bs_tin`, `bb_tin`, `cd_nif`, `mr_nif`, `me_pib`, `zw_tin`, `ba_tin`, `gn_nif`, `mk_vat`, `sr_fin`, `sn_ninea`, `am_tin`, `np_pan`, `tj_tin`, `ug_tin`, `zm_tin`, `kh_tin`, `aw_tin`, `az_tin`, `bd_bin`, `bj_ifu`, `et_tin`, `kg_tin`, `la_tin`, `cm_niu`, `cv_nif`, `bf_ifu`, or `unknown`.
     #[serde(rename = "type")]
     pub type_: TaxIdType,
@@ -744,7 +735,6 @@ pub struct InvoicesResourceInvoiceTaxId {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesResourcePretaxCreditAmount {
-
     /// The amount, in cents (or local equivalent), of the pretax credit amount.
     pub amount: i64,
 
@@ -763,7 +753,6 @@ pub struct InvoicesResourcePretaxCreditAmount {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct InvoicesResourceStatusTransitions {
-
     /// The time that the invoice draft was finalized.
     pub finalized_at: Option<Timestamp>,
 
@@ -780,7 +769,6 @@ pub struct InvoicesResourceStatusTransitions {
 /// The parameters for `Invoice::create`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct CreateInvoice<'a> {
-
     /// The account tax IDs associated with the invoice.
     ///
     /// Only editable when the invoice is a draft.
@@ -1014,7 +1002,6 @@ impl<'a> CreateInvoice<'a> {
 /// The parameters for `Invoice::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListInvoices<'a> {
-
     /// The collection method of the invoice to retrieve.
     ///
     /// Either `charge_automatically` or `send_invoice`.
@@ -1086,12 +1073,12 @@ impl<'a> ListInvoices<'a> {
 impl Paginable for ListInvoices<'_> {
     type O = Invoice;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 /// The parameters for `Invoice::update`.
 #[derive(Clone, Debug, Serialize)]
 pub struct UpdateInvoice<'a> {
-
     /// Specifies which fields in the response should be expanded.
     #[serde(skip_serializing_if = "Expand::is_empty")]
     pub expand: &'a [&'a str],
@@ -1111,17 +1098,12 @@ pub struct UpdateInvoice<'a> {
 
 impl<'a> UpdateInvoice<'a> {
     pub fn new(lines: Vec<UpdateInvoiceLines>) -> Self {
-        UpdateInvoice {
-            expand: Default::default(),
-            invoice_metadata: Default::default(),
-            lines,
-        }
+        UpdateInvoice { expand: Default::default(), invoice_metadata: Default::default(), lines }
     }
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceAutomaticTax {
-
     /// Whether Stripe automatically computes tax on this invoice.
     ///
     /// Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
@@ -1137,7 +1119,6 @@ pub struct CreateInvoiceAutomaticTax {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceCustomFields {
-
     /// The name of the custom field.
     ///
     /// This may be up to 40 characters.
@@ -1151,7 +1132,6 @@ pub struct CreateInvoiceCustomFields {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceDiscounts {
-
     /// ID of the coupon to create a new discount for.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub coupon: Option<String>,
@@ -1167,7 +1147,6 @@ pub struct CreateInvoiceDiscounts {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceFromInvoice {
-
     /// The relation between the new invoice and the original invoice.
     ///
     /// Currently, only 'revision' is permitted.
@@ -1179,7 +1158,6 @@ pub struct CreateInvoiceFromInvoice {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceIssuer {
-
     /// The connected account being referenced when `type` is `account`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub account: Option<String>,
@@ -1191,7 +1169,6 @@ pub struct CreateInvoiceIssuer {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettings {
-
     /// ID of the mandate to be used for this invoice.
     ///
     /// It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.
@@ -1213,7 +1190,6 @@ pub struct CreateInvoicePaymentSettings {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceRendering {
-
     /// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
     ///
     /// One of `exclude_tax` or `include_inclusive_tax`.
@@ -1237,7 +1213,6 @@ pub struct CreateInvoiceRendering {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingCost {
-
     /// The ID of the shipping rate to use for this order.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub shipping_rate: Option<String>,
@@ -1249,7 +1224,6 @@ pub struct CreateInvoiceShippingCost {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingDetails {
-
     /// Shipping address.
     pub address: CreateInvoiceShippingDetailsAddress,
 
@@ -1263,7 +1237,6 @@ pub struct CreateInvoiceShippingDetails {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceTransferData {
-
     /// The amount that will be transferred automatically when the invoice is paid.
     ///
     /// If no amount is set, the full amount is transferred.
@@ -1276,7 +1249,6 @@ pub struct CreateInvoiceTransferData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateInvoiceLines {
-
     /// The integer amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice.
     ///
     /// If you want to apply a credit to the customer's account, pass a negative amount.
@@ -1355,7 +1327,6 @@ pub struct UpdateInvoiceLines {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceAutomaticTaxLiability {
-
     /// The connected account being referenced when `type` is `account`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub account: Option<String>,
@@ -1367,7 +1338,6 @@ pub struct CreateInvoiceAutomaticTaxLiability {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptions {
-
     /// If paying by `acss_debit`, this sub-hash contains details about the Canadian pre-authorized debit payment method options to pass to the invoice’s PaymentIntent.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub acss_debit: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebit>,
@@ -1399,7 +1369,6 @@ pub struct CreateInvoicePaymentSettingsPaymentMethodOptions {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceRenderingPdf {
-
     /// Page size for invoice PDF.
     ///
     /// Can be set to `a4`, `letter`, or `auto`.  If set to `auto`, invoice PDF page size defaults to `a4` for customers with  Japanese locale and `letter` for customers with other locales.
@@ -1409,7 +1378,6 @@ pub struct CreateInvoiceRenderingPdf {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingCostShippingRateData {
-
     /// The estimated range for how long shipping will take, meant to be displayable to the customer.
     ///
     /// This will appear on CheckoutSessions.
@@ -1455,7 +1423,6 @@ pub struct CreateInvoiceShippingCostShippingRateData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingDetailsAddress {
-
     /// City, district, suburb, town, or village.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub city: Option<String>,
@@ -1483,7 +1450,6 @@ pub struct CreateInvoiceShippingDetailsAddress {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateInvoiceLinesDiscounts {
-
     /// ID of the coupon to create a new discount for.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub coupon: Option<String>,
@@ -1499,7 +1465,6 @@ pub struct UpdateInvoiceLinesDiscounts {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateInvoiceLinesPeriod {
-
     /// The end of the period, which must be greater than or equal to the start.
     ///
     /// This value is inclusive.
@@ -1513,7 +1478,6 @@ pub struct UpdateInvoiceLinesPeriod {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateInvoiceLinesPriceData {
-
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     ///
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -1554,7 +1518,6 @@ pub struct UpdateInvoiceLinesPriceData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateInvoiceLinesPricing {
-
     /// The ID of the price object.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub price: Option<String>,
@@ -1562,7 +1525,6 @@ pub struct UpdateInvoiceLinesPricing {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateInvoiceLinesTaxAmounts {
-
     /// The amount, in cents (or local equivalent), of the tax.
     pub amount: i64,
 
@@ -1584,27 +1546,27 @@ pub struct UpdateInvoiceLinesTaxAmounts {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebit {
-
     /// Additional fields for Mandate creation.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub mandate_options: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptions>,
+    pub mandate_options:
+        Option<CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptions>,
 
     /// Verification method for the intent.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub verification_method: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod>,
+    pub verification_method:
+        Option<CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsBancontact {
-
     /// Preferred language of the Bancontact authorization page that the customer is redirected to.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub preferred_language: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage>,
+    pub preferred_language:
+        Option<CreateInvoicePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCard {
-
     /// Installment configuration for payments attempted on this invoice.
     ///
     /// For more information, see the [installments integration guide](https://stripe.com/docs/payments/installments).
@@ -1616,15 +1578,16 @@ pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCard {
     /// However, if you wish to request 3D Secure based on logic from your own fraud engine, provide this option.
     /// Read our guide on [manually requesting 3D Secure](https://stripe.com/docs/payments/3d-secure/authentication-flow#manual-three-ds) for more information on how this configuration interacts with Radar and our SCA Engine.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub request_three_d_secure: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure>,
+    pub request_three_d_secure:
+        Option<CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalance {
-
     /// Configuration for the bank transfer funding type, if the `funding_type` is set to `bank_transfer`.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub bank_transfer: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransfer>,
+    pub bank_transfer:
+        Option<CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransfer>,
 
     /// The funding method type to be used when there are not enough funds in the customer balance.
     ///
@@ -1634,28 +1597,26 @@ pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalance {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsKonbini {
-}
+pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsKonbini {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsSepaDebit {
-}
+pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsSepaDebit {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccount {
-
     /// Additional fields for Financial Connections Session creation.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub financial_connections: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnections>,
+    pub financial_connections:
+        Option<CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnections>,
 
     /// Verification method for the intent.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub verification_method: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod>,
+    pub verification_method:
+        Option<CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingCostShippingRateDataDeliveryEstimate {
-
     /// The upper bound of the estimated range.
     ///
     /// If empty, represents no upper bound i.e., infinite.
@@ -1671,7 +1632,6 @@ pub struct CreateInvoiceShippingCostShippingRateDataDeliveryEstimate {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingCostShippingRateDataFixedAmount {
-
     /// A non-negative integer in cents representing how much to charge.
     pub amount: i64,
 
@@ -1684,12 +1644,12 @@ pub struct CreateInvoiceShippingCostShippingRateDataFixedAmount {
     ///
     /// Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub currency_options: Option<CurrencyMap<CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptions>>,
+    pub currency_options:
+        Option<CurrencyMap<CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptions>>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateInvoiceLinesPriceDataProductData {
-
     /// The product's description, meant to be displayable to the customer.
     ///
     /// Use this field to optionally store a long form explanation of the product being sold for your own rendering purposes.
@@ -1718,7 +1678,6 @@ pub struct UpdateInvoiceLinesPriceDataProductData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateInvoiceLinesTaxAmountsTaxRateData {
-
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub country: Option<String>,
@@ -1766,15 +1725,15 @@ pub struct UpdateInvoiceLinesTaxAmountsTaxRateData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptions {
-
     /// Transaction type of the mandate.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub transaction_type: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType>,
+    pub transaction_type: Option<
+        CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType,
+    >,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallments {
-
     /// Setting to true enables installments for this invoice.
     /// Setting to false will prevent any selected plan from applying to a payment.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -1787,10 +1746,11 @@ pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallments {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransfer {
-
     /// Configuration for eu_bank_transfer funding type.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub eu_bank_transfer: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer>,
+    pub eu_bank_transfer: Option<
+        CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer,
+    >,
 
     /// The bank transfer type that can be used for funding.
     ///
@@ -1821,7 +1781,6 @@ pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancia
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximum {
-
     /// A unit of time.
     pub unit: CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit,
 
@@ -1831,7 +1790,6 @@ pub struct CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximum {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimum {
-
     /// A unit of time.
     pub unit: CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit,
 
@@ -1841,7 +1799,6 @@ pub struct CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimum {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptions {
-
     /// A non-negative integer in cents representing how much to charge.
     pub amount: i64,
 
@@ -1849,12 +1806,12 @@ pub struct CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptions {
     ///
     /// One of `inclusive`, `exclusive`, or `unspecified`.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub tax_behavior: Option<CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior>,
+    pub tax_behavior:
+        Option<CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlan {
-
     /// For `fixed_count` installment plans, this is required.
     ///
     /// It represents the number of installment payments your customer will make to their credit card.
@@ -1865,7 +1822,8 @@ pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlan 
     ///
     /// It represents the interval between installment payments your customer will make to their credit card. One of `month`.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub interval: Option<CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval>,
+    pub interval:
+        Option<CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval>,
 
     /// Type of installment plan, one of `fixed_count`, `bonus`, or `revolving`.
     #[serde(rename = "type")]
@@ -1873,8 +1831,8 @@ pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlan 
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer {
-
+pub struct CreateInvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEuBankTransfer
+{
     /// The desired country code of the bank account information.
     ///
     /// Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
@@ -1902,7 +1860,9 @@ pub enum AutomaticTaxDisabledReason {
 impl AutomaticTaxDisabledReason {
     pub fn as_str(self) -> &'static str {
         match self {
-            AutomaticTaxDisabledReason::FinalizationRequiresLocationInputs => "finalization_requires_location_inputs",
+            AutomaticTaxDisabledReason::FinalizationRequiresLocationInputs => {
+                "finalization_requires_location_inputs"
+            }
             AutomaticTaxDisabledReason::FinalizationSystemError => "finalization_system_error",
         }
     }
@@ -1973,7 +1933,9 @@ impl BillingBillResourceInvoicingParentsInvoiceParentType {
     pub fn as_str(self) -> &'static str {
         match self {
             BillingBillResourceInvoicingParentsInvoiceParentType::QuoteDetails => "quote_details",
-            BillingBillResourceInvoicingParentsInvoiceParentType::SubscriptionDetails => "subscription_details",
+            BillingBillResourceInvoicingParentsInvoiceParentType::SubscriptionDetails => {
+                "subscription_details"
+            }
         }
     }
 }
@@ -2054,21 +2016,37 @@ pub enum BillingBillResourceInvoicingTaxesTaxTaxabilityReason {
 impl BillingBillResourceInvoicingTaxesTaxTaxabilityReason {
     pub fn as_str(self) -> &'static str {
         match self {
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::CustomerExempt => "customer_exempt",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::CustomerExempt => {
+                "customer_exempt"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotAvailable => "not_available",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotCollecting => "not_collecting",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSubjectToTax => "not_subject_to_tax",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSubjectToTax => {
+                "not_subject_to_tax"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSupported => "not_supported",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionProductExempt => "portion_product_exempt",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionReducedRated => "portion_reduced_rated",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionStandardRated => "portion_standard_rated",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionProductExempt => {
+                "portion_product_exempt"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionReducedRated => {
+                "portion_reduced_rated"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionStandardRated => {
+                "portion_standard_rated"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExempt => "product_exempt",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExemptHoliday => "product_exempt_holiday",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProportionallyRated => "proportionally_rated",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExemptHoliday => {
+                "product_exempt_holiday"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProportionallyRated => {
+                "proportionally_rated"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ReducedRated => "reduced_rated",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ReverseCharge => "reverse_charge",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::StandardRated => "standard_rated",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::TaxableBasisReduced => "taxable_basis_reduced",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::TaxableBasisReduced => {
+                "taxable_basis_reduced"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ZeroRated => "zero_rated",
         }
     }
@@ -2276,18 +2254,24 @@ impl CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTran
     }
 }
 
-impl AsRef<str> for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType {
+impl AsRef<str>
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType
+{
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
 
-impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType {
+impl std::fmt::Display
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitMandateOptionsTransactionType
+{
     fn default() -> Self {
         Self::Business
     }
@@ -2318,12 +2302,16 @@ impl AsRef<str> for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitVer
     }
 }
 
-impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod {
+impl std::fmt::Display
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsAcssDebitVerificationMethod
+{
     fn default() -> Self {
         Self::Automatic
     }
@@ -2356,12 +2344,16 @@ impl AsRef<str> for CreateInvoicePaymentSettingsPaymentMethodOptionsBancontactPr
     }
 }
 
-impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage {
+impl std::fmt::Display
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsBancontactPreferredLanguage
+{
     fn default() -> Self {
         Self::De
     }
@@ -2377,7 +2369,9 @@ pub enum CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInt
 impl CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval {
     pub fn as_str(self) -> &'static str {
         match self {
-            CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval::Month => "month",
+            CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval::Month => {
+                "month"
+            }
         }
     }
 }
@@ -2388,12 +2382,16 @@ impl AsRef<str> for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallm
     }
 }
 
-impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval {
+impl std::fmt::Display
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanInterval
+{
     fn default() -> Self {
         Self::Month
     }
@@ -2424,12 +2422,16 @@ impl AsRef<str> for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallm
     }
 }
 
-impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType {
+impl std::fmt::Display
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsCardInstallmentsPlanType
+{
     fn default() -> Self {
         Self::Bonus
     }
@@ -2448,8 +2450,12 @@ impl CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure {
     pub fn as_str(self) -> &'static str {
         match self {
             CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure::Any => "any",
-            CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure::Automatic => "automatic",
-            CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure::Challenge => "challenge",
+            CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure::Automatic => {
+                "automatic"
+            }
+            CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure::Challenge => {
+                "challenge"
+            }
         }
     }
 }
@@ -2465,7 +2471,9 @@ impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsCardR
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure
+{
     fn default() -> Self {
         Self::Any
     }
@@ -2474,7 +2482,8 @@ impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsC
 /// An enum representing the possible values of an `CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFilters`'s `account_subcategories` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories {
+pub enum CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsFiltersAccountSubcategories
+{
     Checking,
     Savings,
 }
@@ -2508,7 +2517,8 @@ impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsU
 /// An enum representing the possible values of an `CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnections`'s `permissions` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions {
+pub enum CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions
+{
     Balances,
     Ownership,
     PaymentMethod,
@@ -2526,18 +2536,24 @@ impl CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConne
     }
 }
 
-impl AsRef<str> for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions {
+impl AsRef<str>
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions
+{
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
 
-impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions {
+impl std::fmt::Display
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPermissions
+{
     fn default() -> Self {
         Self::Balances
     }
@@ -2562,18 +2578,24 @@ impl CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConne
     }
 }
 
-impl AsRef<str> for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch {
+impl AsRef<str>
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch
+{
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
 
-impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch {
+impl std::fmt::Display
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountFinancialConnectionsPrefetch
+{
     fn default() -> Self {
         Self::Balances
     }
@@ -2598,18 +2620,24 @@ impl CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMe
     }
 }
 
-impl AsRef<str> for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod {
+impl AsRef<str>
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod
+{
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
 
-impl std::fmt::Display for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod {
+impl std::fmt::Display
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod {
+impl std::default::Default
+    for CreateInvoicePaymentSettingsPaymentMethodOptionsUsBankAccountVerificationMethod
+{
     fn default() -> Self {
         Self::Automatic
     }
@@ -2663,7 +2691,9 @@ pub enum CreateInvoicePaymentSettingsPaymentMethodTypes {
 impl CreateInvoicePaymentSettingsPaymentMethodTypes {
     pub fn as_str(self) -> &'static str {
         match self {
-            CreateInvoicePaymentSettingsPaymentMethodTypes::AchCreditTransfer => "ach_credit_transfer",
+            CreateInvoicePaymentSettingsPaymentMethodTypes::AchCreditTransfer => {
+                "ach_credit_transfer"
+            }
             CreateInvoicePaymentSettingsPaymentMethodTypes::AchDebit => "ach_debit",
             CreateInvoicePaymentSettingsPaymentMethodTypes::AcssDebit => "acss_debit",
             CreateInvoicePaymentSettingsPaymentMethodTypes::Affirm => "affirm",
@@ -2681,7 +2711,9 @@ impl CreateInvoicePaymentSettingsPaymentMethodTypes {
             CreateInvoicePaymentSettingsPaymentMethodTypes::Giropay => "giropay",
             CreateInvoicePaymentSettingsPaymentMethodTypes::Grabpay => "grabpay",
             CreateInvoicePaymentSettingsPaymentMethodTypes::Ideal => "ideal",
-            CreateInvoicePaymentSettingsPaymentMethodTypes::JpCreditTransfer => "jp_credit_transfer",
+            CreateInvoicePaymentSettingsPaymentMethodTypes::JpCreditTransfer => {
+                "jp_credit_transfer"
+            }
             CreateInvoicePaymentSettingsPaymentMethodTypes::KakaoPay => "kakao_pay",
             CreateInvoicePaymentSettingsPaymentMethodTypes::Klarna => "klarna",
             CreateInvoicePaymentSettingsPaymentMethodTypes::Konbini => "konbini",
@@ -2696,7 +2728,9 @@ impl CreateInvoicePaymentSettingsPaymentMethodTypes {
             CreateInvoicePaymentSettingsPaymentMethodTypes::Paypal => "paypal",
             CreateInvoicePaymentSettingsPaymentMethodTypes::Promptpay => "promptpay",
             CreateInvoicePaymentSettingsPaymentMethodTypes::RevolutPay => "revolut_pay",
-            CreateInvoicePaymentSettingsPaymentMethodTypes::SepaCreditTransfer => "sepa_credit_transfer",
+            CreateInvoicePaymentSettingsPaymentMethodTypes::SepaCreditTransfer => {
+                "sepa_credit_transfer"
+            }
             CreateInvoicePaymentSettingsPaymentMethodTypes::SepaDebit => "sepa_debit",
             CreateInvoicePaymentSettingsPaymentMethodTypes::Sofort => "sofort",
             CreateInvoicePaymentSettingsPaymentMethodTypes::Swish => "swish",
@@ -2807,7 +2841,9 @@ pub enum CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit {
 impl CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit {
     pub fn as_str(self) -> &'static str {
         match self {
-            CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit::BusinessDay => "business_day",
+            CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit::BusinessDay => {
+                "business_day"
+            }
             CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit::Day => "day",
             CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit::Hour => "hour",
             CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit::Month => "month",
@@ -2827,7 +2863,9 @@ impl std::fmt::Display for CreateInvoiceShippingCostShippingRateDataDeliveryEsti
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit {
+impl std::default::Default
+    for CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMaximumUnit
+{
     fn default() -> Self {
         Self::BusinessDay
     }
@@ -2847,7 +2885,9 @@ pub enum CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit {
 impl CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit {
     pub fn as_str(self) -> &'static str {
         match self {
-            CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit::BusinessDay => "business_day",
+            CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit::BusinessDay => {
+                "business_day"
+            }
             CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit::Day => "day",
             CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit::Hour => "hour",
             CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit::Month => "month",
@@ -2867,7 +2907,9 @@ impl std::fmt::Display for CreateInvoiceShippingCostShippingRateDataDeliveryEsti
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit {
+impl std::default::Default
+    for CreateInvoiceShippingCostShippingRateDataDeliveryEstimateMinimumUnit
+{
     fn default() -> Self {
         Self::BusinessDay
     }
@@ -2898,12 +2940,16 @@ impl AsRef<str> for CreateInvoiceShippingCostShippingRateDataFixedAmountCurrency
     }
 }
 
-impl std::fmt::Display for CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior {
+impl std::fmt::Display
+    for CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior {
+impl std::default::Default
+    for CreateInvoiceShippingCostShippingRateDataFixedAmountCurrencyOptionsTaxBehavior
+{
     fn default() -> Self {
         Self::Exclusive
     }
@@ -2995,7 +3041,9 @@ pub enum InvoiceBillingReason {
 impl InvoiceBillingReason {
     pub fn as_str(self) -> &'static str {
         match self {
-            InvoiceBillingReason::AutomaticPendingInvoiceItemInvoice => "automatic_pending_invoice_item_invoice",
+            InvoiceBillingReason::AutomaticPendingInvoiceItemInvoice => {
+                "automatic_pending_invoice_item_invoice"
+            }
             InvoiceBillingReason::Manual => "manual",
             InvoiceBillingReason::QuoteAccept => "quote_accept",
             InvoiceBillingReason::Subscription => "subscription",
@@ -3326,7 +3374,9 @@ pub enum InvoicesResourcePretaxCreditAmountType {
 impl InvoicesResourcePretaxCreditAmountType {
     pub fn as_str(self) -> &'static str {
         match self {
-            InvoicesResourcePretaxCreditAmountType::CreditBalanceTransaction => "credit_balance_transaction",
+            InvoicesResourcePretaxCreditAmountType::CreditBalanceTransaction => {
+                "credit_balance_transaction"
+            }
             InvoicesResourcePretaxCreditAmountType::Discount => "discount",
         }
     }
@@ -3703,7 +3753,9 @@ impl UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType {
     pub fn as_str(self) -> &'static str {
         match self {
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::AmusementTax => "amusement_tax",
-            UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::CommunicationsTax => "communications_tax",
+            UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::CommunicationsTax => {
+                "communications_tax"
+            }
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::Gst => "gst",
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::Hst => "hst",
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::Igst => "igst",
@@ -3711,7 +3763,9 @@ impl UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType {
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::LeaseTax => "lease_tax",
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::Pst => "pst",
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::Qst => "qst",
-            UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::RetailDeliveryFee => "retail_delivery_fee",
+            UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::RetailDeliveryFee => {
+                "retail_delivery_fee"
+            }
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::Rst => "rst",
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::SalesTax => "sales_tax",
             UpdateInvoiceLinesTaxAmountsTaxRateDataTaxType::ServiceTax => "service_tax",
@@ -3765,16 +3819,28 @@ impl UpdateInvoiceLinesTaxAmountsTaxabilityReason {
             UpdateInvoiceLinesTaxAmountsTaxabilityReason::NotCollecting => "not_collecting",
             UpdateInvoiceLinesTaxAmountsTaxabilityReason::NotSubjectToTax => "not_subject_to_tax",
             UpdateInvoiceLinesTaxAmountsTaxabilityReason::NotSupported => "not_supported",
-            UpdateInvoiceLinesTaxAmountsTaxabilityReason::PortionProductExempt => "portion_product_exempt",
-            UpdateInvoiceLinesTaxAmountsTaxabilityReason::PortionReducedRated => "portion_reduced_rated",
-            UpdateInvoiceLinesTaxAmountsTaxabilityReason::PortionStandardRated => "portion_standard_rated",
+            UpdateInvoiceLinesTaxAmountsTaxabilityReason::PortionProductExempt => {
+                "portion_product_exempt"
+            }
+            UpdateInvoiceLinesTaxAmountsTaxabilityReason::PortionReducedRated => {
+                "portion_reduced_rated"
+            }
+            UpdateInvoiceLinesTaxAmountsTaxabilityReason::PortionStandardRated => {
+                "portion_standard_rated"
+            }
             UpdateInvoiceLinesTaxAmountsTaxabilityReason::ProductExempt => "product_exempt",
-            UpdateInvoiceLinesTaxAmountsTaxabilityReason::ProductExemptHoliday => "product_exempt_holiday",
-            UpdateInvoiceLinesTaxAmountsTaxabilityReason::ProportionallyRated => "proportionally_rated",
+            UpdateInvoiceLinesTaxAmountsTaxabilityReason::ProductExemptHoliday => {
+                "product_exempt_holiday"
+            }
+            UpdateInvoiceLinesTaxAmountsTaxabilityReason::ProportionallyRated => {
+                "proportionally_rated"
+            }
             UpdateInvoiceLinesTaxAmountsTaxabilityReason::ReducedRated => "reduced_rated",
             UpdateInvoiceLinesTaxAmountsTaxabilityReason::ReverseCharge => "reverse_charge",
             UpdateInvoiceLinesTaxAmountsTaxabilityReason::StandardRated => "standard_rated",
-            UpdateInvoiceLinesTaxAmountsTaxabilityReason::TaxableBasisReduced => "taxable_basis_reduced",
+            UpdateInvoiceLinesTaxAmountsTaxabilityReason::TaxableBasisReduced => {
+                "taxable_basis_reduced"
+            }
             UpdateInvoiceLinesTaxAmountsTaxabilityReason::ZeroRated => "zero_rated",
         }
     }

@@ -3,9 +3,9 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::{CustomerId};
+use crate::ids::CustomerId;
 use crate::params::{Expand, Expandable, Object, Timestamp};
-use crate::resources::{Customer};
+use crate::resources::Customer;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "CustomerSessionResourceCustomerSession".
@@ -13,7 +13,6 @@ use serde::{Deserialize, Serialize};
 /// For more details see <https://stripe.com/docs/api/customer_sessions/object>
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerSession {
-
     /// The client secret of this Customer Session.
     ///
     /// Used on the client to set up secure access to the given `customer`.  The client secret can be used to provide access to `customer` from your frontend.
@@ -40,7 +39,6 @@ pub struct CustomerSession {
 }
 
 impl CustomerSession {
-
     /// Creates a Customer Session object that includes a single-use client secret that you can use on your front-end to grant client-side API access for certain customer resources.
     pub fn create(client: &Client, params: CreateCustomerSession<'_>) -> Response<CustomerSession> {
         #[allow(clippy::needless_borrows_for_generic_args)]
@@ -58,7 +56,6 @@ impl Object for CustomerSession {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerSessionResourceComponents {
-
     pub buy_button: CustomerSessionResourceComponentsResourceBuyButton,
 
     pub payment_element: CustomerSessionResourceComponentsResourcePaymentElement,
@@ -68,14 +65,12 @@ pub struct CustomerSessionResourceComponents {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerSessionResourceComponentsResourceBuyButton {
-
     /// Whether the buy button is enabled.
     pub enabled: bool,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerSessionResourceComponentsResourcePaymentElement {
-
     /// Whether the Payment Element is enabled.
     pub enabled: bool,
 
@@ -124,7 +119,6 @@ pub struct CustomerSessionResourceComponentsResourcePaymentElementResourceFeatur
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CustomerSessionResourceComponentsResourcePricingTable {
-
     /// Whether the pricing table is enabled.
     pub enabled: bool,
 }
@@ -132,7 +126,6 @@ pub struct CustomerSessionResourceComponentsResourcePricingTable {
 /// The parameters for `CustomerSession::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreateCustomerSession<'a> {
-
     /// Configuration for each component.
     ///
     /// Exactly 1 component must be enabled.
@@ -148,17 +141,12 @@ pub struct CreateCustomerSession<'a> {
 
 impl<'a> CreateCustomerSession<'a> {
     pub fn new(components: CreateCustomerSessionComponents, customer: CustomerId) -> Self {
-        CreateCustomerSession {
-            components,
-            customer,
-            expand: Default::default(),
-        }
+        CreateCustomerSession { components, customer, expand: Default::default() }
     }
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCustomerSessionComponents {
-
     /// Configuration for buy button.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub buy_button: Option<CreateCustomerSessionComponentsBuyButton>,
@@ -174,14 +162,12 @@ pub struct CreateCustomerSessionComponents {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCustomerSessionComponentsBuyButton {
-
     /// Whether the buy button is enabled.
     pub enabled: bool,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCustomerSessionComponentsPaymentElement {
-
     /// Whether the Payment Element is enabled.
     pub enabled: bool,
 
@@ -192,27 +178,30 @@ pub struct CreateCustomerSessionComponentsPaymentElement {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCustomerSessionComponentsPricingTable {
-
     /// Whether the pricing table is enabled.
     pub enabled: bool,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCustomerSessionComponentsPaymentElementFeatures {
-
     /// A list of [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay) values that controls which saved payment methods the Payment Element displays by filtering to only show payment methods with an `allow_redisplay` value that is present in this list.
     ///
     /// If not specified, defaults to ["always"].
     ///
     /// In order to display all saved payment methods, specify ["always", "limited", "unspecified"].
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub payment_method_allow_redisplay_filters: Option<Vec<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters>>,
+    pub payment_method_allow_redisplay_filters: Option<
+        Vec<
+            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters,
+        >,
+    >,
 
     /// Controls whether or not the Payment Element shows saved payment methods.
     ///
     /// This parameter defaults to `disabled`.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub payment_method_redisplay: Option<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay>,
+    pub payment_method_redisplay:
+        Option<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay>,
 
     /// Determines the max number of saved payment methods for the Payment Element to display.
     ///
@@ -226,20 +215,23 @@ pub struct CreateCustomerSessionComponentsPaymentElementFeatures {
     /// This parameter defaults to `disabled`.  Allowing buyers to remove their saved payment methods impacts subscriptions that depend on that payment method.
     /// Removing the payment method detaches the [`customer` object](https://docs.stripe.com/api/payment_methods/object#payment_method_object-customer) from that [PaymentMethod](https://docs.stripe.com/api/payment_methods).
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub payment_method_remove: Option<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove>,
+    pub payment_method_remove:
+        Option<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove>,
 
     /// Controls whether the Payment Element displays a checkbox offering to save a new payment method.
     ///
     /// This parameter defaults to `disabled`.  If a customer checks the box, the [`allow_redisplay`](https://docs.stripe.com/api/payment_methods/object#payment_method_object-allow_redisplay) value on the PaymentMethod is set to `'always'` at confirmation time.
     /// For PaymentIntents, the [`setup_future_usage`](https://docs.stripe.com/api/payment_intents/object#payment_intent_object-setup_future_usage) value is also set to the value defined in `payment_method_save_usage`.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub payment_method_save: Option<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave>,
+    pub payment_method_save:
+        Option<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave>,
 
     /// When using PaymentIntents and the customer checks the save checkbox, this field determines the [`setup_future_usage`](https://docs.stripe.com/api/payment_intents/object#payment_intent_object-setup_future_usage) value used to confirm the PaymentIntent.
     ///
     /// When using SetupIntents, directly configure the [`usage`](https://docs.stripe.com/api/setup_intents/object#setup_intent_object-usage) value on SetupIntent creation.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub payment_method_save_usage: Option<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage>,
+    pub payment_method_save_usage:
+        Option<CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage>,
 }
 
 /// An enum representing the possible values of an `CreateCustomerSessionComponentsPaymentElementFeatures`'s `payment_method_allow_redisplay_filters` field.
@@ -261,18 +253,24 @@ impl CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedi
     }
 }
 
-impl AsRef<str> for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters {
+impl AsRef<str>
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters
+{
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
 
-impl std::fmt::Display for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters {
+impl std::fmt::Display
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters {
+impl std::default::Default
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodAllowRedisplayFilters
+{
     fn default() -> Self {
         Self::Always
     }
@@ -301,12 +299,16 @@ impl AsRef<str> for CreateCustomerSessionComponentsPaymentElementFeaturesPayment
     }
 }
 
-impl std::fmt::Display for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay {
+impl std::fmt::Display
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay {
+impl std::default::Default
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRedisplay
+{
     fn default() -> Self {
         Self::Disabled
     }
@@ -323,8 +325,12 @@ pub enum CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemov
 impl CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove {
     pub fn as_str(self) -> &'static str {
         match self {
-            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove::Disabled => "disabled",
-            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove::Enabled => "enabled",
+            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove::Disabled => {
+                "disabled"
+            }
+            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove::Enabled => {
+                "enabled"
+            }
         }
     }
 }
@@ -335,12 +341,16 @@ impl AsRef<str> for CreateCustomerSessionComponentsPaymentElementFeaturesPayment
     }
 }
 
-impl std::fmt::Display for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove {
+impl std::fmt::Display
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove {
+impl std::default::Default
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodRemove
+{
     fn default() -> Self {
         Self::Disabled
     }
@@ -357,8 +367,12 @@ pub enum CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave 
 impl CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave {
     pub fn as_str(self) -> &'static str {
         match self {
-            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave::Disabled => "disabled",
-            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave::Enabled => "enabled",
+            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave::Disabled => {
+                "disabled"
+            }
+            CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave::Enabled => {
+                "enabled"
+            }
         }
     }
 }
@@ -374,7 +388,9 @@ impl std::fmt::Display for CreateCustomerSessionComponentsPaymentElementFeatures
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave {
+impl std::default::Default
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSave
+{
     fn default() -> Self {
         Self::Disabled
     }
@@ -403,12 +419,16 @@ impl AsRef<str> for CreateCustomerSessionComponentsPaymentElementFeaturesPayment
     }
 }
 
-impl std::fmt::Display for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage {
+impl std::fmt::Display
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage {
+impl std::default::Default
+    for CreateCustomerSessionComponentsPaymentElementFeaturesPaymentMethodSaveUsage
+{
     fn default() -> Self {
         Self::OffSession
     }
@@ -417,7 +437,8 @@ impl std::default::Default for CreateCustomerSessionComponentsPaymentElementFeat
 /// An enum representing the possible values of an `CustomerSessionResourceComponentsResourcePaymentElementResourceFeatures`'s `payment_method_allow_redisplay_filters` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodAllowRedisplayFilters {
+pub enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodAllowRedisplayFilters
+{
     Always,
     Limited,
     Unspecified,
@@ -453,7 +474,8 @@ impl std::default::Default for CustomerSessionResourceComponentsResourcePaymentE
 /// An enum representing the possible values of an `CustomerSessionResourceComponentsResourcePaymentElementResourceFeatures`'s `payment_method_redisplay` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRedisplay {
+pub enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRedisplay
+{
     Disabled,
     Enabled,
 }
@@ -487,7 +509,8 @@ impl std::default::Default for CustomerSessionResourceComponentsResourcePaymentE
 /// An enum representing the possible values of an `CustomerSessionResourceComponentsResourcePaymentElementResourceFeatures`'s `payment_method_remove` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove {
+pub enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove
+{
     Disabled,
     Enabled,
 }
@@ -501,18 +524,24 @@ impl CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaym
     }
 }
 
-impl AsRef<str> for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove {
+impl AsRef<str>
+    for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove
+{
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
 
-impl std::fmt::Display for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove {
+impl std::fmt::Display
+    for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove {
+impl std::default::Default
+    for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodRemove
+{
     fn default() -> Self {
         Self::Disabled
     }
@@ -535,18 +564,24 @@ impl CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaym
     }
 }
 
-impl AsRef<str> for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSave {
+impl AsRef<str>
+    for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSave
+{
     fn as_ref(&self) -> &str {
         self.as_str()
     }
 }
 
-impl std::fmt::Display for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSave {
+impl std::fmt::Display
+    for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSave
+{
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         self.as_str().fmt(f)
     }
 }
-impl std::default::Default for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSave {
+impl std::default::Default
+    for CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSave
+{
     fn default() -> Self {
         Self::Disabled
     }
@@ -555,7 +590,8 @@ impl std::default::Default for CustomerSessionResourceComponentsResourcePaymentE
 /// An enum representing the possible values of an `CustomerSessionResourceComponentsResourcePaymentElementResourceFeatures`'s `payment_method_save_usage` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
-pub enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSaveUsage {
+pub enum CustomerSessionResourceComponentsResourcePaymentElementResourceFeaturesPaymentMethodSaveUsage
+{
     OffSession,
     OnSession,
 }

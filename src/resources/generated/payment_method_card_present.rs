@@ -2,13 +2,15 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::resources::{PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet, PaymentMethodCardPresentNetworks, PaymentMethodDetailsCardPresentOffline};
+use crate::resources::{
+    PaymentFlowsPrivatePaymentMethodsCardPresentCommonWallet, PaymentMethodCardPresentNetworks,
+    PaymentMethodDetailsCardPresentOffline,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "payment_method_card_present".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CardPresent {
-
     /// Card brand.
     ///
     /// Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.

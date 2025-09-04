@@ -6,5 +6,4 @@ use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "payment_method.automatically_updated".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct PaymentMethodAutomaticallyUpdated {
-}
+pub struct PaymentMethodAutomaticallyUpdated {}

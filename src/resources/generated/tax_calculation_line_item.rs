@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{TaxCalculationLineItemId};
+use crate::ids::TaxCalculationLineItemId;
 use crate::params::{Metadata, Object};
 use serde::{Deserialize, Serialize};
 
@@ -65,7 +65,6 @@ impl Object for TaxCalculationLineItem {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TaxProductResourceLineItemTaxBreakdown {
-
     /// The amount of tax, in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
     pub amount: i64,
 
@@ -90,7 +89,6 @@ pub struct TaxProductResourceLineItemTaxBreakdown {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TaxProductResourceJurisdiction {
-
     /// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
     pub country: String,
 
@@ -108,7 +106,6 @@ pub struct TaxProductResourceJurisdiction {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TaxProductResourceLineItemTaxRateDetails {
-
     /// A localized display name for tax type, intended to be human-readable.
     ///
     /// For example, "Local Sales and Use Tax", "Value-added tax (VAT)", or "Umsatzsteuer (USt.)".
@@ -255,20 +252,44 @@ pub enum TaxProductResourceLineItemTaxBreakdownTaxabilityReason {
 impl TaxProductResourceLineItemTaxBreakdownTaxabilityReason {
     pub fn as_str(self) -> &'static str {
         match self {
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::CustomerExempt => "customer_exempt",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::NotCollecting => "not_collecting",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::NotSubjectToTax => "not_subject_to_tax",
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::CustomerExempt => {
+                "customer_exempt"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::NotCollecting => {
+                "not_collecting"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::NotSubjectToTax => {
+                "not_subject_to_tax"
+            }
             TaxProductResourceLineItemTaxBreakdownTaxabilityReason::NotSupported => "not_supported",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::PortionProductExempt => "portion_product_exempt",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::PortionReducedRated => "portion_reduced_rated",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::PortionStandardRated => "portion_standard_rated",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ProductExempt => "product_exempt",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ProductExemptHoliday => "product_exempt_holiday",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ProportionallyRated => "proportionally_rated",
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::PortionProductExempt => {
+                "portion_product_exempt"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::PortionReducedRated => {
+                "portion_reduced_rated"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::PortionStandardRated => {
+                "portion_standard_rated"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ProductExempt => {
+                "product_exempt"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ProductExemptHoliday => {
+                "product_exempt_holiday"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ProportionallyRated => {
+                "proportionally_rated"
+            }
             TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ReducedRated => "reduced_rated",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ReverseCharge => "reverse_charge",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::StandardRated => "standard_rated",
-            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::TaxableBasisReduced => "taxable_basis_reduced",
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ReverseCharge => {
+                "reverse_charge"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::StandardRated => {
+                "standard_rated"
+            }
+            TaxProductResourceLineItemTaxBreakdownTaxabilityReason::TaxableBasisReduced => {
+                "taxable_basis_reduced"
+            }
             TaxProductResourceLineItemTaxBreakdownTaxabilityReason::ZeroRated => "zero_rated",
         }
     }
@@ -315,7 +336,9 @@ impl TaxProductResourceLineItemTaxRateDetailsTaxType {
     pub fn as_str(self) -> &'static str {
         match self {
             TaxProductResourceLineItemTaxRateDetailsTaxType::AmusementTax => "amusement_tax",
-            TaxProductResourceLineItemTaxRateDetailsTaxType::CommunicationsTax => "communications_tax",
+            TaxProductResourceLineItemTaxRateDetailsTaxType::CommunicationsTax => {
+                "communications_tax"
+            }
             TaxProductResourceLineItemTaxRateDetailsTaxType::Gst => "gst",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Hst => "hst",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Igst => "igst",
@@ -323,7 +346,9 @@ impl TaxProductResourceLineItemTaxRateDetailsTaxType {
             TaxProductResourceLineItemTaxRateDetailsTaxType::LeaseTax => "lease_tax",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Pst => "pst",
             TaxProductResourceLineItemTaxRateDetailsTaxType::Qst => "qst",
-            TaxProductResourceLineItemTaxRateDetailsTaxType::RetailDeliveryFee => "retail_delivery_fee",
+            TaxProductResourceLineItemTaxRateDetailsTaxType::RetailDeliveryFee => {
+                "retail_delivery_fee"
+            }
             TaxProductResourceLineItemTaxRateDetailsTaxType::Rst => "rst",
             TaxProductResourceLineItemTaxRateDetailsTaxType::SalesTax => "sales_tax",
             TaxProductResourceLineItemTaxRateDetailsTaxType::ServiceTax => "service_tax",

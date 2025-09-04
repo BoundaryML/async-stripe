@@ -3,7 +3,7 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::{EventId};
+use crate::ids::EventId;
 use crate::params::{Expand, List, Object, Paginable, RangeQuery, Timestamp};
 use crate::resources::{EventType, NotificationEventData};
 use serde::{Deserialize, Serialize};
@@ -52,14 +52,12 @@ pub struct Event {
 }
 
 impl Event {
-
     /// List events, going back up to 30 days.
     ///
     /// Each event data is rendered according to Stripe API version at its creation time, specified in [event object](https://docs.stripe.com/api/events/object) `api_version` attribute (not according to your current Stripe API version or `Stripe-Version` header).
-pub fn list(client: &Client, params: &ListEvents<'_>) -> Response<List<Event>> {
-   client.get_query("/events", params)
-}
-
+    pub fn list(client: &Client, params: &ListEvents<'_>) -> Response<List<Event>> {
+        client.get_query("/events", params)
+    }
 
     /// Retrieves the details of an event if it was created in the last 30 days.
     ///
@@ -81,7 +79,6 @@ impl Object for Event {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct NotificationEventRequest {
-
     /// ID of the API request that caused the event.
     ///
     /// If null, the event was automatic (e.g., Stripe's automatic subscription handling).
@@ -97,7 +94,6 @@ pub struct NotificationEventRequest {
 /// The parameters for `Event::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListEvents<'a> {
-
     /// Only return events that were created during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created: Option<RangeQuery<Timestamp>>,
@@ -164,5 +160,6 @@ impl<'a> ListEvents<'a> {
 impl Paginable for ListEvents<'_> {
     type O = Event;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}

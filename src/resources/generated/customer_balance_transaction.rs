@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{CustomerBalanceTransactionId};
+use crate::ids::CustomerBalanceTransactionId;
 use crate::params::{Expandable, Metadata, Object, Timestamp};
 use crate::resources::{CheckoutSession, CreditNote, Currency, Customer, Invoice};
 use serde::{Deserialize, Serialize};
@@ -101,8 +101,12 @@ impl CustomerBalanceTransactionType {
         match self {
             CustomerBalanceTransactionType::Adjustment => "adjustment",
             CustomerBalanceTransactionType::AppliedToInvoice => "applied_to_invoice",
-            CustomerBalanceTransactionType::CheckoutSessionSubscriptionPayment => "checkout_session_subscription_payment",
-            CustomerBalanceTransactionType::CheckoutSessionSubscriptionPaymentCanceled => "checkout_session_subscription_payment_canceled",
+            CustomerBalanceTransactionType::CheckoutSessionSubscriptionPayment => {
+                "checkout_session_subscription_payment"
+            }
+            CustomerBalanceTransactionType::CheckoutSessionSubscriptionPaymentCanceled => {
+                "checkout_session_subscription_payment_canceled"
+            }
             CustomerBalanceTransactionType::CreditNote => "credit_note",
             CustomerBalanceTransactionType::Initial => "initial",
             CustomerBalanceTransactionType::InvoiceOverpaid => "invoice_overpaid",

@@ -3,7 +3,7 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::{AccountId};
+use crate::ids::AccountId;
 use crate::params::{Expand, Object, Timestamp};
 use serde::{Deserialize, Serialize};
 
@@ -12,7 +12,6 @@ use serde::{Deserialize, Serialize};
 /// For more details see <https://stripe.com/docs/api/account_sessions/object>
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct AccountSession {
-
     /// The ID of the account the AccountSession was created for.
     pub account: String,
 
@@ -33,7 +32,6 @@ pub struct AccountSession {
 }
 
 impl AccountSession {
-
     /// Creates a AccountSession object that includes a single-use token that the platform can use on their front-end to grant client-side API access.
     pub fn create(client: &Client, params: CreateAccountSession<'_>) -> Response<AccountSession> {
         #[allow(clippy::needless_borrows_for_generic_args)]
@@ -51,7 +49,6 @@ impl Object for AccountSession {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedAccountSessionCreateComponents {
-
     pub account_management: ConnectEmbeddedAccountConfigClaim,
 
     pub account_onboarding: ConnectEmbeddedAccountConfigClaim,
@@ -97,7 +94,6 @@ pub struct ConnectEmbeddedAccountSessionCreateComponents {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedAccountConfigClaim {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -106,7 +102,6 @@ pub struct ConnectEmbeddedAccountConfigClaim {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedAccountFeaturesClaim {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -123,7 +118,6 @@ pub struct ConnectEmbeddedAccountFeaturesClaim {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedBaseConfigClaim {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -131,12 +125,10 @@ pub struct ConnectEmbeddedBaseConfigClaim {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct ConnectEmbeddedBaseFeatures {
-}
+pub struct ConnectEmbeddedBaseFeatures {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedDisputesListConfig {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -145,7 +137,6 @@ pub struct ConnectEmbeddedDisputesListConfig {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedDisputesListFeatures {
-
     /// Whether to allow capturing and cancelling payment intents.
     ///
     /// This is `true` by default.
@@ -169,7 +160,6 @@ pub struct ConnectEmbeddedDisputesListFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedFinancialAccountConfigClaim {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -178,7 +168,6 @@ pub struct ConnectEmbeddedFinancialAccountConfigClaim {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedFinancialAccountFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -201,7 +190,6 @@ pub struct ConnectEmbeddedFinancialAccountFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedFinancialAccountTransactionsConfigClaim {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -210,14 +198,12 @@ pub struct ConnectEmbeddedFinancialAccountTransactionsConfigClaim {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedFinancialAccountTransactionsFeatures {
-
     /// Whether to allow card spend dispute management features.
     pub card_spend_dispute_management: bool,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedInstantPayoutsPromotionConfig {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -226,7 +212,6 @@ pub struct ConnectEmbeddedInstantPayoutsPromotionConfig {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedInstantPayoutsPromotionFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -248,7 +233,6 @@ pub struct ConnectEmbeddedInstantPayoutsPromotionFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedIssuingCardConfigClaim {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -257,7 +241,6 @@ pub struct ConnectEmbeddedIssuingCardConfigClaim {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedIssuingCardFeatures {
-
     /// Whether to allow card management features.
     pub card_management: bool,
 
@@ -273,7 +256,6 @@ pub struct ConnectEmbeddedIssuingCardFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedIssuingCardsListConfigClaim {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -282,7 +264,6 @@ pub struct ConnectEmbeddedIssuingCardsListConfigClaim {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedIssuingCardsListFeatures {
-
     /// Whether to allow card management features.
     pub card_management: bool,
 
@@ -305,7 +286,6 @@ pub struct ConnectEmbeddedIssuingCardsListFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedPaymentDisputesConfig {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -314,7 +294,6 @@ pub struct ConnectEmbeddedPaymentDisputesConfig {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedPaymentDisputesFeatures {
-
     /// Whether connected accounts can manage destination charges that are created on behalf of them.
     ///
     /// This is `false` by default.
@@ -333,7 +312,6 @@ pub struct ConnectEmbeddedPaymentDisputesFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedPaymentsConfigClaim {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -342,7 +320,6 @@ pub struct ConnectEmbeddedPaymentsConfigClaim {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedPaymentsFeatures {
-
     /// Whether to allow capturing and cancelling payment intents.
     ///
     /// This is `true` by default.
@@ -366,7 +343,6 @@ pub struct ConnectEmbeddedPaymentsFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedPayoutsConfig {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -375,7 +351,6 @@ pub struct ConnectEmbeddedPayoutsConfig {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ConnectEmbeddedPayoutsFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -408,7 +383,6 @@ pub struct ConnectEmbeddedPayoutsFeatures {
 /// The parameters for `AccountSession::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreateAccountSession<'a> {
-
     /// The identifier of the account to create an Account Session for.
     pub account: AccountId,
 
@@ -424,17 +398,12 @@ pub struct CreateAccountSession<'a> {
 
 impl<'a> CreateAccountSession<'a> {
     pub fn new(account: AccountId, components: CreateAccountSessionComponents) -> Self {
-        CreateAccountSession {
-            account,
-            components,
-            expand: Default::default(),
-        }
+        CreateAccountSession { account, components, expand: Default::default() }
     }
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponents {
-
     /// Configuration for the [account management](/connect/supported-embedded-components/account-management/) embedded component.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub account_management: Option<CreateAccountSessionComponentsAccountManagement>,
@@ -465,7 +434,8 @@ pub struct CreateAccountSessionComponents {
 
     /// Configuration for the [financial account transactions](/connect/supported-embedded-components/financial-account-transactions/) embedded component.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub financial_account_transactions: Option<CreateAccountSessionComponentsFinancialAccountTransactions>,
+    pub financial_account_transactions:
+        Option<CreateAccountSessionComponentsFinancialAccountTransactions>,
 
     /// Configuration for the [instant payouts promotion](/connect/supported-embedded-components/instant-payouts-promotion/) embedded component.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -501,7 +471,8 @@ pub struct CreateAccountSessionComponents {
 
     /// Configuration for the [payout reconciliation report](/connect/supported-embedded-components/financial-reports#payout-reconciliation-report) embedded component.
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub payout_reconciliation_report: Option<CreateAccountSessionComponentsPayoutReconciliationReport>,
+    pub payout_reconciliation_report:
+        Option<CreateAccountSessionComponentsPayoutReconciliationReport>,
 
     /// Configuration for the [payouts](/connect/supported-embedded-components/payouts/) embedded component.
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -522,7 +493,6 @@ pub struct CreateAccountSessionComponents {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsAccountManagement {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -533,7 +503,6 @@ pub struct CreateAccountSessionComponentsAccountManagement {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsAccountOnboarding {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -544,7 +513,6 @@ pub struct CreateAccountSessionComponentsAccountOnboarding {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsBalanceReport {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -555,7 +523,6 @@ pub struct CreateAccountSessionComponentsBalanceReport {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsBalances {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -566,7 +533,6 @@ pub struct CreateAccountSessionComponentsBalances {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsDisputesList {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -577,7 +543,6 @@ pub struct CreateAccountSessionComponentsDisputesList {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsDocuments {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -588,7 +553,6 @@ pub struct CreateAccountSessionComponentsDocuments {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsFinancialAccount {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -599,7 +563,6 @@ pub struct CreateAccountSessionComponentsFinancialAccount {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsFinancialAccountTransactions {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -610,7 +573,6 @@ pub struct CreateAccountSessionComponentsFinancialAccountTransactions {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsInstantPayoutsPromotion {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -621,7 +583,6 @@ pub struct CreateAccountSessionComponentsInstantPayoutsPromotion {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsIssuingCard {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -632,7 +593,6 @@ pub struct CreateAccountSessionComponentsIssuingCard {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsIssuingCardsList {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -643,7 +603,6 @@ pub struct CreateAccountSessionComponentsIssuingCardsList {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsNotificationBanner {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -654,7 +613,6 @@ pub struct CreateAccountSessionComponentsNotificationBanner {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPaymentDetails {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -665,7 +623,6 @@ pub struct CreateAccountSessionComponentsPaymentDetails {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPaymentDisputes {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -676,7 +633,6 @@ pub struct CreateAccountSessionComponentsPaymentDisputes {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPayments {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -687,7 +643,6 @@ pub struct CreateAccountSessionComponentsPayments {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPayoutDetails {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -698,7 +653,6 @@ pub struct CreateAccountSessionComponentsPayoutDetails {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPayoutReconciliationReport {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -709,7 +663,6 @@ pub struct CreateAccountSessionComponentsPayoutReconciliationReport {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPayouts {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -720,7 +673,6 @@ pub struct CreateAccountSessionComponentsPayouts {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPayoutsList {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -731,7 +683,6 @@ pub struct CreateAccountSessionComponentsPayoutsList {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsTaxRegistrations {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -742,7 +693,6 @@ pub struct CreateAccountSessionComponentsTaxRegistrations {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsTaxSettings {
-
     /// Whether the embedded component is enabled.
     pub enabled: bool,
 
@@ -753,7 +703,6 @@ pub struct CreateAccountSessionComponentsTaxSettings {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsAccountManagementFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -772,7 +721,6 @@ pub struct CreateAccountSessionComponentsAccountManagementFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsAccountOnboardingFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -790,12 +738,10 @@ pub struct CreateAccountSessionComponentsAccountOnboardingFeatures {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateAccountSessionComponentsBalanceReportFeatures {
-}
+pub struct CreateAccountSessionComponentsBalanceReportFeatures {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsBalancesFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -832,7 +778,6 @@ pub struct CreateAccountSessionComponentsBalancesFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsDisputesListFeatures {
-
     /// Whether to allow capturing and cancelling payment intents.
     ///
     /// This is `true` by default.
@@ -859,12 +804,10 @@ pub struct CreateAccountSessionComponentsDisputesListFeatures {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateAccountSessionComponentsDocumentsFeatures {
-}
+pub struct CreateAccountSessionComponentsDocumentsFeatures {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsFinancialAccountFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -891,7 +834,6 @@ pub struct CreateAccountSessionComponentsFinancialAccountFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsFinancialAccountTransactionsFeatures {
-
     /// Whether to allow card spend dispute management features.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub card_spend_dispute_management: Option<bool>,
@@ -899,7 +841,6 @@ pub struct CreateAccountSessionComponentsFinancialAccountTransactionsFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsInstantPayoutsPromotionFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -924,7 +865,6 @@ pub struct CreateAccountSessionComponentsInstantPayoutsPromotionFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsIssuingCardFeatures {
-
     /// Whether to allow card management features.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub card_management: Option<bool>,
@@ -944,7 +884,6 @@ pub struct CreateAccountSessionComponentsIssuingCardFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsIssuingCardsListFeatures {
-
     /// Whether to allow card management features.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub card_management: Option<bool>,
@@ -972,7 +911,6 @@ pub struct CreateAccountSessionComponentsIssuingCardsListFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsNotificationBannerFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -991,7 +929,6 @@ pub struct CreateAccountSessionComponentsNotificationBannerFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPaymentDetailsFeatures {
-
     /// Whether to allow capturing and cancelling payment intents.
     ///
     /// This is `true` by default.
@@ -1019,7 +956,6 @@ pub struct CreateAccountSessionComponentsPaymentDetailsFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPaymentDisputesFeatures {
-
     /// Whether connected accounts can manage destination charges that are created on behalf of them.
     ///
     /// This is `false` by default.
@@ -1041,7 +977,6 @@ pub struct CreateAccountSessionComponentsPaymentDisputesFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPaymentsFeatures {
-
     /// Whether to allow capturing and cancelling payment intents.
     ///
     /// This is `true` by default.
@@ -1068,16 +1003,13 @@ pub struct CreateAccountSessionComponentsPaymentsFeatures {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateAccountSessionComponentsPayoutDetailsFeatures {
-}
+pub struct CreateAccountSessionComponentsPayoutDetailsFeatures {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateAccountSessionComponentsPayoutReconciliationReportFeatures {
-}
+pub struct CreateAccountSessionComponentsPayoutReconciliationReportFeatures {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateAccountSessionComponentsPayoutsFeatures {
-
     /// Whether Stripe user authentication is disabled.
     ///
     /// This value can only be `true` for accounts where `controller.requirement_collection` is `application` for the account.
@@ -1113,13 +1045,10 @@ pub struct CreateAccountSessionComponentsPayoutsFeatures {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateAccountSessionComponentsPayoutsListFeatures {
-}
+pub struct CreateAccountSessionComponentsPayoutsListFeatures {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateAccountSessionComponentsTaxRegistrationsFeatures {
-}
+pub struct CreateAccountSessionComponentsTaxRegistrationsFeatures {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct CreateAccountSessionComponentsTaxSettingsFeatures {
-}
+pub struct CreateAccountSessionComponentsTaxSettingsFeatures {}

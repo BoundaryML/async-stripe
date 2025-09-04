@@ -5,7 +5,10 @@
 use crate::client::{Client, Response};
 use crate::ids::{ChargeId, CustomerId, PaymentIntentId, RefundId};
 use crate::params::{Expand, Expandable, List, Metadata, Object, Paginable, RangeQuery, Timestamp};
-use crate::resources::{BalanceTransaction, Charge, Currency, PaymentFlowsPaymentIntentPresentmentDetails, PaymentIntent, TransferReversal};
+use crate::resources::{
+    BalanceTransaction, Charge, Currency, PaymentFlowsPaymentIntentPresentmentDetails,
+    PaymentIntent, TransferReversal,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "Refund".
@@ -102,15 +105,13 @@ pub struct Refund {
 }
 
 impl Refund {
-
     /// Returns a list of all refunds you created.
     ///
     /// We return the refunds in sorted order, with the most recent refunds appearing first.
     /// The 10 most recent refunds are always available by default on the Charge object.
-pub fn list(client: &Client, params: &ListRefunds<'_>) -> Response<List<Refund>> {
-   client.get_query("/refunds", params)
-}
-
+    pub fn list(client: &Client, params: &ListRefunds<'_>) -> Response<List<Refund>> {
+        client.get_query("/refunds", params)
+    }
 
     /// When you create a new refund, you must specify a Charge or a PaymentIntent object on which to create it.
     ///
@@ -154,7 +155,6 @@ impl Object for Refund {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetails {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub affirm: Option<DestinationDetailsUnimplemented>,
 
@@ -260,12 +260,10 @@ pub struct RefundDestinationDetails {
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct DestinationDetailsUnimplemented {
-}
+pub struct DestinationDetailsUnimplemented {}
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsBlik {
-
     /// For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
     pub network_decline_code: Option<String>,
 
@@ -280,7 +278,6 @@ pub struct RefundDestinationDetailsBlik {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsBrBankTransfer {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -292,7 +289,6 @@ pub struct RefundDestinationDetailsBrBankTransfer {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsCard {
-
     /// Value of the reference number assigned to the refund.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub reference: Option<String>,
@@ -316,7 +312,6 @@ pub struct RefundDestinationDetailsCard {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsEuBankTransfer {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -328,7 +323,6 @@ pub struct RefundDestinationDetailsEuBankTransfer {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsGbBankTransfer {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -340,7 +334,6 @@ pub struct RefundDestinationDetailsGbBankTransfer {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsJpBankTransfer {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -352,7 +345,6 @@ pub struct RefundDestinationDetailsJpBankTransfer {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsMultibanco {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -364,7 +356,6 @@ pub struct RefundDestinationDetailsMultibanco {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsMxBankTransfer {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -376,7 +367,6 @@ pub struct RefundDestinationDetailsMxBankTransfer {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsP24 {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -388,14 +378,12 @@ pub struct RefundDestinationDetailsP24 {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsPaypal {
-
     /// For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
     pub network_decline_code: Option<String>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsSwish {
-
     /// For refunds declined by the network, a decline code provided by the network which indicates the reason the refund failed.
     pub network_decline_code: Option<String>,
 
@@ -410,7 +398,6 @@ pub struct RefundDestinationDetailsSwish {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsThBankTransfer {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -422,7 +409,6 @@ pub struct RefundDestinationDetailsThBankTransfer {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundDestinationDetailsUsBankTransfer {
-
     /// The reference assigned to the refund.
     pub reference: Option<String>,
 
@@ -434,7 +420,6 @@ pub struct RefundDestinationDetailsUsBankTransfer {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundNextAction {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub display_details: Option<RefundNextActionDisplayDetails>,
 
@@ -445,7 +430,6 @@ pub struct RefundNextAction {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct RefundNextActionDisplayDetails {
-
     pub email_sent: EmailSent,
 
     /// The expiry timestamp.
@@ -454,7 +438,6 @@ pub struct RefundNextActionDisplayDetails {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct EmailSent {
-
     /// The timestamp when the email was sent.
     pub email_sent_at: Timestamp,
 
@@ -465,7 +448,6 @@ pub struct EmailSent {
 /// The parameters for `Refund::create`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct CreateRefund<'a> {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub amount: Option<i64>,
 
@@ -551,7 +533,6 @@ impl<'a> CreateRefund<'a> {
 /// The parameters for `Refund::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListRefunds<'a> {
-
     /// Only return refunds for the charge specified by this charge ID.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub charge: Option<ChargeId>,
@@ -605,12 +586,12 @@ impl<'a> ListRefunds<'a> {
 impl Paginable for ListRefunds<'_> {
     type O = Refund;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 /// The parameters for `Refund::update`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct UpdateRefund<'a> {
-
     /// Specifies which fields in the response should be expanded.
     #[serde(skip_serializing_if = "Expand::is_empty")]
     pub expand: &'a [&'a str],
@@ -626,10 +607,7 @@ pub struct UpdateRefund<'a> {
 
 impl<'a> UpdateRefund<'a> {
     pub fn new() -> Self {
-        UpdateRefund {
-            expand: Default::default(),
-            metadata: Default::default(),
-        }
+        UpdateRefund { expand: Default::default(), metadata: Default::default() }
     }
 }
 

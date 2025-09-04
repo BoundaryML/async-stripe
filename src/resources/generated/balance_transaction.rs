@@ -5,7 +5,9 @@
 use crate::client::{Client, Response};
 use crate::ids::{BalanceTransactionId, PayoutId, SourceId};
 use crate::params::{Expand, Expandable, List, Object, Paginable, RangeQuery, Timestamp};
-use crate::resources::{BalanceTransactionSourceUnion, BalanceTransactionStatus, Currency, FeeType};
+use crate::resources::{
+    BalanceTransactionSourceUnion, BalanceTransactionStatus, Currency, FeeType,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "BalanceTransaction".
@@ -82,19 +84,24 @@ pub struct BalanceTransaction {
 }
 
 impl BalanceTransaction {
-
     /// Returns a list of transactions that have contributed to the Stripe account balance (e.g., charges, transfers, and so forth).
     ///
     /// The transactions are returned in sorted order, with the most recent transactions appearing first.  Note that this endpoint was previously called “Balance history” and used the path `/v1/balance/history`.
-pub fn list(client: &Client, params: &ListBalanceTransactions<'_>) -> Response<List<BalanceTransaction>> {
-   client.get_query("/balance_transactions", params)
-}
-
+    pub fn list(
+        client: &Client,
+        params: &ListBalanceTransactions<'_>,
+    ) -> Response<List<BalanceTransaction>> {
+        client.get_query("/balance_transactions", params)
+    }
 
     /// Retrieves the balance transaction with the given ID.
     ///
     /// Note that this endpoint previously used the path `/v1/balance/history/:id`.
-    pub fn retrieve(client: &Client, id: &BalanceTransactionId, expand: &[&str]) -> Response<BalanceTransaction> {
+    pub fn retrieve(
+        client: &Client,
+        id: &BalanceTransactionId,
+        expand: &[&str],
+    ) -> Response<BalanceTransaction> {
         client.get_query(&format!("/balance_transactions/{}", id), Expand { expand })
     }
 }
@@ -111,7 +118,6 @@ impl Object for BalanceTransaction {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct Fee {
-
     /// Amount of the fee, in cents.
     pub amount: i64,
 
@@ -136,7 +142,6 @@ pub struct Fee {
 /// The parameters for `BalanceTransaction::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListBalanceTransactions<'a> {
-
     /// Only return transactions that were created during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created: Option<RangeQuery<Timestamp>>,
@@ -206,8 +211,9 @@ impl<'a> ListBalanceTransactions<'a> {
 impl Paginable for ListBalanceTransactions<'_> {
     type O = BalanceTransaction;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 /// An enum representing the possible values of an `BalanceTransaction`'s `balance_type` field.
 #[derive(Copy, Clone, Debug, Deserialize, Serialize, Eq, PartialEq)]
 #[serde(rename_all = "snake_case")]
@@ -222,7 +228,9 @@ impl BalanceTransactionBalanceType {
         match self {
             BalanceTransactionBalanceType::Issuing => "issuing",
             BalanceTransactionBalanceType::Payments => "payments",
-            BalanceTransactionBalanceType::RefundAndDisputePrefunding => "refund_and_dispute_prefunding",
+            BalanceTransactionBalanceType::RefundAndDisputePrefunding => {
+                "refund_and_dispute_prefunding"
+            }
         }
     }
 }
@@ -317,7 +325,9 @@ impl BalanceTransactionType {
             BalanceTransactionType::Payment => "payment",
             BalanceTransactionType::PaymentFailureRefund => "payment_failure_refund",
             BalanceTransactionType::PaymentNetworkReserveHold => "payment_network_reserve_hold",
-            BalanceTransactionType::PaymentNetworkReserveRelease => "payment_network_reserve_release",
+            BalanceTransactionType::PaymentNetworkReserveRelease => {
+                "payment_network_reserve_release"
+            }
             BalanceTransactionType::PaymentRefund => "payment_refund",
             BalanceTransactionType::PaymentReversal => "payment_reversal",
             BalanceTransactionType::PaymentUnreconciled => "payment_unreconciled",
@@ -331,7 +341,9 @@ impl BalanceTransactionType {
             BalanceTransactionType::ReserveTransaction => "reserve_transaction",
             BalanceTransactionType::ReservedFunds => "reserved_funds",
             BalanceTransactionType::StripeBalancePaymentDebit => "stripe_balance_payment_debit",
-            BalanceTransactionType::StripeBalancePaymentDebitReversal => "stripe_balance_payment_debit_reversal",
+            BalanceTransactionType::StripeBalancePaymentDebitReversal => {
+                "stripe_balance_payment_debit_reversal"
+            }
             BalanceTransactionType::StripeFee => "stripe_fee",
             BalanceTransactionType::StripeFxFee => "stripe_fx_fee",
             BalanceTransactionType::TaxFee => "tax_fee",

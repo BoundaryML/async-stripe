@@ -171,6 +171,8 @@ pub fn object_mappings() -> ObjectMap {
         ("webhook_endpoint_api_version", "api_version"),
         ("create_webhook_endpoint_enabled_events", "event_filter"),
         ("update_webhook_endpoint_enabled_events", "event_filter"),
+
+        ("tax_product_resource_postal_address", "address"),
     ])
 }
 

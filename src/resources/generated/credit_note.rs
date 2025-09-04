@@ -5,7 +5,10 @@
 use crate::client::{Client, Response};
 use crate::ids::{CreditNoteId, CustomerId, InvoiceId};
 use crate::params::{Expand, Expandable, List, Metadata, Object, Paginable, RangeQuery, Timestamp};
-use crate::resources::{BillingCreditBalanceTransaction, CreditNoteLineItem, Currency, Customer, CustomerBalanceTransaction, Discount, Invoice, InvoicesResourceShippingCost, Refund};
+use crate::resources::{
+    BillingCreditBalanceTransaction, CreditNoteLineItem, Currency, Customer,
+    CustomerBalanceTransaction, Discount, Invoice, InvoicesResourceShippingCost, Refund,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "CreditNote".
@@ -126,12 +129,10 @@ pub struct CreditNote {
 }
 
 impl CreditNote {
-
     /// Returns a list of credit notes.
-pub fn list(client: &Client, params: &ListCreditNotes<'_>) -> Response<List<CreditNote>> {
-   client.get_query("/credit_notes", params)
-}
-
+    pub fn list(client: &Client, params: &ListCreditNotes<'_>) -> Response<List<CreditNote>> {
+        client.get_query("/credit_notes", params)
+    }
 
     /// Issue a credit note to adjust the amount of a finalized invoice.
     ///
@@ -149,7 +150,11 @@ pub fn list(client: &Client, params: &ListCreditNotes<'_>) -> Response<List<Cred
     }
 
     /// Updates an existing credit note.
-    pub fn update(client: &Client, id: &CreditNoteId, params: UpdateCreditNote<'_>) -> Response<CreditNote> {
+    pub fn update(
+        client: &Client,
+        id: &CreditNoteId,
+        params: UpdateCreditNote<'_>,
+    ) -> Response<CreditNote> {
         #[allow(clippy::needless_borrows_for_generic_args)]
         client.post_form(&format!("/credit_notes/{}", id), &params)
     }
@@ -167,7 +172,6 @@ impl Object for CreditNote {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingTaxesTax {
-
     /// The amount of the tax, in cents (or local equivalent).
     pub amount: i64,
 
@@ -194,13 +198,11 @@ pub struct BillingBillResourceInvoicingTaxesTax {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingBillResourceInvoicingTaxesTaxRateDetails {
-
     pub tax_rate: String,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreditNoteRefund {
-
     /// Amount of the refund that applies to this credit note, in cents (or local equivalent).
     pub amount_refunded: i64,
 
@@ -210,7 +212,6 @@ pub struct CreditNoteRefund {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreditNotesPretaxCreditAmount {
-
     /// The amount, in cents (or local equivalent), of the pretax credit amount.
     pub amount: i64,
 
@@ -229,7 +230,6 @@ pub struct CreditNotesPretaxCreditAmount {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct DiscountsResourceDiscountAmount {
-
     /// The amount, in cents (or local equivalent), of the discount.
     pub amount: i64,
 
@@ -240,7 +240,6 @@ pub struct DiscountsResourceDiscountAmount {
 /// The parameters for `CreditNote::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreateCreditNote<'a> {
-
     /// The integer amount in cents (or local equivalent) representing the total amount of the credit note.
     ///
     /// One of `amount`, `lines`, or `shipping_cost` must be provided.
@@ -336,7 +335,6 @@ impl<'a> CreateCreditNote<'a> {
 /// The parameters for `CreditNote::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListCreditNotes<'a> {
-
     /// Only return credit notes that were created during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created: Option<RangeQuery<Timestamp>>,
@@ -390,12 +388,12 @@ impl<'a> ListCreditNotes<'a> {
 impl Paginable for ListCreditNotes<'_> {
     type O = CreditNote;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 /// The parameters for `CreditNote::update`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct UpdateCreditNote<'a> {
-
     /// Specifies which fields in the response should be expanded.
     #[serde(skip_serializing_if = "Expand::is_empty")]
     pub expand: &'a [&'a str],
@@ -425,7 +423,6 @@ impl<'a> UpdateCreditNote<'a> {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCreditNoteLines {
-
     /// The line item amount to credit.
     ///
     /// Only valid when `type` is `invoice_line_item`.
@@ -481,7 +478,6 @@ pub struct CreateCreditNoteLines {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCreditNoteRefunds {
-
     /// Amount of the refund that applies to this credit note, in cents (or local equivalent).
     ///
     /// Defaults to the entire refund amount.
@@ -497,7 +493,6 @@ pub struct CreateCreditNoteRefunds {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCreditNoteShippingCost {
-
     /// The ID of the shipping rate to use for this order.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub shipping_rate: Option<String>,
@@ -505,7 +500,6 @@ pub struct CreateCreditNoteShippingCost {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateCreditNoteLinesTaxAmounts {
-
     /// The amount, in cents (or local equivalent), of the tax.
     pub amount: i64,
 
@@ -577,21 +571,37 @@ pub enum BillingBillResourceInvoicingTaxesTaxTaxabilityReason {
 impl BillingBillResourceInvoicingTaxesTaxTaxabilityReason {
     pub fn as_str(self) -> &'static str {
         match self {
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::CustomerExempt => "customer_exempt",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::CustomerExempt => {
+                "customer_exempt"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotAvailable => "not_available",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotCollecting => "not_collecting",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSubjectToTax => "not_subject_to_tax",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSubjectToTax => {
+                "not_subject_to_tax"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::NotSupported => "not_supported",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionProductExempt => "portion_product_exempt",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionReducedRated => "portion_reduced_rated",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionStandardRated => "portion_standard_rated",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionProductExempt => {
+                "portion_product_exempt"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionReducedRated => {
+                "portion_reduced_rated"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::PortionStandardRated => {
+                "portion_standard_rated"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExempt => "product_exempt",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExemptHoliday => "product_exempt_holiday",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProportionallyRated => "proportionally_rated",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProductExemptHoliday => {
+                "product_exempt_holiday"
+            }
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ProportionallyRated => {
+                "proportionally_rated"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ReducedRated => "reduced_rated",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ReverseCharge => "reverse_charge",
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::StandardRated => "standard_rated",
-            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::TaxableBasisReduced => "taxable_basis_reduced",
+            BillingBillResourceInvoicingTaxesTaxTaxabilityReason::TaxableBasisReduced => {
+                "taxable_basis_reduced"
+            }
             BillingBillResourceInvoicingTaxesTaxTaxabilityReason::ZeroRated => "zero_rated",
         }
     }
@@ -833,7 +843,9 @@ pub enum CreditNotesPretaxCreditAmountType {
 impl CreditNotesPretaxCreditAmountType {
     pub fn as_str(self) -> &'static str {
         match self {
-            CreditNotesPretaxCreditAmountType::CreditBalanceTransaction => "credit_balance_transaction",
+            CreditNotesPretaxCreditAmountType::CreditBalanceTransaction => {
+                "credit_balance_transaction"
+            }
             CreditNotesPretaxCreditAmountType::Discount => "discount",
         }
     }

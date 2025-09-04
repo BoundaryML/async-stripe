@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_klarna".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodKlarna {
-
     /// The customer's date of birth, if provided.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub dob: Option<PaymentFlowsPrivatePaymentMethodsKlarnaDob>,
@@ -15,7 +14,6 @@ pub struct PaymentMethodKlarna {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentFlowsPrivatePaymentMethodsKlarnaDob {
-
     /// The day of birth, between 1 and 31.
     pub day: Option<i64>,
 

@@ -2,9 +2,11 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{BillingCreditBalanceTransactionId};
+use crate::ids::BillingCreditBalanceTransactionId;
 use crate::params::{Expandable, Object, Timestamp};
-use crate::resources::{BillingCreditGrant, BillingCreditGrantsResourceAmount, Invoice, TestHelpersTestClock};
+use crate::resources::{
+    BillingCreditGrant, BillingCreditGrantsResourceAmount, Invoice, TestHelpersTestClock,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "CreditBalanceTransaction".
@@ -59,13 +61,13 @@ impl Object for BillingCreditBalanceTransaction {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceBalanceCredit {
-
     pub amount: BillingCreditGrantsResourceAmount,
 
     /// Details of the invoice to which the reinstated credits were originally applied.
     ///
     /// Only present if `type` is `credits_application_invoice_voided`.
-    pub credits_application_invoice_voided: Option<BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoided>,
+    pub credits_application_invoice_voided:
+        Option<BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoided>,
 
     /// The type of credit transaction.
     #[serde(rename = "type")]
@@ -74,7 +76,6 @@ pub struct BillingCreditGrantsResourceBalanceCredit {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoided {
-
     /// The invoice to which the reinstated billing credits were originally applied.
     pub invoice: Expandable<Invoice>,
 
@@ -84,7 +85,6 @@ pub struct BillingCreditGrantsResourceBalanceCreditsApplicationInvoiceVoided {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceBalanceDebit {
-
     pub amount: BillingCreditGrantsResourceAmount,
 
     /// Details of how the billing credits were applied to an invoice.
@@ -99,7 +99,6 @@ pub struct BillingCreditGrantsResourceBalanceDebit {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BillingCreditGrantsResourceBalanceCreditsApplied {
-
     /// The invoice to which the billing credits were applied.
     pub invoice: Expandable<Invoice>,
 
@@ -152,7 +151,9 @@ pub enum BillingCreditGrantsResourceBalanceCreditType {
 impl BillingCreditGrantsResourceBalanceCreditType {
     pub fn as_str(self) -> &'static str {
         match self {
-            BillingCreditGrantsResourceBalanceCreditType::CreditsApplicationInvoiceVoided => "credits_application_invoice_voided",
+            BillingCreditGrantsResourceBalanceCreditType::CreditsApplicationInvoiceVoided => {
+                "credits_application_invoice_voided"
+            }
             BillingCreditGrantsResourceBalanceCreditType::CreditsGranted => "credits_granted",
         }
     }

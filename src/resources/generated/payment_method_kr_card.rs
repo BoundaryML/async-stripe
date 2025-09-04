@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_kr_card".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodKrCard {
-
     /// The local credit or debit card brand.
     pub brand: Option<PaymentMethodKrCardBrand>,
 

@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_details_passthrough_card".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodDetailsPassthroughCard {
-
     /// Card brand.
     ///
     /// Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `eftpos_au`, `jcb`, `link`, `mastercard`, `unionpay`, `visa` or `unknown`.

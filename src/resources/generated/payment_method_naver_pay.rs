@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_naver_pay".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodNaverPay {
-
     /// Uniquely identifies this particular Naver Pay account.
     ///
     /// You can use this attribute to check whether two Naver Pay accounts are the same.

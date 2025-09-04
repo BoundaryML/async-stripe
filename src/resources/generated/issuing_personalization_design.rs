@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{IssuingPersonalizationDesignId};
+use crate::ids::IssuingPersonalizationDesignId;
 use crate::params::{Expandable, Metadata, Object, Timestamp};
 use crate::resources::{File, IssuingPhysicalBundle};
 use serde::{Deserialize, Serialize};
@@ -67,7 +67,6 @@ impl Object for IssuingPersonalizationDesign {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingPersonalizationDesignCarrierText {
-
     /// The footer body text of the carrier letter.
     pub footer_body: Option<String>,
 
@@ -83,7 +82,6 @@ pub struct IssuingPersonalizationDesignCarrierText {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingPersonalizationDesignPreferences {
-
     /// Whether we use this personalization design to create cards when one isn't specified.
     ///
     /// A connected account uses the Connect platform's default design if no personalization design is set as the default design.
@@ -95,7 +93,6 @@ pub struct IssuingPersonalizationDesignPreferences {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingPersonalizationDesignRejectionReasons {
-
     /// The reason(s) the card logo was rejected.
     pub card_logo: Option<Vec<IssuingPersonalizationDesignRejectionReasonsCardLogo>>,
 
@@ -120,14 +117,22 @@ pub enum IssuingPersonalizationDesignRejectionReasonsCardLogo {
 impl IssuingPersonalizationDesignRejectionReasonsCardLogo {
     pub fn as_str(self) -> &'static str {
         match self {
-            IssuingPersonalizationDesignRejectionReasonsCardLogo::GeographicLocation => "geographic_location",
+            IssuingPersonalizationDesignRejectionReasonsCardLogo::GeographicLocation => {
+                "geographic_location"
+            }
             IssuingPersonalizationDesignRejectionReasonsCardLogo::Inappropriate => "inappropriate",
             IssuingPersonalizationDesignRejectionReasonsCardLogo::NetworkName => "network_name",
-            IssuingPersonalizationDesignRejectionReasonsCardLogo::NonBinaryImage => "non_binary_image",
-            IssuingPersonalizationDesignRejectionReasonsCardLogo::NonFiatCurrency => "non_fiat_currency",
+            IssuingPersonalizationDesignRejectionReasonsCardLogo::NonBinaryImage => {
+                "non_binary_image"
+            }
+            IssuingPersonalizationDesignRejectionReasonsCardLogo::NonFiatCurrency => {
+                "non_fiat_currency"
+            }
             IssuingPersonalizationDesignRejectionReasonsCardLogo::Other => "other",
             IssuingPersonalizationDesignRejectionReasonsCardLogo::OtherEntity => "other_entity",
-            IssuingPersonalizationDesignRejectionReasonsCardLogo::PromotionalMaterial => "promotional_material",
+            IssuingPersonalizationDesignRejectionReasonsCardLogo::PromotionalMaterial => {
+                "promotional_material"
+            }
         }
     }
 }
@@ -165,13 +170,21 @@ pub enum IssuingPersonalizationDesignRejectionReasonsCarrierText {
 impl IssuingPersonalizationDesignRejectionReasonsCarrierText {
     pub fn as_str(self) -> &'static str {
         match self {
-            IssuingPersonalizationDesignRejectionReasonsCarrierText::GeographicLocation => "geographic_location",
-            IssuingPersonalizationDesignRejectionReasonsCarrierText::Inappropriate => "inappropriate",
+            IssuingPersonalizationDesignRejectionReasonsCarrierText::GeographicLocation => {
+                "geographic_location"
+            }
+            IssuingPersonalizationDesignRejectionReasonsCarrierText::Inappropriate => {
+                "inappropriate"
+            }
             IssuingPersonalizationDesignRejectionReasonsCarrierText::NetworkName => "network_name",
-            IssuingPersonalizationDesignRejectionReasonsCarrierText::NonFiatCurrency => "non_fiat_currency",
+            IssuingPersonalizationDesignRejectionReasonsCarrierText::NonFiatCurrency => {
+                "non_fiat_currency"
+            }
             IssuingPersonalizationDesignRejectionReasonsCarrierText::Other => "other",
             IssuingPersonalizationDesignRejectionReasonsCarrierText::OtherEntity => "other_entity",
-            IssuingPersonalizationDesignRejectionReasonsCarrierText::PromotionalMaterial => "promotional_material",
+            IssuingPersonalizationDesignRejectionReasonsCarrierText::PromotionalMaterial => {
+                "promotional_material"
+            }
         }
     }
 }

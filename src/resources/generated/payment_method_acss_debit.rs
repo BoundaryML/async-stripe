@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_acss_debit".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodAcssDebit {
-
     /// Name of the bank associated with the bank account.
     pub bank_name: Option<String>,
 

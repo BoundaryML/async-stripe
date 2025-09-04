@@ -2,9 +2,13 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{IssuingAuthorizationId};
+use crate::ids::IssuingAuthorizationId;
 use crate::params::{Expandable, Metadata, Object, Timestamp};
-use crate::resources::{BalanceTransaction, Currency, IssuingAuthorizationAmountDetails, IssuingAuthorizationCheck, IssuingAuthorizationMethod, IssuingAuthorizationReason, IssuingCard, IssuingCardholder, IssuingToken, IssuingTransaction, MerchantData};
+use crate::resources::{
+    BalanceTransaction, Currency, IssuingAuthorizationAmountDetails, IssuingAuthorizationCheck,
+    IssuingAuthorizationMethod, IssuingAuthorizationReason, IssuingCard, IssuingCardholder,
+    IssuingToken, IssuingTransaction, MerchantData,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "IssuingAuthorization".
@@ -142,7 +146,6 @@ impl Object for IssuingAuthorization {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationFleetData {
-
     /// Answers to prompts presented to the cardholder at the point of sale.
     ///
     /// Prompted fields vary depending on the configuration of your physical fleet cards.
@@ -164,7 +167,6 @@ pub struct IssuingAuthorizationFleetData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationFleetCardholderPromptData {
-
     /// [Deprecated] An alphanumeric ID, though typical point of sales only support numeric entry.
     ///
     /// The card program can be configured to prompt for a vehicle ID, driver ID, or generic ID.
@@ -190,7 +192,6 @@ pub struct IssuingAuthorizationFleetCardholderPromptData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationFleetReportedBreakdown {
-
     /// Breakdown of fuel portion of the purchase.
     pub fuel: Option<IssuingAuthorizationFleetFuelPriceData>,
 
@@ -203,21 +204,18 @@ pub struct IssuingAuthorizationFleetReportedBreakdown {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationFleetFuelPriceData {
-
     /// Gross fuel amount that should equal Fuel Quantity multiplied by Fuel Unit Cost, inclusive of taxes.
     pub gross_amount_decimal: Option<String>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationFleetNonFuelPriceData {
-
     /// Gross non-fuel amount that should equal the sum of the line items, inclusive of taxes.
     pub gross_amount_decimal: Option<String>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationFleetTaxData {
-
     /// Amount of state or provincial Sales Tax included in the transaction amount.
     ///
     /// `null` if not reported by merchant or not subject to tax.
@@ -231,7 +229,6 @@ pub struct IssuingAuthorizationFleetTaxData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationFraudChallenge {
-
     /// The method by which the fraud challenge was delivered to the cardholder.
     pub channel: IssuingAuthorizationFraudChallengeChannel,
 
@@ -244,7 +241,6 @@ pub struct IssuingAuthorizationFraudChallenge {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationFuelData {
-
     /// [Conexxus Payment System Product Code](https://www.conexxus.org/conexxus-payment-system-product-codes) identifying the primary fuel product purchased.
     pub industry_product_code: Option<String>,
 
@@ -264,7 +260,6 @@ pub struct IssuingAuthorizationFuelData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationNetworkData {
-
     /// Identifier assigned to the acquirer by the card network.
     ///
     /// Sometimes this value is not provided by the network; in this case, the value will be `null`.
@@ -281,7 +276,6 @@ pub struct IssuingAuthorizationNetworkData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationPendingRequest {
-
     /// The additional amount Stripe will hold if the authorization is approved, in the card's [currency](https://stripe.com/docs/api#issuing_authorization_object-pending-request-currency) and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
     pub amount: i64,
 
@@ -314,7 +308,6 @@ pub struct IssuingAuthorizationPendingRequest {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationRequest {
-
     /// The `pending_request.amount` at the time of the request, presented in your card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
     ///
     /// Stripe held this amount from your account to fund the authorization if the request was approved.
@@ -374,7 +367,6 @@ pub struct IssuingAuthorizationRequest {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationTreasury {
-
     /// The array of [ReceivedCredits](https://stripe.com/docs/api/treasury/received_credits) associated with this authorization.
     pub received_credits: Vec<String>,
 
@@ -387,7 +379,6 @@ pub struct IssuingAuthorizationTreasury {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationVerificationData {
-
     /// Whether the cardholder provided an address first line and if it matched the cardholder’s `billing.address.line1`.
     pub address_line1_check: IssuingAuthorizationCheck,
 
@@ -412,7 +403,6 @@ pub struct IssuingAuthorizationVerificationData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationAuthenticationExemption {
-
     /// The entity that requested the exemption, either the acquiring merchant or the Issuing user.
     pub claimed_by: IssuingAuthorizationAuthenticationExemptionClaimedBy,
 
@@ -423,7 +413,6 @@ pub struct IssuingAuthorizationAuthenticationExemption {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingAuthorizationThreeDSecure {
-
     /// The outcome of the 3D Secure authentication request.
     pub result: IssuingAuthorizationThreeDSecureResult,
 }
@@ -474,8 +463,12 @@ pub enum IssuingAuthorizationAuthenticationExemptionType {
 impl IssuingAuthorizationAuthenticationExemptionType {
     pub fn as_str(self) -> &'static str {
         match self {
-            IssuingAuthorizationAuthenticationExemptionType::LowValueTransaction => "low_value_transaction",
-            IssuingAuthorizationAuthenticationExemptionType::TransactionRiskAnalysis => "transaction_risk_analysis",
+            IssuingAuthorizationAuthenticationExemptionType::LowValueTransaction => {
+                "low_value_transaction"
+            }
+            IssuingAuthorizationAuthenticationExemptionType::TransactionRiskAnalysis => {
+                "transaction_risk_analysis"
+            }
             IssuingAuthorizationAuthenticationExemptionType::Unknown => "unknown",
         }
     }
@@ -510,7 +503,9 @@ pub enum IssuingAuthorizationFleetDataPurchaseType {
 impl IssuingAuthorizationFleetDataPurchaseType {
     pub fn as_str(self) -> &'static str {
         match self {
-            IssuingAuthorizationFleetDataPurchaseType::FuelAndNonFuelPurchase => "fuel_and_non_fuel_purchase",
+            IssuingAuthorizationFleetDataPurchaseType::FuelAndNonFuelPurchase => {
+                "fuel_and_non_fuel_purchase"
+            }
             IssuingAuthorizationFleetDataPurchaseType::FuelPurchase => "fuel_purchase",
             IssuingAuthorizationFleetDataPurchaseType::NonFuelPurchase => "non_fuel_purchase",
         }
@@ -653,8 +648,12 @@ pub enum IssuingAuthorizationFraudChallengeUndeliverableReason {
 impl IssuingAuthorizationFraudChallengeUndeliverableReason {
     pub fn as_str(self) -> &'static str {
         match self {
-            IssuingAuthorizationFraudChallengeUndeliverableReason::NoPhoneNumber => "no_phone_number",
-            IssuingAuthorizationFraudChallengeUndeliverableReason::UnsupportedPhoneNumber => "unsupported_phone_number",
+            IssuingAuthorizationFraudChallengeUndeliverableReason::NoPhoneNumber => {
+                "no_phone_number"
+            }
+            IssuingAuthorizationFraudChallengeUndeliverableReason::UnsupportedPhoneNumber => {
+                "unsupported_phone_number"
+            }
         }
     }
 }

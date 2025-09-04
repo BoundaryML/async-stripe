@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "DisputeTransactionShippingAddress".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct DisputeTransactionShippingAddress {
-
     /// City, district, suburb, town, or village.
     pub city: Option<String>,
 

@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::params::{Object};
+use crate::params::Object;
 use crate::resources::{BalanceAmountBySourceType, Currency};
 use serde::{Deserialize, Serialize};
 
@@ -11,7 +11,6 @@ use serde::{Deserialize, Serialize};
 /// For more details see <https://stripe.com/docs/api/balance/balance_object>
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct Balance {
-
     /// Available funds that you can transfer or pay out automatically by Stripe or explicitly through the [Transfers API](https://stripe.com/docs/api#transfers) or [Payouts API](https://stripe.com/docs/api#payouts).
     ///
     /// You can find the available balance for each currency and payment type in the `source_types` property.
@@ -52,7 +51,6 @@ impl Object for Balance {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BalanceAmount {
-
     /// Balance amount.
     pub amount: i64,
 
@@ -67,7 +65,6 @@ pub struct BalanceAmount {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BalanceAmountNet {
-
     /// Balance amount.
     pub amount: i64,
 
@@ -86,14 +83,12 @@ pub struct BalanceAmountNet {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BalanceDetail {
-
     /// Funds that are available for use.
     pub available: Vec<BalanceAmount>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BalanceDetailUngated {
-
     /// Funds that are available for use.
     pub available: Vec<BalanceAmount>,
 
@@ -103,7 +98,6 @@ pub struct BalanceDetailUngated {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct BalanceNetAvailable {
-
     /// Net balance amount, subtracting fees from platform-set pricing.
     pub amount: i64,
 

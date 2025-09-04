@@ -3,7 +3,7 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::{PayoutId};
+use crate::ids::PayoutId;
 use crate::params::{Expand, Expandable, List, Metadata, Object, Paginable, RangeQuery, Timestamp};
 use crate::resources::{ApplicationFee, BalanceTransaction, Currency, PayoutDestinationUnion};
 use serde::{Deserialize, Serialize};
@@ -119,14 +119,12 @@ pub struct Payout {
 }
 
 impl Payout {
-
     /// Returns a list of existing payouts sent to third-party bank accounts or payouts that Stripe sent to you.
     ///
     /// The payouts return in sorted order, with the most recently created payouts appearing first.
-pub fn list(client: &Client, params: &ListPayouts<'_>) -> Response<List<Payout>> {
-   client.get_query("/payouts", params)
-}
-
+    pub fn list(client: &Client, params: &ListPayouts<'_>) -> Response<List<Payout>> {
+        client.get_query("/payouts", params)
+    }
 
     /// To send funds to your own bank account, create a new payout object.
     ///
@@ -168,7 +166,6 @@ impl Object for Payout {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PayoutsTraceId {
-
     /// Possible values are `pending`, `supported`, and `unsupported`.
     ///
     /// When `payout.status` is `pending` or `in_transit`, this will be `pending`.
@@ -183,7 +180,6 @@ pub struct PayoutsTraceId {
 /// The parameters for `Payout::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreatePayout<'a> {
-
     /// A positive integer in cents representing how much to payout.
     pub amount: i64,
 
@@ -264,7 +260,6 @@ impl<'a> CreatePayout<'a> {
 /// The parameters for `Payout::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListPayouts<'a> {
-
     /// Only return payouts that are expected to arrive during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub arrival_date: Option<RangeQuery<Timestamp>>,
@@ -323,12 +318,12 @@ impl<'a> ListPayouts<'a> {
 impl Paginable for ListPayouts<'_> {
     type O = Payout;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 /// The parameters for `Payout::update`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct UpdatePayout<'a> {
-
     /// Specifies which fields in the response should be expanded.
     #[serde(skip_serializing_if = "Expand::is_empty")]
     pub expand: &'a [&'a str],
@@ -344,10 +339,7 @@ pub struct UpdatePayout<'a> {
 
 impl<'a> UpdatePayout<'a> {
     pub fn new() -> Self {
-        UpdatePayout {
-            expand: Default::default(),
-            metadata: Default::default(),
-        }
+        UpdatePayout { expand: Default::default(), metadata: Default::default() }
     }
 }
 

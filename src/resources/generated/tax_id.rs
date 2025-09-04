@@ -3,7 +3,7 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::{TaxIdId};
+use crate::ids::TaxIdId;
 use crate::params::{Deleted, Expand, Expandable, List, Object, Paginable, Timestamp};
 use crate::resources::{Account, Application, Customer};
 use serde::{Deserialize, Serialize};
@@ -59,12 +59,10 @@ pub struct TaxId {
 }
 
 impl TaxId {
-
     /// Returns a list of tax IDs.
-pub fn list(client: &Client, params: &ListTaxIds<'_>) -> Response<List<TaxId>> {
-   client.get_query("/tax_ids", params)
-}
-
+    pub fn list(client: &Client, params: &ListTaxIds<'_>) -> Response<List<TaxId>> {
+        client.get_query("/tax_ids", params)
+    }
 
     /// Creates a new account or customer `tax_id` object.
     pub fn create(client: &Client, params: CreateTaxId<'_>) -> Response<TaxId> {
@@ -95,7 +93,6 @@ impl Object for TaxId {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TaxIDsOwner {
-
     /// The account being referenced when `type` is `account`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub account: Option<Expandable<Account>>,
@@ -115,7 +112,6 @@ pub struct TaxIDsOwner {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TaxIdVerification {
-
     /// Verification status, one of `pending`, `verified`, `unverified`, or `unavailable`.
     pub status: TaxIdVerificationStatus,
 
@@ -129,7 +125,6 @@ pub struct TaxIdVerification {
 /// The parameters for `TaxId::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreateTaxId<'a> {
-
     /// Specifies which fields in the response should be expanded.
     #[serde(skip_serializing_if = "Expand::is_empty")]
     pub expand: &'a [&'a str],
@@ -150,19 +145,13 @@ pub struct CreateTaxId<'a> {
 
 impl<'a> CreateTaxId<'a> {
     pub fn new(type_: TaxIdTypeFilter, value: &'a str) -> Self {
-        CreateTaxId {
-            expand: Default::default(),
-            owner: Default::default(),
-            type_,
-            value,
-        }
+        CreateTaxId { expand: Default::default(), owner: Default::default(), type_, value }
     }
 }
 
 /// The parameters for `TaxId::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListTaxIds<'a> {
-
     /// A cursor for use in pagination.
     ///
     /// `ending_before` is an object ID that defines your place in the list.
@@ -208,11 +197,11 @@ impl<'a> ListTaxIds<'a> {
 impl Paginable for ListTaxIds<'_> {
     type O = TaxId;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTaxIdOwner {
-
     /// Account the tax ID belongs to.
     ///
     /// Required when `type=account`.
@@ -232,7 +221,6 @@ pub struct CreateTaxIdOwner {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct ListTaxIdsOwner {
-
     /// Account the tax ID belongs to.
     ///
     /// Required when `type=account`.

@@ -2,14 +2,13 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::params::{Expandable};
+use crate::params::Expandable;
 use crate::resources::{Charge, SetupAttempt};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "payment_method_sepa_debit".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodSepaDebit {
-
     /// Bank code of bank associated with the bank account.
     pub bank_code: Option<String>,
 
@@ -33,7 +32,6 @@ pub struct PaymentMethodSepaDebit {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct SepaDebitGeneratedFrom {
-
     /// The ID of the Charge that generated this PaymentMethod, if any.
     pub charge: Option<Expandable<Charge>>,
 

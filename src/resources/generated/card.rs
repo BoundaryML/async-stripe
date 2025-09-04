@@ -2,7 +2,7 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{CardId};
+use crate::ids::CardId;
 use crate::params::{Expandable, Metadata, Object};
 use crate::resources::{Account, Currency, Customer};
 use serde::{Deserialize, Serialize};
@@ -197,7 +197,6 @@ impl Object for Card {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TokenCardNetworks {
-
     /// The preferred network for co-branded cards.
     ///
     /// Can be `cartes_bancaires`, `mastercard`, `visa` or `invalid_preference` if requested network is not valid for the card.

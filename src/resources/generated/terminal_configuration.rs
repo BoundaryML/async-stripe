@@ -3,9 +3,9 @@
 // ======================================
 
 use crate::client::{Client, Response};
-use crate::ids::{TerminalConfigurationId};
+use crate::ids::TerminalConfigurationId;
 use crate::params::{Expand, Expandable, List, Object, Paginable};
-use crate::resources::{File};
+use crate::resources::File;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "TerminalConfigurationConfiguration".
@@ -55,15 +55,19 @@ pub struct TerminalConfiguration {
 }
 
 impl TerminalConfiguration {
-
     /// Returns a list of `Configuration` objects.
-pub fn list(client: &Client, params: &ListTerminalConfigurations<'_>) -> Response<List<TerminalConfiguration>> {
-   client.get_query("/terminal/configurations", params)
-}
-
+    pub fn list(
+        client: &Client,
+        params: &ListTerminalConfigurations<'_>,
+    ) -> Response<List<TerminalConfiguration>> {
+        client.get_query("/terminal/configurations", params)
+    }
 
     /// Creates a new `Configuration` object.
-    pub fn create(client: &Client, params: CreateTerminalConfiguration<'_>) -> Response<TerminalConfiguration> {
+    pub fn create(
+        client: &Client,
+        params: CreateTerminalConfiguration<'_>,
+    ) -> Response<TerminalConfiguration> {
         #[allow(clippy::needless_borrows_for_generic_args)]
         client.post_form("/terminal/configurations", &params)
     }
@@ -81,7 +85,6 @@ impl Object for TerminalConfiguration {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig {
-
     /// A File ID representing an image to display on the reader.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub splashscreen: Option<Expandable<File>>,
@@ -89,7 +92,6 @@ pub struct TerminalConfigurationConfigurationResourceDeviceTypeSpecificConfig {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourceOfflineConfig {
-
     /// Determines whether to allow transactions to be collected while reader is offline.
     ///
     /// Defaults to false.
@@ -98,7 +100,6 @@ pub struct TerminalConfigurationConfigurationResourceOfflineConfig {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourceRebootWindow {
-
     /// Integer between 0 to 23 that represents the end hour of the reboot time window.
     ///
     /// The value must be different than the start_hour.
@@ -110,7 +111,6 @@ pub struct TerminalConfigurationConfigurationResourceRebootWindow {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourceTipping {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub aed: Option<TerminalConfigurationConfigurationResourceCurrencySpecificConfig>,
 
@@ -177,7 +177,6 @@ pub struct TerminalConfigurationConfigurationResourceTipping {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourceCurrencySpecificConfig {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -193,7 +192,6 @@ pub struct TerminalConfigurationConfigurationResourceCurrencySpecificConfig {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourceWifiConfig {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub enterprise_eap_peap: Option<TerminalConfigurationConfigurationResourceEnterprisePeapWifi>,
 
@@ -212,7 +210,6 @@ pub struct TerminalConfigurationConfigurationResourceWifiConfig {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourceEnterprisePeapWifi {
-
     /// A File ID representing a PEM file containing the server certificate.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ca_certificate_file: Option<String>,
@@ -229,7 +226,6 @@ pub struct TerminalConfigurationConfigurationResourceEnterprisePeapWifi {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourceEnterpriseTlsWifi {
-
     /// A File ID representing a PEM file containing the server certificate.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ca_certificate_file: Option<String>,
@@ -250,7 +246,6 @@ pub struct TerminalConfigurationConfigurationResourceEnterpriseTlsWifi {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct TerminalConfigurationConfigurationResourcePersonalPskWifi {
-
     /// Password for connecting to the WiFi network.
     pub password: String,
 
@@ -261,7 +256,6 @@ pub struct TerminalConfigurationConfigurationResourcePersonalPskWifi {
 /// The parameters for `TerminalConfiguration::create`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct CreateTerminalConfiguration<'a> {
-
     /// An object containing device type specific settings for BBPOS WisePOS E readers.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub bbpos_wisepos_e: Option<CreateTerminalConfigurationBbposWiseposE>,
@@ -318,7 +312,6 @@ impl<'a> CreateTerminalConfiguration<'a> {
 /// The parameters for `TerminalConfiguration::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListTerminalConfigurations<'a> {
-
     /// A cursor for use in pagination.
     ///
     /// `ending_before` is an object ID that defines your place in the list.
@@ -362,11 +355,11 @@ impl<'a> ListTerminalConfigurations<'a> {
 impl Paginable for ListTerminalConfigurations<'_> {
     type O = TerminalConfiguration;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationBbposWiseposE {
-
     /// A File ID representing an image to display on the reader.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub splashscreen: Option<String>,
@@ -374,7 +367,6 @@ pub struct CreateTerminalConfigurationBbposWiseposE {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationOffline {
-
     /// Determines whether to allow transactions to be collected while reader is offline.
     ///
     /// Defaults to false.
@@ -383,7 +375,6 @@ pub struct CreateTerminalConfigurationOffline {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationRebootWindow {
-
     /// Integer between 0 to 23 that represents the end hour of the reboot time window.
     ///
     /// The value must be different than the start_hour.
@@ -395,7 +386,6 @@ pub struct CreateTerminalConfigurationRebootWindow {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationStripeS700 {
-
     /// A File ID representing an image you would like displayed on the reader.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub splashscreen: Option<String>,
@@ -403,7 +393,6 @@ pub struct CreateTerminalConfigurationStripeS700 {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTipping {
-
     /// Tipping configuration for AED.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub aed: Option<CreateTerminalConfigurationTippingAed>,
@@ -491,7 +480,6 @@ pub struct CreateTerminalConfigurationTipping {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationVerifoneP400 {
-
     /// A File ID representing an image you would like displayed on the reader.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub splashscreen: Option<String>,
@@ -499,7 +487,6 @@ pub struct CreateTerminalConfigurationVerifoneP400 {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationWifi {
-
     /// Credentials for a WPA-Enterprise WiFi network using the EAP-PEAP authentication method.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub enterprise_eap_peap: Option<CreateTerminalConfigurationWifiEnterpriseEapPeap>,
@@ -521,7 +508,6 @@ pub struct CreateTerminalConfigurationWifi {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingAed {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -537,7 +523,6 @@ pub struct CreateTerminalConfigurationTippingAed {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingAud {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -553,7 +538,6 @@ pub struct CreateTerminalConfigurationTippingAud {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingBgn {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -569,7 +553,6 @@ pub struct CreateTerminalConfigurationTippingBgn {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingCad {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -585,7 +568,6 @@ pub struct CreateTerminalConfigurationTippingCad {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingChf {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -601,7 +583,6 @@ pub struct CreateTerminalConfigurationTippingChf {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingCzk {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -617,7 +598,6 @@ pub struct CreateTerminalConfigurationTippingCzk {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingDkk {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -633,7 +613,6 @@ pub struct CreateTerminalConfigurationTippingDkk {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingEur {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -649,7 +628,6 @@ pub struct CreateTerminalConfigurationTippingEur {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingGbp {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -665,7 +643,6 @@ pub struct CreateTerminalConfigurationTippingGbp {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingHkd {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -681,7 +658,6 @@ pub struct CreateTerminalConfigurationTippingHkd {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingHuf {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -697,7 +673,6 @@ pub struct CreateTerminalConfigurationTippingHuf {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingJpy {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -713,7 +688,6 @@ pub struct CreateTerminalConfigurationTippingJpy {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingMxn {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -729,7 +703,6 @@ pub struct CreateTerminalConfigurationTippingMxn {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingMyr {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -745,7 +718,6 @@ pub struct CreateTerminalConfigurationTippingMyr {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingNok {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -761,7 +733,6 @@ pub struct CreateTerminalConfigurationTippingNok {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingNzd {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -777,7 +748,6 @@ pub struct CreateTerminalConfigurationTippingNzd {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingPln {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -793,7 +763,6 @@ pub struct CreateTerminalConfigurationTippingPln {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingRon {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -809,7 +778,6 @@ pub struct CreateTerminalConfigurationTippingRon {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingSek {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -825,7 +793,6 @@ pub struct CreateTerminalConfigurationTippingSek {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingSgd {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -841,7 +808,6 @@ pub struct CreateTerminalConfigurationTippingSgd {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationTippingUsd {
-
     /// Fixed amounts displayed when collecting a tip.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub fixed_amounts: Option<Vec<i64>>,
@@ -857,7 +823,6 @@ pub struct CreateTerminalConfigurationTippingUsd {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationWifiEnterpriseEapPeap {
-
     /// A File ID representing a PEM file containing the server certificate.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ca_certificate_file: Option<String>,
@@ -874,7 +839,6 @@ pub struct CreateTerminalConfigurationWifiEnterpriseEapPeap {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationWifiEnterpriseEapTls {
-
     /// A File ID representing a PEM file containing the server certificate.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub ca_certificate_file: Option<String>,
@@ -895,7 +859,6 @@ pub struct CreateTerminalConfigurationWifiEnterpriseEapTls {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateTerminalConfigurationWifiPersonalPsk {
-
     /// Password for connecting to the WiFi network.
     pub password: String,
 
@@ -951,8 +914,12 @@ pub enum TerminalConfigurationConfigurationResourceWifiConfigType {
 impl TerminalConfigurationConfigurationResourceWifiConfigType {
     pub fn as_str(self) -> &'static str {
         match self {
-            TerminalConfigurationConfigurationResourceWifiConfigType::EnterpriseEapPeap => "enterprise_eap_peap",
-            TerminalConfigurationConfigurationResourceWifiConfigType::EnterpriseEapTls => "enterprise_eap_tls",
+            TerminalConfigurationConfigurationResourceWifiConfigType::EnterpriseEapPeap => {
+                "enterprise_eap_peap"
+            }
+            TerminalConfigurationConfigurationResourceWifiConfigType::EnterpriseEapTls => {
+                "enterprise_eap_tls"
+            }
             TerminalConfigurationConfigurationResourceWifiConfigType::PersonalPsk => "personal_psk",
         }
     }

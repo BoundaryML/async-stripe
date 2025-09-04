@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_bacs_debit".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodBacsDebit {
-
     /// Uniquely identifies this particular bank account.
     ///
     /// You can use this attribute to check whether two bank accounts are the same.

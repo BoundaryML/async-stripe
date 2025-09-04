@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_paypal".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodPaypal {
-
     /// Two-letter ISO code representing the buyer's country.
     ///
     /// Values are provided by PayPal directly (if supported) at the time of authorization or settlement.

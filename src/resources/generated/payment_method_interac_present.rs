@@ -2,13 +2,12 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::resources::{PaymentMethodCardPresentNetworks};
+use crate::resources::PaymentMethodCardPresentNetworks;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "payment_method_interac_present".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodInteracPresent {
-
     /// Card brand.
     ///
     /// Can be `interac`, `mastercard` or `visa`.
@@ -92,8 +91,12 @@ impl PaymentMethodInteracPresentReadMethod {
         match self {
             PaymentMethodInteracPresentReadMethod::ContactEmv => "contact_emv",
             PaymentMethodInteracPresentReadMethod::ContactlessEmv => "contactless_emv",
-            PaymentMethodInteracPresentReadMethod::ContactlessMagstripeMode => "contactless_magstripe_mode",
-            PaymentMethodInteracPresentReadMethod::MagneticStripeFallback => "magnetic_stripe_fallback",
+            PaymentMethodInteracPresentReadMethod::ContactlessMagstripeMode => {
+                "contactless_magstripe_mode"
+            }
+            PaymentMethodInteracPresentReadMethod::MagneticStripeFallback => {
+                "magnetic_stripe_fallback"
+            }
             PaymentMethodInteracPresentReadMethod::MagneticStripeTrack2 => "magnetic_stripe_track2",
         }
     }

@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_us_bank_account".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodUsBankAccount {
-
     /// Account holder type: individual or company.
     pub account_holder_type: Option<PaymentMethodUsBankAccountAccountHolderType>,
 
@@ -42,14 +41,12 @@ pub struct PaymentMethodUsBankAccount {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodUsBankAccountStatusDetails {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub blocked: Option<PaymentMethodUsBankAccountBlocked>,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodUsBankAccountBlocked {
-
     /// The ACH network code that resulted in this block.
     pub network_code: Option<PaymentMethodUsBankAccountBlockedNetworkCode>,
 
@@ -59,7 +56,6 @@ pub struct PaymentMethodUsBankAccountBlocked {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UsBankAccountNetworks {
-
     /// The preferred network.
     pub preferred: Option<String>,
 
@@ -218,8 +214,12 @@ impl PaymentMethodUsBankAccountBlockedReason {
         match self {
             PaymentMethodUsBankAccountBlockedReason::BankAccountClosed => "bank_account_closed",
             PaymentMethodUsBankAccountBlockedReason::BankAccountFrozen => "bank_account_frozen",
-            PaymentMethodUsBankAccountBlockedReason::BankAccountInvalidDetails => "bank_account_invalid_details",
-            PaymentMethodUsBankAccountBlockedReason::BankAccountRestricted => "bank_account_restricted",
+            PaymentMethodUsBankAccountBlockedReason::BankAccountInvalidDetails => {
+                "bank_account_invalid_details"
+            }
+            PaymentMethodUsBankAccountBlockedReason::BankAccountRestricted => {
+                "bank_account_restricted"
+            }
             PaymentMethodUsBankAccountBlockedReason::BankAccountUnusable => "bank_account_unusable",
             PaymentMethodUsBankAccountBlockedReason::DebitNotAuthorized => "debit_not_authorized",
         }

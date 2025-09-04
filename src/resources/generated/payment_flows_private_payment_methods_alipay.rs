@@ -6,5 +6,4 @@ use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "PaymentFlowsPrivatePaymentMethodsAlipay".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct PaymentFlowsPrivatePaymentMethodsAlipay {
-}
+pub struct PaymentFlowsPrivatePaymentMethodsAlipay {}

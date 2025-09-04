@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_fpx".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodFpx {
-
     /// Account holder type, if provided.
     ///
     /// Can be one of `individual` or `company`.

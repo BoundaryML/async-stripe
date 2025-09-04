@@ -5,7 +5,9 @@
 use crate::client::{Client, Response};
 use crate::ids::{PlanId, PriceId, SubscriptionId, SubscriptionItemId};
 use crate::params::{Deleted, Expand, Expandable, List, Metadata, Object, Paginable, Timestamp};
-use crate::resources::{Currency, Discount, Plan, Price, SubscriptionItemBillingThresholds, TaxRate};
+use crate::resources::{
+    Currency, Discount, Plan, Price, SubscriptionItemBillingThresholds, TaxRate,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "SubscriptionItem".
@@ -73,28 +75,40 @@ pub struct SubscriptionItem {
 }
 
 impl SubscriptionItem {
-
     /// Returns a list of your subscription items for a given subscription.
-pub fn list(client: &Client, params: &ListSubscriptionItems<'_>) -> Response<List<SubscriptionItem>> {
-   client.get_query("/subscription_items", params)
-}
-
+    pub fn list(
+        client: &Client,
+        params: &ListSubscriptionItems<'_>,
+    ) -> Response<List<SubscriptionItem>> {
+        client.get_query("/subscription_items", params)
+    }
 
     /// Adds a new item to an existing subscription.
     ///
     /// No existing items will be changed or replaced.
-    pub fn create(client: &Client, params: CreateSubscriptionItem<'_>) -> Response<SubscriptionItem> {
+    pub fn create(
+        client: &Client,
+        params: CreateSubscriptionItem<'_>,
+    ) -> Response<SubscriptionItem> {
         #[allow(clippy::needless_borrows_for_generic_args)]
         client.post_form("/subscription_items", &params)
     }
 
     /// Retrieves the subscription item with the given ID.
-    pub fn retrieve(client: &Client, id: &SubscriptionItemId, expand: &[&str]) -> Response<SubscriptionItem> {
+    pub fn retrieve(
+        client: &Client,
+        id: &SubscriptionItemId,
+        expand: &[&str],
+    ) -> Response<SubscriptionItem> {
         client.get_query(&format!("/subscription_items/{}", id), Expand { expand })
     }
 
     /// Updates the plan or quantity of an item on a current subscription.
-    pub fn update(client: &Client, id: &SubscriptionItemId, params: UpdateSubscriptionItem<'_>) -> Response<SubscriptionItem> {
+    pub fn update(
+        client: &Client,
+        id: &SubscriptionItemId,
+        params: UpdateSubscriptionItem<'_>,
+    ) -> Response<SubscriptionItem> {
         #[allow(clippy::needless_borrows_for_generic_args)]
         client.post_form(&format!("/subscription_items/{}", id), &params)
     }
@@ -102,7 +116,10 @@ pub fn list(client: &Client, params: &ListSubscriptionItems<'_>) -> Response<Lis
     /// Deletes an item from the subscription.
     ///
     /// Removing a subscription item from a subscription will not cancel the subscription.
-    pub fn delete(client: &Client, id: &SubscriptionItemId) -> Response<Deleted<SubscriptionItemId>> {
+    pub fn delete(
+        client: &Client,
+        id: &SubscriptionItemId,
+    ) -> Response<Deleted<SubscriptionItemId>> {
         client.delete(&format!("/subscription_items/{}", id))
     }
 }
@@ -120,7 +137,6 @@ impl Object for SubscriptionItem {
 /// The parameters for `SubscriptionItem::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreateSubscriptionItem<'a> {
-
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period.
     ///
     /// Pass an empty string to remove previously-defined thresholds.
@@ -220,7 +236,6 @@ impl<'a> CreateSubscriptionItem<'a> {
 /// The parameters for `SubscriptionItem::list`.
 #[derive(Clone, Debug, Serialize)]
 pub struct ListSubscriptionItems<'a> {
-
     /// A cursor for use in pagination.
     ///
     /// `ending_before` is an object ID that defines your place in the list.
@@ -263,12 +278,12 @@ impl<'a> ListSubscriptionItems<'a> {
 impl Paginable for ListSubscriptionItems<'_> {
     type O = SubscriptionItem;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 /// The parameters for `SubscriptionItem::update`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct UpdateSubscriptionItem<'a> {
-
     /// Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period.
     ///
     /// Pass an empty string to remove previously-defined thresholds.
@@ -375,7 +390,6 @@ impl<'a> UpdateSubscriptionItem<'a> {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct CreateSubscriptionItemDiscounts {
-
     /// ID of the coupon to create a new discount for.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub coupon: Option<String>,
@@ -391,7 +405,6 @@ pub struct CreateSubscriptionItemDiscounts {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct SubscriptionItemPriceData {
-
     /// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
     ///
     /// Must be a [supported currency](https://stripe.com/docs/currencies).
@@ -424,7 +437,6 @@ pub struct SubscriptionItemPriceData {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct UpdateSubscriptionItemDiscounts {
-
     /// ID of the coupon to create a new discount for.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub coupon: Option<String>,
@@ -440,7 +452,6 @@ pub struct UpdateSubscriptionItemDiscounts {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct SubscriptionItemPriceDataRecurring {
-
     /// Specifies billing frequency.
     ///
     /// Either `day`, `week`, `month` or `year`.

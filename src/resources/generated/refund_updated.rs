@@ -6,5 +6,4 @@ use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "refund.updated".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
-pub struct RefundUpdated {
-}
+pub struct RefundUpdated {}

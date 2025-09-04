@@ -2,9 +2,11 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{IssuingDisputeId};
+use crate::ids::IssuingDisputeId;
 use crate::params::{Expandable, Metadata, Object, Timestamp};
-use crate::resources::{BalanceTransaction, Currency, File, IssuingDisputeStatus, IssuingTransaction};
+use crate::resources::{
+    BalanceTransaction, Currency, File, IssuingDisputeStatus, IssuingTransaction,
+};
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "IssuingDispute".
@@ -72,7 +74,6 @@ impl Object for IssuingDispute {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeEvidence {
-
     #[serde(skip_serializing_if = "Option::is_none")]
     pub canceled: Option<IssuingDisputeCanceledEvidence>,
 
@@ -105,7 +106,6 @@ pub struct IssuingDisputeEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeCanceledEvidence {
-
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
     pub additional_documentation: Option<Expandable<File>>,
 
@@ -139,7 +139,6 @@ pub struct IssuingDisputeCanceledEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeDuplicateEvidence {
-
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
     pub additional_documentation: Option<Expandable<File>>,
 
@@ -163,7 +162,6 @@ pub struct IssuingDisputeDuplicateEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeFraudulentEvidence {
-
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
     pub additional_documentation: Option<Expandable<File>>,
 
@@ -173,7 +171,6 @@ pub struct IssuingDisputeFraudulentEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeMerchandiseNotAsDescribedEvidence {
-
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
     pub additional_documentation: Option<Expandable<File>>,
 
@@ -195,7 +192,6 @@ pub struct IssuingDisputeMerchandiseNotAsDescribedEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeNoValidAuthorizationEvidence {
-
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
     pub additional_documentation: Option<Expandable<File>>,
 
@@ -205,7 +201,6 @@ pub struct IssuingDisputeNoValidAuthorizationEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeNotReceivedEvidence {
-
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
     pub additional_documentation: Option<Expandable<File>>,
 
@@ -224,7 +219,6 @@ pub struct IssuingDisputeNotReceivedEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeOtherEvidence {
-
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
     pub additional_documentation: Option<Expandable<File>>,
 
@@ -240,7 +234,6 @@ pub struct IssuingDisputeOtherEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeServiceNotAsDescribedEvidence {
-
     /// (ID of a [file upload](https://stripe.com/docs/guides/file-upload)) Additional documentation supporting the dispute.
     pub additional_documentation: Option<Expandable<File>>,
 
@@ -259,7 +252,6 @@ pub struct IssuingDisputeServiceNotAsDescribedEvidence {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct IssuingDisputeTreasury {
-
     /// The Treasury [DebitReversal](https://stripe.com/docs/api/treasury/debit_reversals) representing this Issuing dispute.
     pub debit_reversal: Option<String>,
 
@@ -355,7 +347,9 @@ impl IssuingDisputeEvidenceReason {
             IssuingDisputeEvidenceReason::Canceled => "canceled",
             IssuingDisputeEvidenceReason::Duplicate => "duplicate",
             IssuingDisputeEvidenceReason::Fraudulent => "fraudulent",
-            IssuingDisputeEvidenceReason::MerchandiseNotAsDescribed => "merchandise_not_as_described",
+            IssuingDisputeEvidenceReason::MerchandiseNotAsDescribed => {
+                "merchandise_not_as_described"
+            }
             IssuingDisputeEvidenceReason::NoValidAuthorization => "no_valid_authorization",
             IssuingDisputeEvidenceReason::NotReceived => "not_received",
             IssuingDisputeEvidenceReason::Other => "other",
@@ -411,25 +405,45 @@ pub enum IssuingDisputeLossReason {
 impl IssuingDisputeLossReason {
     pub fn as_str(self) -> &'static str {
         match self {
-            IssuingDisputeLossReason::CardholderAuthenticationIssuerLiability => "cardholder_authentication_issuer_liability",
-            IssuingDisputeLossReason::Eci5TokenTransactionWithTavv => "eci5_token_transaction_with_tavv",
+            IssuingDisputeLossReason::CardholderAuthenticationIssuerLiability => {
+                "cardholder_authentication_issuer_liability"
+            }
+            IssuingDisputeLossReason::Eci5TokenTransactionWithTavv => {
+                "eci5_token_transaction_with_tavv"
+            }
             IssuingDisputeLossReason::ExcessDisputesInTimeframe => "excess_disputes_in_timeframe",
-            IssuingDisputeLossReason::HasNotMetTheMinimumDisputeAmountRequirements => "has_not_met_the_minimum_dispute_amount_requirements",
+            IssuingDisputeLossReason::HasNotMetTheMinimumDisputeAmountRequirements => {
+                "has_not_met_the_minimum_dispute_amount_requirements"
+            }
             IssuingDisputeLossReason::InvalidDuplicateDispute => "invalid_duplicate_dispute",
-            IssuingDisputeLossReason::InvalidIncorrectAmountDispute => "invalid_incorrect_amount_dispute",
+            IssuingDisputeLossReason::InvalidIncorrectAmountDispute => {
+                "invalid_incorrect_amount_dispute"
+            }
             IssuingDisputeLossReason::InvalidNoAuthorization => "invalid_no_authorization",
             IssuingDisputeLossReason::InvalidUseOfDisputes => "invalid_use_of_disputes",
-            IssuingDisputeLossReason::MerchandiseDeliveredOrShipped => "merchandise_delivered_or_shipped",
-            IssuingDisputeLossReason::MerchandiseOrServiceAsDescribed => "merchandise_or_service_as_described",
+            IssuingDisputeLossReason::MerchandiseDeliveredOrShipped => {
+                "merchandise_delivered_or_shipped"
+            }
+            IssuingDisputeLossReason::MerchandiseOrServiceAsDescribed => {
+                "merchandise_or_service_as_described"
+            }
             IssuingDisputeLossReason::NotCancelled => "not_cancelled",
             IssuingDisputeLossReason::Other => "other",
             IssuingDisputeLossReason::RefundIssued => "refund_issued",
-            IssuingDisputeLossReason::SubmittedBeyondAllowableTimeLimit => "submitted_beyond_allowable_time_limit",
+            IssuingDisputeLossReason::SubmittedBeyondAllowableTimeLimit => {
+                "submitted_beyond_allowable_time_limit"
+            }
             IssuingDisputeLossReason::Transaction3dsRequired => "transaction_3ds_required",
-            IssuingDisputeLossReason::TransactionApprovedAfterPriorFraudDispute => "transaction_approved_after_prior_fraud_dispute",
+            IssuingDisputeLossReason::TransactionApprovedAfterPriorFraudDispute => {
+                "transaction_approved_after_prior_fraud_dispute"
+            }
             IssuingDisputeLossReason::TransactionAuthorized => "transaction_authorized",
-            IssuingDisputeLossReason::TransactionElectronicallyRead => "transaction_electronically_read",
-            IssuingDisputeLossReason::TransactionQualifiesForVisaEasyPaymentService => "transaction_qualifies_for_visa_easy_payment_service",
+            IssuingDisputeLossReason::TransactionElectronicallyRead => {
+                "transaction_electronically_read"
+            }
+            IssuingDisputeLossReason::TransactionQualifiesForVisaEasyPaymentService => {
+                "transaction_qualifies_for_visa_easy_payment_service"
+            }
             IssuingDisputeLossReason::TransactionUnattended => "transaction_unattended",
         }
     }
@@ -463,7 +477,9 @@ pub enum IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus {
 impl IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus {
     pub fn as_str(self) -> &'static str {
         match self {
-            IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus::MerchantRejected => "merchant_rejected",
+            IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus::MerchantRejected => {
+                "merchant_rejected"
+            }
             IssuingDisputeMerchandiseNotAsDescribedEvidenceReturnStatus::Successful => "successful",
         }
     }

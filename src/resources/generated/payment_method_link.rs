@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_link".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodLink {
-
     /// Account owner's email address.
     pub email: Option<String>,
 

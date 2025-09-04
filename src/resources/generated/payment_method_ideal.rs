@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 /// The resource representing a Stripe "payment_method_ideal".
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PaymentMethodIdeal {
-
     /// The customer's bank, if provided.
     ///
     /// Can be one of `abn_amro`, `asn_bank`, `bunq`, `buut`, `handelsbanken`, `ing`, `knab`, `moneyou`, `n26`, `nn`, `rabobank`, `regiobank`, `revolut`, `sns_bank`, `triodos_bank`, `van_lanschot`, or `yoursafe`.

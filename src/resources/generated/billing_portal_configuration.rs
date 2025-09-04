@@ -2,9 +2,9 @@
 // This file was automatically generated.
 // ======================================
 
-use crate::ids::{BillingPortalConfigurationId};
+use crate::ids::BillingPortalConfigurationId;
 use crate::params::{Expandable, Metadata, Object, Timestamp};
-use crate::resources::{Application};
+use crate::resources::Application;
 use serde::{Deserialize, Serialize};
 
 /// The resource representing a Stripe "PortalConfiguration".
@@ -69,7 +69,6 @@ impl Object for BillingPortalConfiguration {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalBusinessProfile {
-
     /// The messaging shown to customers in the portal.
     pub headline: Option<String>,
 
@@ -82,7 +81,6 @@ pub struct PortalBusinessProfile {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalFeatures {
-
     pub customer_update: PortalCustomerUpdate,
 
     pub invoice_history: PortalInvoiceList,
@@ -96,7 +94,6 @@ pub struct PortalFeatures {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalCustomerUpdate {
-
     /// The types of customer updates that are supported.
     ///
     /// When empty, customers are not updateable.
@@ -108,14 +105,12 @@ pub struct PortalCustomerUpdate {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalInvoiceList {
-
     /// Whether the feature is enabled.
     pub enabled: bool,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalLoginPage {
-
     /// If `true`, a shareable `url` will be generated that will take your customers to a hosted login page for the customer portal.
     ///
     /// If `false`, the previously generated `url`, if any, will be deactivated.
@@ -129,14 +124,12 @@ pub struct PortalLoginPage {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalPaymentMethodUpdate {
-
     /// Whether the feature is enabled.
     pub enabled: bool,
 }
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalSubscriptionCancel {
-
     pub cancellation_reason: PortalSubscriptionCancellationReason,
 
     /// Whether the feature is enabled.
@@ -153,7 +146,6 @@ pub struct PortalSubscriptionCancel {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalSubscriptionCancellationReason {
-
     /// Whether the feature is enabled.
     pub enabled: bool,
 
@@ -163,7 +155,6 @@ pub struct PortalSubscriptionCancellationReason {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalSubscriptionUpdate {
-
     /// The types of subscription updates that are supported for items listed in the `products` attribute.
     ///
     /// When empty, subscriptions are not updateable.
@@ -187,7 +178,6 @@ pub struct PortalSubscriptionUpdate {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalResourceScheduleUpdateAtPeriodEnd {
-
     /// List of conditions.
     ///
     /// When any condition is true, an update will be scheduled at the end of the current period.
@@ -196,7 +186,6 @@ pub struct PortalResourceScheduleUpdateAtPeriodEnd {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalResourceScheduleUpdateAtPeriodEndCondition {
-
     /// The type of condition.
     #[serde(rename = "type")]
     pub type_: PortalResourceScheduleUpdateAtPeriodEndConditionType,
@@ -204,7 +193,6 @@ pub struct PortalResourceScheduleUpdateAtPeriodEndCondition {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalSubscriptionUpdateProduct {
-
     pub adjustable_quantity: PortalSubscriptionUpdateProductAdjustableQuantity,
 
     /// The list of price IDs which, when subscribed to, a subscription can be updated.
@@ -216,7 +204,6 @@ pub struct PortalSubscriptionUpdateProduct {
 
 #[derive(Clone, Debug, Default, Deserialize, Serialize)]
 pub struct PortalSubscriptionUpdateProductAdjustableQuantity {
-
     /// If true, the quantity can be adjusted to any non-negative integer.
     pub enabled: bool,
 
@@ -280,8 +267,12 @@ pub enum PortalResourceScheduleUpdateAtPeriodEndConditionType {
 impl PortalResourceScheduleUpdateAtPeriodEndConditionType {
     pub fn as_str(self) -> &'static str {
         match self {
-            PortalResourceScheduleUpdateAtPeriodEndConditionType::DecreasingItemAmount => "decreasing_item_amount",
-            PortalResourceScheduleUpdateAtPeriodEndConditionType::ShorteningInterval => "shortening_interval",
+            PortalResourceScheduleUpdateAtPeriodEndConditionType::DecreasingItemAmount => {
+                "decreasing_item_amount"
+            }
+            PortalResourceScheduleUpdateAtPeriodEndConditionType::ShorteningInterval => {
+                "shortening_interval"
+            }
         }
     }
 }

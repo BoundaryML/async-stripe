@@ -79,14 +79,12 @@ pub struct Transfer {
 }
 
 impl Transfer {
-
     /// Returns a list of existing transfers sent to connected accounts.
     ///
     /// The transfers are returned in sorted order, with the most recently created transfers appearing first.
-pub fn list(client: &Client, params: &ListTransfers<'_>) -> Response<List<Transfer>> {
-   client.get_query("/transfers", params)
-}
-
+    pub fn list(client: &Client, params: &ListTransfers<'_>) -> Response<List<Transfer>> {
+        client.get_query("/transfers", params)
+    }
 
     /// To send funds from your Stripe account to a connected account, you create a new transfer object.
     ///
@@ -106,7 +104,11 @@ pub fn list(client: &Client, params: &ListTransfers<'_>) -> Response<List<Transf
     /// Updates the specified transfer by setting the values of the parameters passed.
     ///
     /// Any parameters not provided will be left unchanged.  This request accepts only metadata as an argument.
-    pub fn update(client: &Client, id: &TransferId, params: UpdateTransfer<'_>) -> Response<Transfer> {
+    pub fn update(
+        client: &Client,
+        id: &TransferId,
+        params: UpdateTransfer<'_>,
+    ) -> Response<Transfer> {
         #[allow(clippy::needless_borrows_for_generic_args)]
         client.post_form(&format!("/transfers/{}", id), &params)
     }
@@ -125,7 +127,6 @@ impl Object for Transfer {
 /// The parameters for `Transfer::create`.
 #[derive(Clone, Debug, Serialize)]
 pub struct CreateTransfer<'a> {
-
     /// A positive integer in cents (or local equivalent) representing how much to transfer.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub amount: Option<i64>,
@@ -198,7 +199,6 @@ impl<'a> CreateTransfer<'a> {
 /// The parameters for `Transfer::list`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct ListTransfers<'a> {
-
     /// Only return transfers that were created during the given date interval.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub created: Option<RangeQuery<Timestamp>>,
@@ -252,12 +252,12 @@ impl<'a> ListTransfers<'a> {
 impl Paginable for ListTransfers<'_> {
     type O = Transfer;
     fn set_last(&mut self, item: Self::O) {
-                self.starting_after = Some(item.id());
-            }}
+        self.starting_after = Some(item.id());
+    }
+}
 /// The parameters for `Transfer::update`.
 #[derive(Clone, Debug, Serialize, Default)]
 pub struct UpdateTransfer<'a> {
-
     /// An arbitrary string attached to the object.
     ///
     /// Often useful for displaying to users.
